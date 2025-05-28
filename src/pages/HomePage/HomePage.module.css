@@ -1,0 +1,114 @@
+.homePage {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.titleText {
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 1.2;
+  text-align: center;
+  vertical-align: middle;
+  color: red;
+
+  margin-bottom: 16px;
+}
+
+/*  */
+.filterBlock {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: var(--background);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.categoryList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.categoryItem {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+}
+.categoryItem:hover {
+  /* transform: translateY(4px); */
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.imageWrapper {
+  width: 100%;
+  padding-top: 75%; /* Співвідношення сторін 4:3 */
+  position: relative;
+  background-color: #f5f5f5; /* резервне світло-сіре тло */
+}
+
+.imageWrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoryTitle {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  color: #333;
+}
+
+/* tiresList */
+.button {
+  padding: 10px 20px;
+  border: 1px solid green;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  margin-right: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+.tireItem {
+  border: 1px solid green;
+  padding: 25px 15px;
+  margin-bottom: 10px;
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.tireList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+}

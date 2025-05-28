@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  .active {
+    color: #0b44cd;
+  }
+}
+
+.navItem {
+  margin-right: 32px;
+}
