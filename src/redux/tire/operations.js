@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+// import { clearTiresByCategory } from "./slice.js";
 
 axios.defaults.baseURL = "https://tire-store-server.onrender.com";
 
@@ -21,6 +22,7 @@ export const fetchTiresByCategory = createAsyncThunk(
   "tire/fetchTiresByCategory",
   async (category, thunkAPI) => {
     try {
+      // thunkAPI.dispatch(clearTiresByCategory()); // Скидаємо стан перед новим запитом
       const response = await axios.get(`/tires?category=${category}`);
       return response.data.data;
     } catch (err) {
@@ -45,7 +47,6 @@ export const fetchTiresById = createAsyncThunk(
 //fetch Tires By Filter
 
 //----- ADD --------- content-type: form-data
-//add tire
 export const addTire = createAsyncThunk(
   "tire/addTire",
   // body = newTire ?
@@ -65,7 +66,6 @@ export const addTire = createAsyncThunk(
 );
 
 //----- DELETE -------
-//delete tire
 export const deleteTire = createAsyncThunk(
   "tire/deleteTire",
   async (id, thunkAPI) => {
@@ -79,7 +79,26 @@ export const deleteTire = createAsyncThunk(
   }
 );
 
-//edit tire
+//----- EDIT -------
+export const editTire = createAsyncThunk(
+  "tire/editTire",
+  async ({ id, formData }, thunkAPI) => {
+    console.log(
+      "Всередині editTire, FormData:",
+      Array.from(formData.entries())
+    );
+    try {
+      const response = await axios.patch(`/tires/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log("Відповідь від бекенду:", response.data);
+      return response.data;
+    } catch (err) {
+      console.log("Помилка в editTire:", err.message);
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
 
 // ===================== content-type: application / json;
 // //add tire

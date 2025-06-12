@@ -2,9 +2,10 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   addTire,
   deleteTire,
+  editTire,
   fetchAllTires,
   fetchTiresByCategory,
-} from "./operations";
+} from "./operations.js";
 
 const initialState = {
   items: [],
@@ -20,7 +21,7 @@ const initialState = {
 const slice = createSlice({
   name: "tire",
   initialState,
-  //action
+  //action  //те що змінює локально
   reducer: {
     addFavoriteTire(state, action) {
       state.favoriteTires.push(action.payload);
@@ -29,6 +30,9 @@ const slice = createSlice({
       state.favoriteTires = state.favoriteTires.filter(
         (item) => item.id !== action.payload
       );
+    },
+    clearTiresByCategory(state) {
+      state.tiresByCategory = []; // Скидаємо список шин за категорією
     },
   },
 
@@ -41,34 +45,38 @@ const slice = createSlice({
         state.items = action.payload.data;
       })
       //   fetch by category
+      // .addCase(fetchTiresByCategory.pending, (state, actions) => {
+      //   state.tiresByCategory = []; // Скидаємо список шин за категорією
+      // })
       .addCase(fetchTiresByCategory.fulfilled, (state, action) => {
-        console.log("CATEGORY-", action.payload);
-        console.dir("CATEGORY--", JSON.parse(JSON.stringify(state.items)));
+        // console.log("CATEGORY-", action.payload);
+
         state.tiresByCategory = action.payload.data;
       })
       .addCase(addTire.fulfilled, (state, action) => {
-        console.log("✅ Added tire:", action.payload);
+        // console.log("✅ Added tire:", action.payload);
         state.items.push(action.payload);
       })
       .addCase(deleteTire.fulfilled, (state, { payload }) => {
         const tireId = payload;
-        console.log("delete-payload:", payload);
-        console.dir(
-          "deleteSTATE-payload_1:",
-          JSON.parse(JSON.stringify(state.items))
-        );
         state.items = state.items.filter((item) => {
-          console.log("item!--", item);
           return item._id !== tireId;
         });
-        state.tiresByCategory = state.tiresByCategory.filter(
-          (item) => item._id !== tireId
-        );
-        console.dir(
-          "deleteSTATE-payload_2:",
-          state.items,
-          state.tiresByCategory
-        );
+      })
+      .addCase(editTire.fulfilled, (state, { payload }) => {
+        console.log("Edit-Payload у slice.js:", payload);
+        const updatedTire = payload.data; //оновлена шина
+        if (updatedTire) {
+          state.items = state.items.map((item) =>
+            item._id === updatedTire._id ? updatedTire : item
+          );
+          state.tiresByCategory = state.tiresByCategory.map((item) =>
+            item._id === updatedTire._id ? updatedTire : item
+          );
+          state.tireById = updatedTire;
+        } else {
+          console.warn("No updated tire data received:", payload);
+        }
       })
       //-- addMatcher --//
       //== стан в очікуванні - pending
@@ -77,7 +85,8 @@ const slice = createSlice({
           fetchAllTires.pending,
           fetchTiresByCategory.pending,
           addTire.pending,
-          deleteTire.pending
+          deleteTire.pending,
+          editTire.pending
         ),
         (state) => {
           state.isLoading = true;
@@ -90,7 +99,8 @@ const slice = createSlice({
           fetchAllTires.fulfilled,
           fetchTiresByCategory.fulfilled,
           addTire.fulfilled,
-          deleteTire.fulfilled
+          deleteTire.fulfilled,
+          editTire.fulfilled
         ),
         (state) => {
           state.isLoading = false;
@@ -102,16 +112,17 @@ const slice = createSlice({
           fetchAllTires.rejected,
           fetchTiresByCategory.rejected,
           addTire.rejected,
-          deleteTire.rejected
+          deleteTire.rejected,
+          editTire.rejected
         ),
         (state, action) => {
           state.isLoading = false;
-          //   state.isError = action.payload;
-          state.isError = true; //??
+          state.isError = action.payload || true; //??
         }
       );
   },
 });
 
-export const { addFavoriteTire, deleteFavoriteTire } = slice.actions;
+export const { addFavoriteTire, deleteFavoriteTire, clearTiresByCategory } =
+  slice.actions;
 export const tiresReducer = slice.reducer;

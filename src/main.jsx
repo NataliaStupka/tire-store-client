@@ -16,9 +16,9 @@ createRoot(document.getElementById("root")).render(
         <App />
         {/* Сповіщення */}
         <Toaster
-          position="top-center"
-          reverseOrder={false}
-          gutter={8}
+          position="top-right"
+          reverseOrder={false} //Нові повідомлення додаватимуться знизу в списку
+          gutter={8} //Відстань між повідомленнями
           containerClassName=""
           containerStyle={{}}
           toastOptions={{
@@ -26,8 +26,8 @@ createRoot(document.getElementById("root")).render(
             className: "",
             duration: 2000,
             style: {
-              background: "#363636",
-              color: "#fff",
+              background: "#fff",
+              color: "363636",
             },
 
             // Default options for specific types
