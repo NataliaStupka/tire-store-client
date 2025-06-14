@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addTire } from "../../redux/tire/operations";
 import toast from "react-hot-toast";
 
-export const AddTireForm = () => {
+export const AddTireForm = ({ onClose }) => {
   const initialValues = {
     category: "",
     title: "",
@@ -27,6 +27,7 @@ export const AddTireForm = () => {
 
   //values це initialValues
   const handleSubmit = async (values, options) => {
+    options.setSubmitting(true);
     try {
       const newTire = {
         //   id - автоматично генерується на бекенді (MongoDB)
@@ -58,9 +59,12 @@ export const AddTireForm = () => {
         `${newTire.title} ${newTire.size} додано в категорію ${newTire.category}.`
       );
       options.resetForm(); // очистка форми
+      onClose(); // Закриваємо модалку
     } catch (error) {
       toast.error("Помилка при додаванні шини");
       console.error("Error:", error);
+    } finally {
+      options.setSubmitting(false); // скидаємо стан відправки
     }
     //   dublicate ?? попередження якщо вже така шина є??
     //як шина нова то повідамлення що додали
@@ -116,7 +120,7 @@ export const AddTireForm = () => {
         initialValues={initialValues}
         validationSchema={tireSchema}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, isSubmitting }) => (
           <Form className={s.form}>
             <div className={s.group}>
               <label className={s.label}>Категорія</label>
@@ -268,7 +272,13 @@ export const AddTireForm = () => {
             </div>
 
             {/* className={s.button} */}
-            <button type="submit">Додати</button>
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <span className={s.loader}>Завантаження...</span>
+              ) : (
+                "Додати"
+              )}
+            </button>
           </Form>
         )}
       </Formik>

@@ -80,7 +80,7 @@ const Navigation = () => {
 
         {isOpenModal && (
           <Modal title="Додаємо шину/диск" onClose={closeModal}>
-            <AddTireForm />
+            <AddTireForm onClose={closeModal} />
           </Modal>
         )}
       </div>
