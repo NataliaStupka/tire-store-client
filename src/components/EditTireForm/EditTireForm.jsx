@@ -2,28 +2,19 @@ import toast from "react-hot-toast";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import s from "./EditTireForm.module.css";
 import LoaderComponent from "../Loader/Loader";
-// import { useDispatch } from "react-redux";
 
 export const EditTireForm = ({ tire, onSubmit }) => {
   console.log("Форма для зміни шини/диска", tire);
 
-  //   const dispatch = useDispatch();
-
-  //setSubmitting, resetForm - ?
+  //formikBag містить setSubmitting - відправ форми true/false; resetForm - скид форми; setFieldValue - Динамічно змінює значення конкретного поля;
+  //setFieldError - Встановлює помилку для конкретного поля; setValues - Оновлює всі значення форми одночасно; інші
   const handleSubmit = async (values, { setSubmitting }) => {
     //values - дані з форми редагування
-    console.log("HandleFromEdit - НОВІ ЗНАЧЕННЯ", values);
-
     const formData = new FormData();
     //Object.entries повертає масив пар ключ-значення [key, value]
     Object.entries(values).forEach(([key, value]) => {
-      console.log(`${key}: ${value} (${typeof value})`);
-
       if (key !== "id") {
         const originalValue = tire[key];
-        console.log(
-          `originalValue - ${originalValue} (${typeof originalValue})`
-        );
 
         if (value !== originalValue) {
           //append - додає пару ключ-значення до об’єкта FormData
@@ -36,18 +27,12 @@ export const EditTireForm = ({ tire, onSubmit }) => {
           } else {
             formData.append(key, value.toString());
           }
-          console.log("newValues", values);
-          console.log("-------------------------------");
         }
       }
     });
 
-    console.log("===============================");
-    console.log("Що ПЕРЕдається ?? FormData:", Array.from(formData.entries()));
-
     try {
       await onSubmit(formData); // Викликаємо onSubmit з батьківського компонента
-      console.log("?????????", Array.from(formData.entries()));
       setSubmitting(false);
     } catch (err) {
       console.log("Помилка в handleSubmit:", err.message);

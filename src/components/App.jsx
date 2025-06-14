@@ -12,7 +12,6 @@ function App() {
   return (
     <>
       <Header />
-      {/* <Toaster position="top-right" /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/category/:item" element={<CategoryTirePage />} />

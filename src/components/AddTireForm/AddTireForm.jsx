@@ -38,9 +38,8 @@ export const AddTireForm = () => {
         modelTire: values.modelTire || "",
         layering: values.layering || "",
         loadIndex: values.loadIndex || "",
-        tireType: values.title === "tire" ? values.tireType : "", //????? - щоб було порожнім для дисків
-        // tireType: values.tireType || undefined, //???
-        //   image: values.image || null, //відправляємо окремо
+        tireType: values.title === "tire" ? values.tireType : "", // '' - щоб було порожнім для дисків
+
         diskModel: values.diskModel || "",
         instock: values.instock, //// Конвертуємо у Boolean true/false
       };
@@ -55,7 +54,9 @@ export const AddTireForm = () => {
         formData.append("image", values.image); // Завантаження зображення на бекенд
       }
       await dispatch(addTire(formData)).unwrap();
-      toast.success(`${newTire.title} ${newTire.size} додано.`);
+      toast.success(
+        `${newTire.title} ${newTire.size} додано в категорію ${newTire.category}.`
+      );
       options.resetForm(); // очистка форми
     } catch (error) {
       toast.error("Помилка при додаванні шини");

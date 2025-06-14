@@ -52,12 +52,9 @@ export const addTire = createAsyncThunk(
   // body = newTire ?
   async (formData, thunkAPI) => {
     try {
-      console.log("ADD", formData);
       const response = await axios.post(`/tires`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
-      console.log("Add_Tire???", formData);
       return response.data.data; //??? return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);

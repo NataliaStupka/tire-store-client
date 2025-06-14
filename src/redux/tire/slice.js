@@ -22,17 +22,17 @@ const slice = createSlice({
   name: "tire",
   initialState,
   //action  //те що змінює локально
-  reducer: {
-    addFavoriteTire(state, action) {
+  reducers: {
+    addFavoriteTire: (state, action) => {
       state.favoriteTires.push(action.payload);
     },
-    deleteFavoriteTire(state, action) {
+    deleteFavoriteTire: (state, action) => {
       state.favoriteTires = state.favoriteTires.filter(
         (item) => item.id !== action.payload
       );
     },
-    clearTiresByCategory(state) {
-      state.tiresByCategory = []; // Скидаємо список шин за категорією
+    clearTiresByCategory: (state) => {
+      state.tiresByCategory = [];
     },
   },
 
@@ -125,4 +125,5 @@ const slice = createSlice({
 
 export const { addFavoriteTire, deleteFavoriteTire, clearTiresByCategory } =
   slice.actions;
+
 export const tiresReducer = slice.reducer;

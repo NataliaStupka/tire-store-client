@@ -12,9 +12,10 @@ import { fetchAllTires } from "../../redux/tire/operations";
 import { TireItem } from "../../components/TireItem/TireItem";
 import LoaderComponent from "../../components/Loader/Loader";
 import { AddTireForm } from "../../components/AddTireForm/AddTireForm";
+import { CategoryList } from "../../components/CategoryList/CategoryList";
 // import { Helmet } from "react-helmet";
 
-const category = ["loader", "industrial", "agricultural", "rims"];
+// const category = ["loader", "industrial", "agricultural", "rims"];
 
 const HomePage = () => {
   //
@@ -31,58 +32,23 @@ const HomePage = () => {
 
   return (
     <main>
-      {/* ???? */}
-      {/* <Helmet>
-        <title>Категорії шин | Магазин Tire Store</title>
-        <meta
-          name="description"
-          content="Вибір шин для спецтехніки та сільгосптехніки."
-        />
-      </Helmet> */}
-
       <div className={s.homePage}>
         <section>
-          <h1 className={s.titleText}>Категорії Шин</h1>
-
-          <ul className={s.categoryList}>
-            {category.map((item) => {
-              return (
-                <li key={nanoid()} className={s.categoryItem}>
-                  <NavLink to={`/category/${item}`}>
-                    <div className={s.imageWrapper}>
-                      <img src="/tire.jpg" alt={item} />
-                    </div>
-                    <div>
-                      <h3 className={s.categoryTitle}>{item}</h3>
-                    </div>
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
-
-          <p className={s.filterBlock}>БЛОК ФІЛЬТРАЦІЇ</p>
+          <CategoryList />
         </section>
 
-        {/* TiresCatalog */}
         <section>
-          <h2>All tires:</h2>
-          {/* <button className={s.button}>Add tire</button> */}
+          <h2 className={s.filterBlock}>БЛОК ПОШУКУ</h2>
+        </section>
+
+        {/* Add tire */}
+        {/* <section>
           <p>Додаємо Шину/Диск в базу даних</p>
           <AddTireForm />
 
           {isLoading && <LoaderComponent />}
           {isError && <p>Error: {isError}</p>}
-
-          <ul className={s.tireList}>
-            {/* ---- перенести в окремий компонент ---- */}
-            {allTires.map((tire) => (
-              <li className={s.tireItem} key={tire._id}>
-                <TireItem tire={tire} />
-              </li>
-            ))}
-          </ul>
-        </section>
+        </section> */}
 
         <section>
           <h2>Про компанію/магазин</h2>

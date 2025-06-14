@@ -12,6 +12,7 @@ import { selectTireById } from "../../redux/tire/selectors";
 import { EditTireForm } from "../EditTireForm/EditTireForm";
 import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
+import { useModal } from "../../hooks/useModal";
 
 export const TireItem = ({
   tire: {
@@ -27,21 +28,14 @@ export const TireItem = ({
 }) => {
   const dispatch = useDispatch();
   const tireDetails = useSelector(selectTireById);
-  const [isOpen, setIsOpen] = useState(false);
-  // const [isSubmitting, setIsSubmitting] = useState(false); // Додаємо стан для відправлення, вимикаємо кнопку під час відправлення
+  const { isOpenModal, openModal, closeModal } = useModal();
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpenModal) {
       console.log("Fetching tire by ID:", _id);
       dispatch(fetchTiresById(_id)); // Завантажуємо деталі шини при відкритті модалки
     }
-  }, [dispatch, _id, isOpen]);
-
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => {
-    setIsOpen(false);
-    // setIsSubmitting(false); // Скидаємо стан при закритті
-  };
+  }, [dispatch, _id, isOpenModal]);
 
   const handleDelete = () => {
     //визначаємо в якій категорії ця шина, щоб обновити та перемалювати сторінку
@@ -66,11 +60,9 @@ export const TireItem = ({
       "Перед відправкою в editTire, FormData",
       Array.from(formData.entries())
     ); //[['size', '+++++'], ['tireType', '']]
-    // setIsSubmitting(true); // Вимикаємо кнопку під час відправлення
 
     try {
       await dispatch(editTire({ id: _id, formData })).unwrap();
-      // console.log("!!! formData-TireItem", _id, Array.from(formData.entries())); //[['size', '+++++'], ['tireType', '']]
 
       const categoryMatch = window.location.pathname.match(/\/category\/(.+)/); //['/category/loader', 'loader'] - наприклад якщо знаходимось на loader
 
@@ -83,9 +75,6 @@ export const TireItem = ({
     } catch (err) {
       toast.error(`Помилка оновлення: ${err.message}`);
     }
-    // finally {
-    //   setIsSubmitting(false); // Активуємо кнопку після завершення
-    // }
   };
 
   return (
@@ -110,7 +99,7 @@ export const TireItem = ({
         </button>
       </div>
 
-      {isOpen && (
+      {isOpenModal && (
         <Modal title="Редагування" onClose={closeModal}>
           <EditTireForm
             tire={
