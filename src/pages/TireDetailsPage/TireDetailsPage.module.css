@@ -1,0 +1,70 @@
+.title {
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0%;
+
+  /* color: var(--main-text); */
+  margin-bottom: 8px;
+  padding-left: 32px;
+}
+
+.details {
+  padding-top: 44px;
+  padding-bottom: 20px;
+}
+
+.detailsContainer {
+  display: flex;
+  gap: 72px;
+}
+
+.wrapper {
+  justify-content: center;
+  align-items: center;
+  max-width: 640px;
+}
+
+.img {
+  border-radius: 18px;
+  margin-bottom: 40px;
+}
+
+/*  */
+.titleTire {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.nameTire {
+  /* Змінити tire на Шина , а rims на Диск */
+  color: red;
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+
+  /* color: var(--main-text); */
+
+  margin-right: 16px;
+}
+.name {
+  font-family: Manrope;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+
+  /* color: var(--main-text); */
+  margin-bottom: 10px;
+}
+.value {
+  display: flex;
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
