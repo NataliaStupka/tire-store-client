@@ -5,6 +5,7 @@ import {
   editTire,
   fetchAllTires,
   fetchTiresByCategory,
+  fetchTiresById,
 } from "./operations.js";
 
 const initialState = {
@@ -40,21 +41,17 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllTires.fulfilled, (state, action) => {
-        //   const { tire } = action.payload;
-        //   state.items = [...state.items, ...tire];
         state.items = action.payload.data;
       })
-      //   fetch by category
-      // .addCase(fetchTiresByCategory.pending, (state, actions) => {
-      //   state.tiresByCategory = []; // Скидаємо список шин за категорією
-      // })
       .addCase(fetchTiresByCategory.fulfilled, (state, action) => {
-        // console.log("CATEGORY-", action.payload);
-
         state.tiresByCategory = action.payload.data;
       })
+      .addCase(fetchTiresById.fulfilled, (state, action) => {
+        console.log("SLICE--", action.payload);
+        state.tireById = action.payload.data || action.payload;
+        // state.tireById = action.payload.data;
+      })
       .addCase(addTire.fulfilled, (state, action) => {
-        // console.log("✅ Added tire:", action.payload);
         state.items.push(action.payload);
       })
       .addCase(deleteTire.fulfilled, (state, { payload }) => {
@@ -64,7 +61,7 @@ const slice = createSlice({
         });
       })
       .addCase(editTire.fulfilled, (state, { payload }) => {
-        console.log("Edit-Payload у slice.js:", payload);
+        console.log("Edit fulfilled:", payload);
         const updatedTire = payload.data; //оновлена шина
         if (updatedTire) {
           state.items = state.items.map((item) =>
@@ -84,6 +81,7 @@ const slice = createSlice({
         isAnyOf(
           fetchAllTires.pending,
           fetchTiresByCategory.pending,
+          fetchTiresById.pending,
           addTire.pending,
           deleteTire.pending,
           editTire.pending
@@ -98,6 +96,7 @@ const slice = createSlice({
         isAnyOf(
           fetchAllTires.fulfilled,
           fetchTiresByCategory.fulfilled,
+          fetchTiresById.fulfilled,
           addTire.fulfilled,
           deleteTire.fulfilled,
           editTire.fulfilled
@@ -111,6 +110,7 @@ const slice = createSlice({
         isAnyOf(
           fetchAllTires.rejected,
           fetchTiresByCategory.rejected,
+          fetchTiresById.rejected,
           addTire.rejected,
           deleteTire.rejected,
           editTire.rejected

@@ -36,9 +36,12 @@ export const fetchTiresById = createAsyncThunk(
   "tire/fetchTiresById",
   async (id, thunkAPI) => {
     try {
+      console.log("Fetching tire with id:", id); // Дебаґ
       const response = await axios.get(`/tires/${id}`);
+      console.log("Response data:", response.data); // Перевірка структури
       return response.data;
     } catch (err) {
+      console.error("Fetch error:", err.response?.data || err.message);
       return thunkAPI.rejectWithValue(err.message);
     }
   }
@@ -81,7 +84,9 @@ export const editTire = createAsyncThunk(
   "tire/editTire",
   async ({ id, formData }, thunkAPI) => {
     console.log(
-      "Всередині editTire, FormData:",
+      "Starting editTire for id:",
+      id,
+      "with formData:",
       Array.from(formData.entries())
     );
     try {

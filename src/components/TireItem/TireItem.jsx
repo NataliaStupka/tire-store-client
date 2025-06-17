@@ -27,15 +27,8 @@ export const TireItem = ({
   },
 }) => {
   const dispatch = useDispatch();
-  const tireDetails = useSelector(selectTireById);
+  const tireDetails = useSelector(selectTireById); // Не використовується, якщо ініціалізуємо з props
   const { isOpenModal, openModal, closeModal } = useModal();
-
-  useEffect(() => {
-    if (isOpenModal) {
-      console.log("Fetching tire by ID:", _id);
-      dispatch(fetchTiresById(_id)); // Завантажуємо деталі шини при відкритті модалки
-    }
-  }, [dispatch, _id, isOpenModal]);
 
   const handleDelete = () => {
     //визначаємо в якій категорії ця шина, щоб обновити та перемалювати сторінку
@@ -56,10 +49,7 @@ export const TireItem = ({
   };
 
   const handleEdit = async (formData) => {
-    console.log(
-      "Перед відправкою в editTire, FormData",
-      Array.from(formData.entries())
-    ); //[['size', '+++++'], ['tireType', '']]
+    //formData - [['size', '+++++'], ['tireType', '']]
 
     try {
       await dispatch(editTire({ id: _id, formData })).unwrap();
@@ -79,8 +69,9 @@ export const TireItem = ({
 
   return (
     <>
-      {/* додати яка категорія - category/loader/tire/title_size/ */}
-      <Link to={`/tire/${_id}`}>
+      {/* location -  pathname, search, hash , та ін. */}
+      {/* location.pathname - /category/agricultural - шлях, звідки прийшов */}
+      <Link to={`/tire/${_id}`} state={{ from: location.pathname }}>
         <img src={image} alt={size} style={{ width: "80px" }} />
         <div>
           <h3>
@@ -90,7 +81,7 @@ export const TireItem = ({
         </div>
       </Link>
 
-      <div className={s.adminBtn}>
+      <div className={s.adminBtns}>
         <button className={s.button} onClick={openModal}>
           Edit
         </button>
@@ -102,17 +93,16 @@ export const TireItem = ({
       {isOpenModal && (
         <Modal title="Редагування" onClose={closeModal}>
           <EditTireForm
-            tire={
-              tireDetails?.tire || {
-                _id,
-                title,
-                size,
-                model,
-                producer,
-                price,
-                category,
-              }
-            }
+            tire={{
+              _id,
+              title,
+              size,
+              model,
+              producer,
+              price,
+              category,
+              image, // Додаємо image для коректного відображення
+            }}
             onSubmit={handleEdit}
           />
         </Modal>
