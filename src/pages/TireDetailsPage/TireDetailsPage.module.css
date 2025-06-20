@@ -23,12 +23,13 @@
 .wrapper {
   justify-content: center;
   align-items: center;
-  max-width: 640px;
+  max-width: 300px;
 }
 
 .img {
   border-radius: 18px;
   margin-bottom: 40px;
+  /* width: 300px; */
 }
 
 /*  */

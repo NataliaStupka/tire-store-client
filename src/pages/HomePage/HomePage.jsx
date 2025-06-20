@@ -5,14 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectAllTires,
   selectIsError,
-  selectIsLoading,
+  // selectIsLoading,
 } from "../../redux/tire/selectors";
-import { useEffect } from "react";
+import { selectFilterLoading } from "../../redux/filter/selectors";
+import { useEffect, useState } from "react";
 import { fetchAllTires } from "../../redux/tire/operations";
 import { TireItem } from "../../components/TireItem/TireItem";
 import LoaderComponent from "../../components/Loader/Loader";
 import { AddTireForm } from "../../components/AddTireForm/AddTireForm";
 import { CategoryList } from "../../components/CategoryList/CategoryList";
+import { SearchBar } from "../../components/SearchBar/SearchBar";
+import { selectTiresBySize } from "../../redux/filter/selectors";
+import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
 // import { Helmet } from "react-helmet";
 
 // const category = ["loader", "industrial", "agricultural", "rims"];
@@ -21,9 +25,13 @@ const HomePage = () => {
   //
   const dispatch = useDispatch();
   const allTires = useSelector(selectAllTires);
+  const tiresBySize = useSelector(selectTiresBySize);
 
-  const isLoading = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectFilterLoading); //filter
   const isError = useSelector(selectIsError);
+
+  const [searchSize, setSearchSize] = useState(""); // Стан для size
+  console.log("searchSize", searchSize);
 
   useEffect(() => {
     // document.title = "Tire Store | Home"; ////???
@@ -38,17 +46,19 @@ const HomePage = () => {
         </section>
 
         <section>
-          <h2 className={s.filterBlock}>БЛОК ПОШУКУ</h2>
+          <h2 className={s.filterBlock}>Пошук по розміру.</h2>
+          <SearchBar onSizeChange={setSearchSize} />
+
+          <h2>Знайдені шини:</h2>
+          {/* searchSize - користувач ввів щось у поле? */}
+          {isLoading ? (
+            <LoaderComponent />
+          ) : tiresBySize.length > 0 ? (
+            <TiresCatalog tires={tiresBySize} />
+          ) : (
+            searchSize && <p>Нічого не знайдено.</p>
+          )}
         </section>
-
-        {/* Add tire */}
-        {/* <section>
-          <p>Додаємо Шину/Диск в базу даних</p>
-          <AddTireForm />
-
-          {isLoading && <LoaderComponent />}
-          {isError && <p>Error: {isError}</p>}
-        </section> */}
 
         <section>
           <h2>Про компанію/магазин</h2>

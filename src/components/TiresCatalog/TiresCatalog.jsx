@@ -9,8 +9,10 @@ import {
 import s from "./TiresCatalog.module.css";
 import LoaderComponent from "../Loader/Loader";
 
-export const TiresCatalog = () => {
+export const TiresCatalog = ({ tires: propTires }) => {
   const tiresByCategory = useSelector(selectTiresByCategory);
+
+  const tires = propTires || tiresByCategory;
 
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
@@ -19,8 +21,8 @@ export const TiresCatalog = () => {
     <section>
       <ul className={s.tireList}>
         {/* ---- перенести в окремий компонент ---- */}
-        {tiresByCategory.length > 0 ? (
-          tiresByCategory.map((tire) => (
+        {tires.length > 0 ? (
+          tires.map((tire) => (
             <li
               className={s.tireItem}
               key={tire._id}
@@ -34,7 +36,7 @@ export const TiresCatalog = () => {
         )}
       </ul>
 
-      {isLoading && !tiresByCategory.length && <LoaderComponent />}
+      {isLoading && !tires.length && <LoaderComponent />}
       {isError && <p>Error: {isError}</p>}
     </section>
   );
