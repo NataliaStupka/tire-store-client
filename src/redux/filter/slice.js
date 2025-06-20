@@ -11,8 +11,9 @@ const slice = createSlice({
   initialState,
   reducers: {
     changeFilter: (state, action) => {
-      const { name, value } = action.payload;
-      state[name] = value;
+      //   const { name, value } = action.payload;
+      //   state[name] = value;
+      state.tiresBySize = [];
     },
   },
   extraReducers: (builder) => {
@@ -23,9 +24,9 @@ const slice = createSlice({
         state.tiresBySize = []; // Очищаємо перед новим запитом
       })
       .addCase(fetchTiresBySize.fulfilled, (state, action) => {
-        console.log("Slice-action.payload:", action.payload.data);
+        // console.log("Slice-action.payload:", action.payload.data);
         state.isLoading = false;
-        state.tiresBySize = action.payload.data || []; //??? action.payload.data;
+        state.tiresBySize = action.payload.data || [];
       })
       .addCase(fetchTiresBySize.rejected, (state) => {
         state.isLoading = false;

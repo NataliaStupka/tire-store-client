@@ -31,7 +31,6 @@ const HomePage = () => {
   const isError = useSelector(selectIsError);
 
   const [searchSize, setSearchSize] = useState(""); // Стан для size
-  console.log("searchSize", searchSize);
 
   useEffect(() => {
     // document.title = "Tire Store | Home"; ////???
@@ -49,12 +48,14 @@ const HomePage = () => {
           <h2 className={s.filterBlock}>Пошук по розміру.</h2>
           <SearchBar onSizeChange={setSearchSize} />
 
-          <h2>Знайдені шини:</h2>
           {/* searchSize - користувач ввів щось у поле? */}
           {isLoading ? (
             <LoaderComponent />
           ) : tiresBySize.length > 0 ? (
-            <TiresCatalog tires={tiresBySize} />
+            <>
+              <h2>Знайдені шини:</h2>
+              <TiresCatalog tires={tiresBySize} />
+            </>
           ) : (
             searchSize && <p>Нічого не знайдено.</p>
           )}
