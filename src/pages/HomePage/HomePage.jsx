@@ -1,6 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
 import s from "./HomePage.module.css";
-import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectAllTires,
@@ -10,9 +8,7 @@ import {
 import { selectFilterLoading } from "../../redux/filter/selectors";
 import { useEffect, useState } from "react";
 import { fetchAllTires } from "../../redux/tire/operations";
-import { TireItem } from "../../components/TireItem/TireItem";
 import LoaderComponent from "../../components/Loader/Loader";
-import { AddTireForm } from "../../components/AddTireForm/AddTireForm";
 import { CategoryList } from "../../components/CategoryList/CategoryList";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { selectTiresBySize } from "../../redux/filter/selectors";
@@ -61,7 +57,7 @@ const HomePage = () => {
           )}
         </section>
 
-        <section>
+        <section style={{ marginBottom: "20px" }}>
           <h2>Про компанію/магазин</h2>
         </section>
       </div>

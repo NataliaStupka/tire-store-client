@@ -7,11 +7,53 @@ import FavoritePage from "../pages/FavoritePage/FavoritePage";
 import CategoryTirePage from "../pages/CategoryTirePage/CategoryTirePage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import { TireDetailsPage } from "../pages/TireDetailsPage/TireDetailsPage";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoggedIn, selectIsRefreshing } from "../redux/auth/selectors";
+import { useEffect } from "react";
+import { refreshUser } from "../redux/auth/operations";
+import { Footer } from "./Footer/Footer";
+
+//???????
+// PrivateRoute: Для /add-tire, /edit-tire, /delete-tire
+//???????? - RestrictedRoute: Для /login??
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <HomePage />,
+//   },
+//   {
+//     path: "/add-tire",
+//     element: (
+//       <PrivateRoute redirectTo="/login">
+//         <AddTireForm />
+//       </PrivateRoute>
+//     ),
+//   },
+//   {
+//     path: "/login",
+//     element: <RestrictedRoute component={<LoginForm />} redirectTo="/" />,
+//   },
+// ]);
 
 function App() {
+  const dispatch = useDispatch();
+  // const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    dispatch(refreshUser())
+      .then(() => {
+        console.log("Refresh completed, isLoggedIn:", isLoggedIn);
+      })
+      .catch((err) => {
+        console.error("Refresh failed:", error.message);
+      });
+  }, [dispatch]);
+
   return (
     <>
       <Header />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/category/:item" element={<CategoryTirePage />} />
@@ -23,6 +65,8 @@ function App() {
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+
+      <Footer />
     </>
   );
 }

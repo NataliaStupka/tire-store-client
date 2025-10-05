@@ -5,7 +5,6 @@ import {
   deleteTire,
   editTire,
   fetchTiresByCategory,
-  fetchTiresById,
 } from "../../redux/tire/operations";
 import toast from "react-hot-toast";
 import { selectTireById } from "../../redux/tire/selectors";
@@ -13,6 +12,7 @@ import { EditTireForm } from "../EditTireForm/EditTireForm";
 import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import { useModal } from "../../hooks/useModal";
+import { selectUserRole } from "../../redux/auth/selectors";
 
 export const TireItem = ({
   tire: {
@@ -29,6 +29,7 @@ export const TireItem = ({
   const dispatch = useDispatch();
   const tireDetails = useSelector(selectTireById); // Не використовується, якщо ініціалізуємо з props
   const { isOpenModal, openModal, closeModal } = useModal();
+  const userRole = useSelector(selectUserRole);
 
   const handleDelete = () => {
     //визначаємо в якій категорії ця шина, щоб обновити та перемалювати сторінку
@@ -81,14 +82,16 @@ export const TireItem = ({
         </div>
       </Link>
 
-      <div className={s.adminBtns}>
-        <button className={s.button} onClick={openModal}>
-          Edit
-        </button>
-        <button className={s.button} onClick={handleDelete}>
-          Delete
-        </button>
-      </div>
+      {userRole === "admin" && (
+        <div className={s.adminBtns}>
+          <button className={s.button} onClick={openModal}>
+            Edit
+          </button>
+          <button className={s.button} onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
+      )}
 
       {isOpenModal && (
         <Modal title="Редагування" onClose={closeModal}>

@@ -1,0 +1,31 @@
+.loginFooter {
+  /* position: absolute; */
+  /* bottom: 10px; */
+  /* right: 10px; */
+  display: flex;
+  justify-content: center; /* по горизонталі */
+  background-color: rgb(196, 248, 196);
+}
+
+.logoutButton {
+  /* position: absolute; */
+  /* top: 10px; */
+  /* right: 10px; */
+  background-color: rgb(248, 196, 220);
+}
+
+.btnAdmin {
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: transparent;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover,
+  &:focus {
+    /* transform: scale(1.05); */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}

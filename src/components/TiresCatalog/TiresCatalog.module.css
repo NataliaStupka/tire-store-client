@@ -1,0 +1,6 @@
+.tireItem {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid red;
+  margin-bottom: 20px;
+}

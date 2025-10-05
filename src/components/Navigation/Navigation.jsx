@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "../Modal/Modal";
 import { AddTireForm } from "../AddTireForm/AddTireForm";
 import { useModal } from "../../hooks/useModal";
+import { useSelector } from "react-redux";
+import { selectUserRole } from "../../redux/auth/selectors";
 
 const buildLinkClass = ({ isActive }) => clsx(s.link, { [s.active]: isActive });
 
@@ -14,6 +16,8 @@ const Navigation = () => {
   const [isOpenAdmin, setIsOpenAdmin] = useState(false);
   const { isOpenModal, openModal, closeModal } = useModal();
   const adminWrapRef = useRef(null); //для відстеження контейнера adminWrap
+  const userRole = useSelector(selectUserRole);
+  console.log("User role:", userRole);
 
   const toggleAdminMenu = () => {
     setIsOpenAdmin(!isOpenAdmin);
@@ -59,24 +63,26 @@ const Navigation = () => {
           LOGO
         </NavLink>
 
-        <div className={s.adminWrap} ref={adminWrapRef}>
-          <button
-            type="button"
-            className={s.btnAdmin}
-            onClick={toggleAdminMenu}
-            aria-expanded={isOpenAdmin}
-          >
-            Admin
-            <svg className={s.btnIcon}>
-              <use href={`${sprite}#icon-chevron-down`} />
-            </svg>
-          </button>
-          <div className={`${s.adminMenu} ${isOpenAdmin ? s.open : ""}`}>
-            <button className={s.addButton} onClick={handleAddButton}>
-              + Додати шину/диск
+        {userRole === "admin" && (
+          <div className={s.adminWrap} ref={adminWrapRef}>
+            <button
+              type="button"
+              className={s.btnAdmin}
+              onClick={toggleAdminMenu}
+              aria-expanded={isOpenAdmin}
+            >
+              Admin
+              <svg className={s.btnIcon}>
+                <use href={`${sprite}#icon-chevron-down`} />
+              </svg>
             </button>
+            <div className={`${s.adminMenu} ${isOpenAdmin ? s.open : ""}`}>
+              <button className={s.addButton} onClick={handleAddButton}>
+                + Додати шину/диск
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {isOpenModal && (
           <Modal title="Додаємо шину/диск" onClose={closeModal}>
