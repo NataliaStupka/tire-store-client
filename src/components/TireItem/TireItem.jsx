@@ -72,7 +72,12 @@ export const TireItem = ({
     <>
       {/* location -  pathname, search, hash , та ін. */}
       {/* location.pathname - /category/agricultural - шлях, звідки прийшов */}
-      <Link to={`/tire/${_id}`} state={{ from: location.pathname }}>
+      <Link
+        to={`/tire/${_id}`}
+        state={{ from: location.pathname }}
+        className={s.tireItem}
+        style={{ border: "1px solid red" }}
+      >
         <img src={image} alt={size} style={{ width: "80px" }} />
         <div>
           <h3>

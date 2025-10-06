@@ -46,19 +46,21 @@ export const SearchBar = ({ onSizeChange }) => {
         {({ values, setFieldValue }) => (
           <Form className={s.form}>
             <div className={s.group}>
-              <label className={s.label}>Розмір (пошук)</label>
-              <Field
-                type="text"
-                name="size"
-                className={clsx(s.input)}
-                placeholder="Введіть розмір"
-                autoComplete="off" // Відключає автозаповнення
-                onChange={(e) => {
-                  const size = e.target.value;
-                  setFieldValue("size", size); // Оновлюємо значення в Formik
-                  handleSearch(size); //викликаємо пошук
-                }}
-              />
+              <label className={s.label}>
+                <Field
+                  type="text"
+                  name="size"
+                  className={clsx(s.searchInput)}
+                  placeholder="Введіть розмір"
+                  aria-label="Пошук шин за розміром"
+                  autoComplete="off" // Відключає автозаповнення
+                  onChange={(e) => {
+                    const size = e.target.value;
+                    setFieldValue("size", size); // Оновлюємо значення в Formik
+                    handleSearch(size); //викликаємо пошук
+                  }}
+                />
+              </label>
               <ErrorMessage name="size" component="div" className={s.error} />
             </div>
 

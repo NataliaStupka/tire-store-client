@@ -5,7 +5,27 @@
   text-align: center;
 }
 
-.titleText {
+.hero {
+  background-color: #e0e4eb; /* Світло-сірий фон, нейтральний і чистий */
+  padding: 80px 20px;
+  text-align: center;
+  border-radius: 16px;
+}
+.hero h1 {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--main-text);
+  margin-bottom: 16px;
+}
+.hero p {
+  font-size: 18px;
+  color: var(--grey);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* .titleText {
   font-family: Manrope;
   font-weight: 700;
   font-size: 60px;
@@ -15,7 +35,7 @@
   color: red;
 
   margin-bottom: 16px;
-}
+} */
 
 /*  */
 .filterBlock {

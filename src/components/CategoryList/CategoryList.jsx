@@ -67,8 +67,14 @@ export const CategoryList = ({
       {categories.map((item) => {
         return (
           <li key={nanoid()} className={s.categoryItem}>
-            <NavLink to={`/category/${item}`}>
+            <NavLink
+              to={`/category/${item}`}
+              aria-label={`Переглянути категорію ${item.title}`}
+              title={`Категорія: ${item.title}`}
+              className={s.categoryLink}
+            >
               <div className={s.imageWrapper}>
+                {/* src={item.image} */}
                 <img src="/tire.jpg" alt={item} />
               </div>
               <div>

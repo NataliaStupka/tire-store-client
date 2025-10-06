@@ -36,7 +36,16 @@ const HomePage = () => {
   return (
     <main>
       <div className={s.homePage}>
+        <section className={s.hero}>
+          <h1>Шини для будь-якої техніки</h1>
+          <p>
+            Великий вибір шин для навантажувачів, сільськогосподарської та
+            промислової техніки.
+          </p>
+        </section>
+
         <section>
+          <p>Переглянути каталог</p>
           <CategoryList />
         </section>
 
@@ -55,10 +64,6 @@ const HomePage = () => {
           ) : (
             searchSize && <p>Нічого не знайдено.</p>
           )}
-        </section>
-
-        <section style={{ marginBottom: "20px" }}>
-          <h2>Про компанію/магазин</h2>
         </section>
       </div>
     </main>

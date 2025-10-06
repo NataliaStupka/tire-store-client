@@ -1,3 +1,21 @@
+.tireItem img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.tireItem h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.tireItem p {
+  color: var(--main-text);
+  font-weight: 700;
+  font-size: 20px;
+}
+
 .adminBtns {
   display: flex;
   flex-direction: column;

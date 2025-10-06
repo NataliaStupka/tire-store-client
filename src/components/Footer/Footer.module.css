@@ -2,9 +2,10 @@
   /* position: absolute; */
   /* bottom: 10px; */
   /* right: 10px; */
-  display: flex;
+  /* display: flex; */
   justify-content: center; /* по горизонталі */
   background-color: rgb(196, 248, 196);
+  margin: 50px auto;
 }
 
 .logoutButton {

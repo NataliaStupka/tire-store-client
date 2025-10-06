@@ -10,10 +10,24 @@
   --grey: #8d929a; /* Сірий для другорядного тексту */
   --dark-grey: #333333; /* Темно-сірий (для темної теми браузера) */
 
+  /* ?? */
+  --border-color: #d3d0d0;
+
   /* Шрифти */
   --font-family: "Montserrat", sans-serif; /* Основний шрифт */
   --font-family-secondary: "Roboto", sans-serif; /* Додатковий шрифт */
 }
+
+/* :root {
+  --main-bg: #0f1114;
+  --card-bg: #1b1e22;
+  --accent: #2b7a78;
+  --accent-hover: #3aa89b;
+  --text-main: #f4f4f4;
+  --text-muted: #9ca3af;
+  --border-color: #2a2e33;
+  --grey-btn: #3b3f45;
+} */
 
 *,
 *::before,
@@ -109,11 +123,10 @@ select {
 /* desktop */
 @media screen and (min-width: 1440px) {
   .container {
-    width: 100%;
-    /* width: 1440px; */
-    padding: 0 120px;
-    margin-left: auto;
-    margin-right: auto;
+    /* width: 100%; */
+    width: 1440px;
+    padding: 0 20px;
+    margin: 0 auto;
   }
 }
 
