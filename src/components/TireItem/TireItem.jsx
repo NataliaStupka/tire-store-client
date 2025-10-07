@@ -76,14 +76,19 @@ export const TireItem = ({
         to={`/tire/${_id}`}
         state={{ from: location.pathname }}
         className={s.tireItem}
-        style={{ border: "1px solid red" }}
       >
-        <img src={image} alt={size} style={{ width: "80px" }} />
-        <div>
+        <img
+          src={image}
+          alt={size}
+          style={{ width: "80px" }}
+          className={s.image}
+        />
+
+        <div className={s.info}>
           <h3>
             ☑️ {title} {size} {model} {producer}
           </h3>
-          <p>{price}$</p>
+          <p>Ціна: {price}$</p>
         </div>
       </Link>
 
@@ -115,6 +120,7 @@ export const TireItem = ({
           />
         </Modal>
       )}
+      {/*  </Link> */}
     </>
   );
 };
