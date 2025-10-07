@@ -1,5 +1,6 @@
 .nav {
   display: flex;
+  /* flex-direction: column; */
   justify-content: space-between;
   padding: 10px 0;
   align-items: center;
@@ -30,7 +31,7 @@
 .btnAdmin {
   display: flex;
   align-items: center;
-  margin-bottom: 3px;
+  /* margin-bottom: 3px; */
   padding: 5px 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -115,7 +116,7 @@
 }
 
 .navItem {
-  margin-right: 32px;
+  /* margin-right: 32px; */
   /* margin-right: 10px; */
 }
 
@@ -131,17 +132,10 @@
   }
 }
 
-/* Адаптивність */
-@media (max-width: 768px) {
+/* tablet*/
+@media (min-width: 768px) {
   .nav {
-    flex-direction: column;
     align-items: flex-start;
-  }
-
-  .wrapNav {
-    margin-top: 10px;
-    flex-direction: column;
-    gap: 10px;
   }
 
   .adminMenu {
@@ -149,4 +143,8 @@
     width: 100%;
     box-shadow: none;
   }
+}
+
+/* desctop */
+@media screen and (min-width: 1440px) {
 }
