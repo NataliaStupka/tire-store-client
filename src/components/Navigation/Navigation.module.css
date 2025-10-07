@@ -13,7 +13,8 @@
 .logoWrap {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 3px;
+  flex-direction: column;
 }
 
 .logo {
@@ -99,11 +100,13 @@
 
 .wrapNav {
   display: flex;
-
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   /* gap: 15px; */
 }
-
+.pagesInHeader {
+  margin-bottom: 10px;
+}
 .link {
   text-decoration: none;
   color: #333;
@@ -115,12 +118,7 @@
   font-weight: bold;
 }
 
-.navItem {
-  /* margin-right: 32px; */
-  /* margin-right: 10px; */
-}
-
-/* Анімація для висовування меню ?????*/
+/* ??? Анімація для висовування меню ?????*/
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -138,6 +136,14 @@
     align-items: flex-start;
   }
 
+  .logoWrap {
+    display: flex;
+    align-items: center;
+
+    flex-direction: row;
+    gap: 15px;
+  }
+
   .adminMenu {
     position: static;
     width: 100%;
@@ -147,4 +153,11 @@
 
 /* desctop */
 @media screen and (min-width: 1440px) {
+  .wrapNav {
+    flex-direction: row;
+    align-items: center;
+  }
+  .pagesInHeader {
+    margin-bottom: 0px;
+  }
 }

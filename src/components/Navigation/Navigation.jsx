@@ -92,16 +92,18 @@ const Navigation = () => {
       </div>
 
       <div className={s.wrapNav}>
-        <NavLink
-          to="/"
-          className={(props) => clsx(buildLinkClass(props), s.navItem)}
-        >
-          Головна
-        </NavLink>
+        <div className={s.pagesInHeader}>
+          <NavLink
+            to="/"
+            className={(props) => clsx(buildLinkClass(props), s.navItem)}
+          >
+            Головна
+          </NavLink>
 
-        <NavLink to="/favorite" className={buildLinkClass}>
-          Улюблені
-        </NavLink>
+          <NavLink to="/favorite" className={buildLinkClass}>
+            Улюблені
+          </NavLink>
+        </div>
 
         <CategoryList variant="select" />
       </div>
