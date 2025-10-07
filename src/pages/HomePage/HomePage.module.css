@@ -25,25 +25,18 @@
   line-height: 1.6;
 }
 
-/* .titleText {
-  font-family: Manrope;
-  font-weight: 700;
-  font-size: 60px;
-  line-height: 1.2;
-  text-align: center;
-  vertical-align: middle;
-  color: red;
-
-  margin-bottom: 16px;
-} */
+.category {
+  padding: 40px 50px;
+}
+.categoryText {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 
 /*  */
-.filterBlock {
+.filterText {
   margin-bottom: 30px;
-  padding: 20px;
-  background-color: var(--background);
-  border-radius: 12px;
-  text-align: center;
 }
 
 .subtitle {
@@ -111,5 +104,19 @@
   &:focus {
     /* transform: scale(1.05); */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 768px) {
+  .category {
+    padding: 40px 30px;
+  }
+}
+
+/* desctop */
+@media screen and (min-width: 1440px) {
+  .category {
+    padding: 40px 20px;
   }
 }

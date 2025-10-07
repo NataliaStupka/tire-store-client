@@ -44,13 +44,13 @@ const HomePage = () => {
           </p>
         </section>
 
-        <section>
-          <p>Переглянути каталог</p>
+        <section className={s.category}>
+          <p className={s.categoryText}>Переглянути каталог</p>
           <CategoryList />
         </section>
 
         <section>
-          <h2 className={s.filterBlock}>Пошук по розміру.</h2>
+          <h2 className={s.filterText}>Пошук по розміру.</h2>
           <SearchBar onSizeChange={setSearchSize} />
 
           {/* searchSize - користувач ввів щось у поле? */}

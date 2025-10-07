@@ -1,8 +1,7 @@
 .categoryList {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 40px 20px;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 35px;
 }
 
 .categoryItem {
@@ -62,4 +61,20 @@
   outline: none;
   border-color: #3470ff;
   box-shadow: 0 0 5px rgba(52, 112, 255, 0.5);
+}
+
+/* tablet */
+@media screen and (min-width: 768px) {
+  .categoryList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+/* desctop */
+@media screen and (min-width: 1440px) {
+  .categoryList {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 }
