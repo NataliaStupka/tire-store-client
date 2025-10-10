@@ -23,6 +23,7 @@ export const TiresCatalog = ({ tires: propTires }) => {
         {/* ---- перенести в окремий компонент ---- */}
         {tires.length > 0 ? (
           tires.map((tire) => (
+            // s.tireItem - прибрати !
             <li className={s.tireItem} key={tire._id}>
               <TireItem tire={tire} />
             </li>

@@ -3,6 +3,22 @@ import s from "./CategoryList.module.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
+// поміняти з масиву на об'єкт
+// const categories = [
+//   { key: "loader", title: "Погрузочні шини", image: "/images/loader.jpg" },
+//   {
+//     key: "industrial",
+//     title: "Індустріальні шини",
+//     image: "/images/industrial.jpg",
+//   },
+//   {
+//     key: "agricultural",
+//     title: "Сільськогосподарські шини",
+//     image: "/images/agricultural.jpg",
+//   },
+//   { key: "rims", title: "Диски", image: "/images/rims.jpg" },
+// ];
+
 export const CategoryList = ({
   variant = "list",
   categories = ["loader", "industrial", "agricultural", "rims"],
@@ -63,27 +79,33 @@ export const CategoryList = ({
   }
 
   return (
-    <ul className={s.categoryList}>
-      {categories.map((item) => {
-        return (
-          <li key={nanoid()} className={s.categoryItem}>
-            <NavLink
-              to={`/category/${item}`}
-              aria-label={`Переглянути категорію ${item.title}`}
-              title={`Категорія: ${item.title}`}
-              className={s.categoryLink}
-            >
-              <div className={s.imageWrapper}>
-                {/* src={item.image} */}
-                <img src="/tire.jpg" alt={item} />
-              </div>
-              <div>
-                <h3 className={s.categoryTitle}>{categoryTranslation[item]}</h3>
-              </div>
-            </NavLink>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <p className={s.categoryText}>Переглянути каталог</p>
+      <ul className={s.categoryList}>
+        {categories.map((item) => {
+          return (
+            // <li key={nanoid()} className={s.categoryItem}></li>
+            <li key={item} className={s.categoryItem}>
+              <NavLink
+                to={`/category/${item}`}
+                aria-label={`Переглянути категорію ${categoryTranslation[item]}`}
+                title={`Категорія: ${categoryTranslation[item]}`}
+                className={s.categoryLink}
+              >
+                <div className={s.imageWrapper}>
+                  {/* src={item.image} */}
+                  <img src="/tire.jpg" alt={item} />
+                </div>
+                <div>
+                  <h3 className={s.categoryTitle}>
+                    {categoryTranslation[item]}
+                  </h3>
+                </div>
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 };

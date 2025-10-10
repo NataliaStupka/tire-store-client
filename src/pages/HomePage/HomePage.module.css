@@ -1,15 +1,19 @@
 .homePage {
   max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   text-align: center;
+  background-color: var(--background);
+  color: var(--main-text);
+  font-family: var(--font-family);
 }
 
 .hero {
-  background-color: #e0e4eb; /* Світло-сірий фон, нейтральний і чистий */
+  background-color: var(--hero-bg); /* Світло-сірий фон, нейтральний і чистий */
   padding: 80px 20px;
   text-align: center;
-  border-radius: 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
 }
 .hero h1 {
   font-size: 42px;
@@ -19,98 +23,22 @@
 }
 .hero p {
   font-size: 18px;
-  color: var(--grey);
+  color: var(--color-text-secondary);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
 .category {
-  padding: 40px 50px;
-}
-.categoryText {
-  font-weight: 600;
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-/*  */
-.filterText {
-  margin-bottom: 30px;
-}
-
-.subtitle {
-  margin-bottom: 30px;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-/* tiresList */
-.button {
-  padding: 10px 20px;
-  border: 1px solid green;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
-  margin-right: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover,
-  &:focus {
-    transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
-}
-.tireItem {
-  border: 1px solid green;
-  padding: 25px 15px;
-  margin-bottom: 10px;
-  /* border: 1px solid #e0e0e0; */
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-.tireList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  padding: 20px;
-}
-
-/*  */
-.loginFooter {
-  /* position: absolute; */
-  /* bottom: 10px; */
-  /* right: 10px; */
-  background-color: rgb(196, 248, 196);
-}
-
-.logoutButton {
-  /* position: absolute; */
-  /* top: 10px; */
-  /* right: 10px; */
-  background-color: rgb(248, 196, 220);
-}
-
-.btnAdmin {
-  border: 1px solid green;
-  border-radius: 5px;
-  padding: 10px 15px;
-  cursor: pointer;
-  background-color: transparent;
-
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover,
-  &:focus {
-    /* transform: scale(1.05); */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
+  padding: 60px 20px;
+  /* margin: 60px 0; */
 }
 
 /* tablet */
 @media screen and (min-width: 768px) {
   .category {
     padding: 40px 30px;
+    /* padding: 60px 40px; */
   }
 }
 
@@ -118,5 +46,6 @@
 @media screen and (min-width: 1440px) {
   .category {
     padding: 40px 20px;
+    /* padding: 80px 60px; */
   }
 }

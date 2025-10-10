@@ -28,10 +28,6 @@ const Modal = ({ children, title = "Default modal", onClose }) => {
   return (
     <div onClick={handleBackdropClick} className={s.wrapper}>
       <div className={s.content}>
-        <>
-          <h1 style={{ fontSize: "30px" }}>{title}</h1>
-          <hr />
-        </>
         <button className={s.closeBtn} onClick={onClose}>
           ×
         </button>

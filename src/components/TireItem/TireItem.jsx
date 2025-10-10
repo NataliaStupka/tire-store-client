@@ -67,37 +67,40 @@ export const TireItem = ({
       toast.error(`Помилка оновлення: ${err.message}`);
     }
   };
-
+  //переделка ;;;;;
   return (
-    <>
+    <div className={s.tireItem}>
       {/* location -  pathname, search, hash , та ін. */}
       {/* location.pathname - /category/agricultural - шлях, звідки прийшов */}
       <Link
         to={`/tire/${_id}`}
         state={{ from: location.pathname }}
-        className={s.tireItem}
+        className={s.link}
       >
         <img
           src={image}
           alt={size}
-          style={{ width: "80px" }}
+          // style={{ width: "80px" }}
           className={s.image}
         />
 
         <div className={s.info}>
           <h3>
-            ☑️ {title} {size} {model} {producer}
+            {title} {size} {model} {producer}
           </h3>
-          <p>Ціна: {price}$</p>
+          <p className={s.price}>Ціна: {price}$</p>
         </div>
       </Link>
 
       {userRole === "admin" && (
         <div className={s.adminBtns}>
-          <button className={s.button} onClick={openModal}>
+          <button className={`${s.button} ${s.editBtn}`} onClick={openModal}>
             Edit
           </button>
-          <button className={s.button} onClick={handleDelete}>
+          <button
+            className={`${s.button} ${s.deleteBtn}`}
+            onClick={handleDelete}
+          >
             Delete
           </button>
         </div>
@@ -121,7 +124,7 @@ export const TireItem = ({
         </Modal>
       )}
       {/*  </Link> */}
-    </>
+    </div>
   );
 };
 

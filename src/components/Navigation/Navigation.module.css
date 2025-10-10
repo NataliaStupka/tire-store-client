@@ -1,15 +1,14 @@
 .nav {
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-between;
-  padding: 10px 0;
-  align-items: center;
+  gap: 20px;
 
   .active {
     color: #0b44cd;
   }
 }
 
+/* ---- LOGO ---- */
 .logoWrap {
   display: flex;
   align-items: center;
@@ -20,8 +19,17 @@
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  /* color: var(--secondary); */
+  color: var(--cta);
   text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s ease-in-out;
+  margin-bottom: 10px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 /* Admin */
@@ -33,46 +41,49 @@
   display: flex;
   align-items: center;
   /* margin-bottom: 3px; */
-  padding: 5px 10px;
+  gap: 5px;
+  font-weight: 600;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
+  color: var(--color-text);
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px 12px;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
+  box-shadow: var(--shadow-soft);
 
+  /* transition: background-color 0.2s; */
+  /* transition: all 0.2s ease-in-out; */
+}
 .btnAdmin:hover {
-  background-color: #f0f0f0;
+  background: var(--accent-light);
+  border-color: var(--accent-color);
 }
 
 .btnIcon {
   width: 16px;
   height: 16px;
-  fill: transparent;
+  fill: none;
   stroke: black;
   transition: transform 0.3s ease;
-
-  /* width: 12px;
-  height: 12px;
-  margin-left: 5px;
-  transition: transform 0.2s; */
 }
 
 .btnAdmin[aria-expanded="true"] .btnIcon {
   transform: rotate(180deg); /* Поворот стрілки вниз при відкритому меню */
 }
 
+/* ---- DROPDOWN ---- */
 .adminMenu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
   min-width: 150px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   z-index: 10;
 }
 
@@ -84,38 +95,58 @@
 .addButton {
   display: block;
   width: 100%;
-  padding: 8px 10px;
+  padding: 10px 16px;
   text-align: left;
   border: none;
   background: none;
   cursor: pointer;
   font-size: 14px;
-  color: #333;
+  color: var(--color-text);
+
+  transition: background-color 0.2s ease;
 }
 
 .addButton:hover {
-  background-color: #f0f0f0;
+  background-color: var(--accent-light);
 }
-/* ---- */
 
+/* ---- NAV LINKS ---- */
 .wrapNav {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* gap: 15px; */
 }
 .pagesInHeader {
+  display: flex;
+  gap: 18px;
   margin-bottom: 10px;
 }
 .link {
   text-decoration: none;
-  color: #333;
-  padding: 5px 10px;
+  font-weight: 500;
+  color: var(--color-text);
+  position: relative;
+  transition: color 0.2s ease-in-out;
+  /* padding: 5px 10px; */
+
+  &:link:hover {
+    color: var(--accent-color);
+  }
 }
 
 .active {
   color: #3470ff;
   font-weight: bold;
+}
+.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-color);
+  border-radius: 2px;
 }
 
 /* ??? Анімація для висовування меню ?????*/
@@ -149,6 +180,15 @@
     width: 100%;
     box-shadow: none;
   }
+
+  .wrapNav {
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+  .pagesInHeader {
+    margin-bottom: 0;
+  }
 }
 
 /* desctop */
@@ -160,4 +200,12 @@
   .pagesInHeader {
     margin-bottom: 0px;
   }
+}
+
+/* --- */
+.link:focus,
+.link:focus-visible,
+.logo:focus,
+.logo:focus-visible {
+  outline: none;
 }

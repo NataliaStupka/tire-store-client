@@ -21,15 +21,19 @@ export const Footer = () => {
   const showLogoutButton = isLoggedIn && userRole === "admin";
 
   return (
-    <div className={s.loginFooter}>
-      <h2>FOTER -- </h2>
+    <footer className={s.footer}>
+      <h2>TyreStore</h2>
 
       {/* <p>Міні-блог / поради з вибору шин — корисний для SEO</p> */}
       <p>📦 Доставка і оплата (коротко про умови)</p>
-      <p>🕒 Графік роботи:</p>
+      <p>🕒 Графік роботи: Пн–Пт 09:00–17:00</p>
       <p>📍 Карта / місце розташування (Google Maps iframe).</p>
       <p>
-        📞 Контактний блок (Email, Посилання на Viber / Telegram / WhatsApp)
+        📞 Контакти: <a href="mailto:info@tyrestore.ua">info@tyrestore.ua</a> |{" "}
+        <a href="viber://chat?number=+380991234567">Viber</a> |{" "}
+        <a href="https://t.me/tyrestore" target="_blank" rel="noreferrer">
+          Telegram
+        </a>
       </p>
 
       {showLoginButton && (
@@ -39,7 +43,7 @@ export const Footer = () => {
             openModal();
           }}
         >
-          Вхід в систему - адміністратор.
+          Вхід для адміністратора.
         </button>
       )}
 
@@ -52,10 +56,14 @@ export const Footer = () => {
       {showLogoutButton && (
         <div className={s.logoutButton}>
           <button className={s.btnAdmin} onClick={handleLogout}>
-            Вихід із системи
+            Вийти з системи
           </button>
         </div>
       )}
-    </div>
+
+      <div className={s.footerBottom}>
+        <p>© {new Date().getFullYear()} TyreStore. Усі права захищено.</p>
+      </div>
+    </footer>
   );
 };

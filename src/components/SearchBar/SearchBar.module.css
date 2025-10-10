@@ -1,36 +1,36 @@
+.filterText {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--main-text);
+  margin-bottom: 24px;
+  text-align: left;
+}
+
 .form {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  /* justify-content: center; */
-  /* center */
   align-items: flex-end;
-  margin: 0 auto;
 }
 
 .group {
   position: relative;
   display: flex;
   flex-direction: column;
-
-  /* flex: 1; */
 }
-.label {
-  /* margin-bottom: 8px; */
-  color: #8d929a;
 
-  font-family: Manrope;
-  font-weight: 400;
-  font-size: 12px;
+.label {
+  color: var(--color-text-secondary);
+  font-size: 14px;
   line-height: 16px;
-  vertical-align: middle;
 }
 
 .label .searchInput {
   padding: 12px 32px 12px 16px;
-  border-radius: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
 
-  background-color: #f7f7f7;
+  background-color: var(--white);
 
   /* border: none; */
   font-family: Manrope;
@@ -42,6 +42,7 @@
   color: var(--main-text);
 
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-soft);
 }
 .searchInput:focus,
 .searchInput:hover {
@@ -50,51 +51,24 @@
   outline: none;
 }
 
-/* .mileageGroup {
-  display: flex;
-} */
-/* .inputWrap {
-  position: relative;
-} */
 .error {
   position: absolute;
   left: 15px;
   top: 69px;
-  color: red;
+  color: #d32f2f;
   font-size: 14px;
   margin-top: 4px;
 }
-/* .labelFloat {
-  position: absolute;
-  top: 12px;
-  left: 16px;
-
-  font-family: Manrope;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.25;
-
-  vertical-align: middle;
-
-  color: var(--main-text);
-} */
-
-/* .btnSearch {
-  padding: 12px 51px;
-} */
 
 .btnReset {
-  background-color: var(--grey);
+  background-color: var(--color-text-secondary);
   color: var(--white);
   font-weight: 500;
   margin-left: 10px;
   white-space: nowrap;
-  padding: 12px 45px;
+  padding: 12px 28px;
   cursor: pointer;
 
   transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: var(--shadow-soft);
 }
-/* .btnReset:hover,
-.btnReset:focus {
-  transform: scale(1.03);
-} */

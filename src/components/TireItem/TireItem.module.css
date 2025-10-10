@@ -1,59 +1,83 @@
 .tireItem {
-  /* display: flex; */
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+
   justify-content: space-between;
-  /* border: 2px solid #ddd; */
-  /* border-radius: 12px; */
-  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 35px 10px;
   text-decoration: none;
   color: inherit;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+
+  &:hover {
+    border: 1px solid #eeeeee;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+      1px 4px 6px rgba(0, 0, 0, 0.16);
+  }
+}
+.link {
+  text-decoration: none;
+  color: var(--main-text);
+  text-align: center;
 }
 
 .image {
   width: 100px;
   height: 100px;
-  margin-bottom: 20px;
+
   object-fit: cover;
   border-radius: 8px;
-  margin: 0 auto;
+  margin: 0 auto 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 2px 2px 4px 4px rgb(224, 222, 222);
+  }
 }
-.info {
-  flex: 1;
-}
-.tireItem h3 {
+
+.info h3 {
   font-size: 18px;
   margin: 0;
-}
-
-.tireItem p {
   color: var(--main-text);
-  font-weight: 700;
-  font-size: 20px;
 }
 
+.price {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-top: 8px;
+}
+
+/* === admin buttons === */
 .adminBtns {
   position: absolute;
   top: 10px;
   right: 10px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .button {
   padding: 8px 14px;
-  border: 1px solid green;
-  border-radius: 12px;
+  /* border: 1px solid green; */
+  border: none;
+  border-radius: 8px;
   background: white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   font-weight: 600;
-  margin-top: 10px;
-  margin-right: 10px;
+  /* margin-top: 10px; */
+  /* margin-right: 10px; */
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .button:hover,
 .button:focus {
-  transform: scale(1.1);
+  transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }

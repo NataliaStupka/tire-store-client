@@ -1,33 +1,74 @@
 :root {
-  /* Кольори */
-  --main-text: #101828; /* Основний колір тексту */
-  --accent-text: #5582e9; /* Акцентний колір для посилань, заголовків */
-  --accent-color: #5582e9; /* Акцентний колір для елементів (наприклад, кнопок) */
-  --background: #f2f4f7; /* Фоновий колір сторінки */
-  --white: #ffffff; /* Білий */
-  --button-color: #5582e9; /* Колір кнопок */
-  --button-hover: #3b65d1; /* Колір кнопок при наведенні */
-  --grey: #8d929a; /* Сірий для другорядного тексту */
-  --dark-grey: #333333; /* Темно-сірий (для темної теми браузера) */
+  /* 🎨 Основна кольорова палітра */
+  --main-text: #101828; /* Основний текст - Темно-графітовий */
+  /* --main-text: #1c1e21; */
+  /*--main-text: #1f2937; /* (темно-графітовий) */
+  /* --main-text: #f4f4f4; */ /* світлий */
 
-  /* ?? */
-  --border-color: #d3d0d0;
+  --color-text-secondary: #6b7280; /* Другорядний текст - Сірий */
+  /*--color-text-secondary: #8d929a; /* Сірий */
+  /*--color-text-secondary: #9ca3af; */
+
+  --background: #f2f4f7; /* Світлий фон сторінки */
+  --hero-bg: #e0e4eb;
+  /*--background: #f4f5f7; /* Світлий */
+  /*--background: #0f1114;  /* Темний фон сторінки */
+  /*--dark-grey: #333333; /* Темно-сірий (для темної теми браузера) */
+  --white: #ffffff; /* Фон картки або блоку */
+  --card-bg: #1b1e22; /*заміна white*/
+
+  /* 🔵 Primary (основний акцент — синій) */
+  --primary: #2563eb; /* Основний колір кнопок, лінків, hover-ефектів */
+  --primary-hover: #1e40af; /* Темніший відтінок при hover */
+
+  /* 🟠 CTA (заклик до дії — помаранчевий) */
+  --cta: #f97316; /* Кнопки типу “Buy now” */
+  --cta-hover: #ea580c; /* Hover CTA */
+
+  /* 🟦 SECONDARY (бірюзовий акцент) */
+  --secondary: #06b6d4;
+
+  /* ⚙️ Додаткові кольори та деталі */
+  --border-color: #ddd; /* Легкі роздільники */
+  /*--border-color-light: #d3d0d0; /* ??? */
+  --border-color-dark: #2a2e33;
+
+  --footer-bg: #1e3a8a; /* Темно-синій футер */
+
+  /* 🕶️ Ефекти */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --radius: 12px;
+  --transition: all 0.25s ease; /* !!!!  на своє */
+
+  /* -------------------????------------------------------------ */
+
+  --accent-text: #5582e9; /* Акцентний колір для посилань, заголовків */
+
+  /* 🟢 Акценти */
+  --accent-color: #5582e9; /* 1 Акцентний колір для елементів (наприклад, кнопок) */
+  /* --accent-color: #f59e0b; /*Акцентний колір оранжевий(кнопок, CTA) */
+  /* --accent-color: #3c7c54; /* Основний акцент — зелений (надійність, впевненість) */
+  /* --accent-color: #2b7a78; */
+  /*--accent-color-light: #5ca678; /* Світліший відтінок для hover або деталей */
+
+  /* 🟠 Другий акцент (CTA, hover, важливі елементи) */
+  /*   --cta-color: #e77e23; /* Теплий помаранчевий — для дії */
+  --cta-hover: #c86715; /* Темніший при наведенні */
+
+  /* ⚙️ Допоміжні */
+  /*  --neutral-dark: #2b2f36; /* Для тіней, тексту в темних блоках */
+  /*  --neutral-light: #f9fafb; /* Для контрастного підсвічування */
+
+  /* --icon: #94a3b8; Іконки або тонкі лінії */
+
+  --hover: #d97706; /* Hover-ефект для акценту */
+  /* --hover: #3aa89b;  */
 
   /* Шрифти */
   --font-family: "Montserrat", sans-serif; /* Основний шрифт */
   --font-family-secondary: "Roboto", sans-serif; /* Додатковий шрифт */
 }
-
-/* :root {
-  --main-bg: #0f1114;
-  --card-bg: #1b1e22;
-  --accent: #2b7a78;
-  --accent-hover: #3aa89b;
-  --text-main: #f4f4f4;
-  --text-muted: #9ca3af;
-  --border-color: #2a2e33;
-  --grey-btn: #3b3f45;
-} */
 
 *,
 *::before,
@@ -44,7 +85,6 @@ body {
   line-height: 1.5;
   color: var(--main-text);
   background-color: var(--background);
-  align-items: center;
   margin: 0;
   padding: 0;
 }
@@ -84,6 +124,7 @@ a:hover {
 button {
   border: none;
   cursor: pointer;
+  font-family: inherit;
 }
 
 input,
@@ -94,13 +135,15 @@ select {
 }
 .container {
   /* max-width: 375px; */
-  padding: 15px;
+  /* max-width: 1440px; */
   min-width: 320px;
-  /* margin: 0 auto; */
-  background: var(--main-white);
+  width: 100%;
+  padding: 15px;
+  margin: 0 auto;
+  /* background: var(--main-white); */
 }
 
-/* ??? */
+/* ??? анімації переходів */
 /* @keyframes pageTransition {
   from {
     opacity: 0;
@@ -116,7 +159,7 @@ select {
 @media screen and (min-width: 768px) {
   .container {
     /* max-width: 768px; */
-    padding: 0 30px;
+    padding: 20px;
   }
 }
 
@@ -124,39 +167,25 @@ select {
 @media screen and (min-width: 1440px) {
   .container {
     /* width: 100%; */
-    width: 1440px;
-    padding: 0 20px;
-    margin: 0 auto;
+    /* width: 1440px; */
+    /* padding: 0 20px; */
   }
 }
 
-/* чи потрібно?? */
-/* html::-webkit-scrollbar-button {
-  display: none;
-}
-html::-webkit-scrollbar {
-  display: none;
-}
-html::-webkit-scrollbar-track {
-  display: none;
-}
-html::-webkit-scrollbar-thumb {
-  display: none;
-} */
-
 .button {
-  background-color: var(--button-color);
-  padding: 12px 88px;
+  background-color: var(--primary);
   color: var(--white);
-  border-radius: 12px;
-  border-radius: 12px;
+  padding: 12px 48px;
+  border-radius: var(--radius);
   font-family: var(--font-family);
-  font-weight: 500;
+  font-weight: 600;
+  /* transition: var(--transition); */
   transition: background-color 0.3s ease, transform 0.1s ease; /* Плавний ефект */
 }
 .button:hover {
-  background-color: var(--button-hover);
+  background-color: var(--primary-hover);
   transform: scale(1.02); /* Легке збільшення при наведенні */
+  box-shadow: var(--shadow-hover);
 }
 
 .button:focus {

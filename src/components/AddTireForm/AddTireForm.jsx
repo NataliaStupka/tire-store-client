@@ -122,6 +122,8 @@ export const AddTireForm = ({ onClose }) => {
       >
         {({ values, setFieldValue, isSubmitting }) => (
           <Form className={s.form}>
+            <h2 className={s.formTitle}>Додавання товару</h2>
+
             <div className={s.group}>
               <label className={s.label}>Категорія</label>
               <Field className={s.input} as="select" name="category">

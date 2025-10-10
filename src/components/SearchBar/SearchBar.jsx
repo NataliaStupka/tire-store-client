@@ -37,6 +37,7 @@ export const SearchBar = ({ onSizeChange }) => {
 
   return (
     <div className="container">
+      <h2 className={s.filterText}>Пошук по розміру.</h2>
       <Formik
         // onSubmit={handleSubmit} //якщо пошук після натискання кнопки
         initialValues={initialValues}

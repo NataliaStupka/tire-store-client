@@ -58,28 +58,39 @@ export const TireDetailsPage = () => {
   const isProducer = !!tire.producer;
 
   return (
-    <main>
-      <div className={clsx("container", s.details)}>
-        <Link to={goBackLink.current}>Go back</Link>
-        <h2 className={s.title}>Деталі про {isTire ? "шину" : "диск"}.</h2>
+    <section className={clsx("section", s.details)}>
+      <div className="container">
+        <Link to={goBackLink.current} className={s.goBack}>
+          ← Назад
+        </Link>
+
+        <h2 className={s.pageTitle}>Деталі про {isTire ? "шину" : "диск"}.</h2>
+
         <div className={s.detailsContainer}>
-          <div className={s.wrapper}>
+          <div className={s.imageWrapper}>
             <img src={tire.image} alt={tire.size} className={s.img} />
           </div>
 
-          <div>
-            <div className={s.titleTire}>
-              <h2 className={s.nameTire}>
-                {tire.title} {tire.producer} {tire.size}{" "}
-                {tire.modelTire || tire.diskModel}
-              </h2>
-            </div>
-            <p className={s.name}>
-              Розмір: <span className={s.value}>{tire.size}</span>
-            </p>
-            {isProducer && <p className={s.name}>Виробник: {tire.producer}</p>}
+          <div className={s.info}>
+            <h3 className={s.name}>
+              {tire.title} {tire.producer} {tire.size}{" "}
+              {tire.modelTire || tire.diskModel}
+            </h3>
 
-            {isTire && (
+            <ul className={s.list}>
+              <li>
+                <span>Розмір:</span>
+                {tire.size}
+              </li>
+
+              {/* {isProducer && <p className={s.name}>Виробник: {tire.producer}</p>} */}
+              {tire.producer && (
+                <li>
+                  <span>Виробник:</span> {tire.producer}
+                </li>
+              )}
+
+              {/* {isTire && (
               <>
                 {}
                 {tire.modelTire && (
@@ -96,14 +107,39 @@ export const TireDetailsPage = () => {
                     </p>
                   ))}
               </>
-            )}
-            {/* ???????? ПЕРЕВІРИТИ*/}
-            {isRim && <p className={s.name}>Модель диску: {tire.diskModel}</p>}
-            <p className={s.name}>Ціна: {tire.price}$</p>
-            {/* <p>Артикул ????: {tire._id || "Немає артикулу"}</p> */}
+            )} */}
+              {isTire && tire.modelTire && (
+                <li>
+                  <span>Модель:</span> {tire.modelTire}
+                </li>
+              )}
+              {isTire && tire.tireType && (
+                <li>
+                  <span>Тип:</span> {tire.tireType}
+                </li>
+              )}
+              {isTire && (tire.loadIndex || tire.layering) && (
+                <li>
+                  <span>Індекс навантаження / слойність:</span>{" "}
+                  {tire.loadIndex || tire.layering}
+                </li>
+              )}
+
+              {/* {isRim && <p className={s.name}>Модель диску: {tire.diskModel}</p>} */}
+              {isRim && tire.diskModel && (
+                <li>
+                  <span>Модель диску:</span> {tire.diskModel}
+                </li>
+              )}
+
+              {/* <p className={s.name}>Ціна: {tire.price}$</p> */}
+              <li>
+                <span>Ціна:</span> {tire.price}$
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 };

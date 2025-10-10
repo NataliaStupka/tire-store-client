@@ -1,4 +1,12 @@
-.header {
+/* .header {
   background-color: #f2f4f7;
   border-bottom: 3px solid grey;
+} */
+.header {
+  background: linear-gradient(135deg, #f8faff, #e9eef6);
+  border-bottom: 2px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
