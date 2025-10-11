@@ -1,5 +1,6 @@
 .homePage {
-  max-width: 1440px;
+  /* ?? */
+  max-width: 1200px;
   margin: 0 auto;
   text-align: center;
   background-color: var(--background);
@@ -43,7 +44,7 @@
 }
 
 /* desctop */
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1200px) {
   .category {
     padding: 40px 20px;
     /* padding: 80px 60px; */

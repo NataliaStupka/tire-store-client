@@ -12,12 +12,11 @@
 .logoWrap {
   display: flex;
   align-items: center;
-  gap: 3px;
   flex-direction: column;
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   /* color: var(--secondary); */
   color: var(--cta);
@@ -35,6 +34,7 @@
 /* Admin */
 .adminWrap {
   position: relative;
+  display: inline-block;
 }
 
 .btnAdmin {
@@ -52,6 +52,7 @@
   cursor: pointer;
   box-shadow: var(--shadow-soft);
 
+  transition: var(--transition);
   /* transition: background-color 0.2s; */
   /* transition: all 0.2s ease-in-out; */
 }
@@ -114,7 +115,7 @@
 .wrapNav {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 .pagesInHeader {
   display: flex;
@@ -175,8 +176,12 @@
     gap: 15px;
   }
 
+  .logo {
+    font-size: 22px;
+    margin-bottom: 0;
+  }
+
   .adminMenu {
-    position: static;
     width: 100%;
     box-shadow: none;
   }
@@ -192,7 +197,7 @@
 }
 
 /* desctop */
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1200px) {
   .wrapNav {
     flex-direction: row;
     align-items: center;

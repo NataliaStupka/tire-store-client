@@ -32,7 +32,7 @@
 } */
 
 /* desctop */
-/* @media screen and (min-width: 1440px) {
+/* @media screen and (min-width: 1200px) {
   .tireList {
     grid-template-columns: repeat(3, 1fr);
   }
