@@ -1,11 +1,10 @@
 .selectWrapper {
-  /* margin-left: 20px; */
   display: flex;
   justify-content: center;
-  /* margin-bottom: 20px; */
+  align-items: center;
 }
 
-.select {
+/* .select {
   padding: 10px 14px;
   font-size: 15px;
   border-radius: var(--radius);
@@ -13,6 +12,29 @@
   background-color: var(--white);
   color: var(--main-text);
   transition: var(--transition);
+} */
+.select {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-text);
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+  appearance: none; /* прибираємо системну стрілку */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("../../assets/chevron-down.svg"); /* можна підставити свою іконку */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  min-width: 150px;
 }
 
 .select:focus {
