@@ -22,47 +22,49 @@ export const Footer = () => {
 
   return (
     <footer className={s.footer}>
-      <h2>TyreStore</h2>
+      <div className="container">
+        <h2>TyreStore</h2>
 
-      {/* <p>Міні-блог / поради з вибору шин — корисний для SEO</p> */}
-      <p>📦 Доставка і оплата (коротко про умови)</p>
-      <p>🕒 Графік роботи: Пн–Пт 09:00–17:00</p>
-      <p>📍 Карта / місце розташування (Google Maps iframe).</p>
-      <p>
-        📞 Контакти: <a href="mailto:info@tyrestore.ua">info@tyrestore.ua</a> |{" "}
-        <a href="viber://chat?number=+380991234567">Viber</a> |{" "}
-        <a href="https://t.me/tyrestore" target="_blank" rel="noreferrer">
-          Telegram
-        </a>
-      </p>
+        {/* <p>Міні-блог / поради з вибору шин — корисний для SEO</p> */}
+        <p>📦 Доставка і оплата (коротко про умови)</p>
+        <p>🕒 Графік роботи: Пн–Пт 09:00–17:00</p>
+        <p>📍 Карта / місце розташування (Google Maps iframe).</p>
+        <p>
+          📞 Контакти: <a href="mailto:info@tyrestore.ua">info@tyrestore.ua</a>{" "}
+          | <a href="viber://chat?number=+380991234567">Viber</a> |{" "}
+          <a href="https://t.me/tyrestore" target="_blank" rel="noreferrer">
+            Telegram
+          </a>
+        </p>
 
-      {showLoginButton && (
-        <button
-          className={s.btnAdmin}
-          onClick={() => {
-            openModal();
-          }}
-        >
-          Вхід для адміністратора.
-        </button>
-      )}
-
-      {isOpenModal && (
-        <Modal title="Адміністратор" onClose={closeModal}>
-          <LoginForm />
-        </Modal>
-      )}
-
-      {showLogoutButton && (
-        <div className={s.logoutButton}>
-          <button className={s.btnAdmin} onClick={handleLogout}>
-            Вийти з системи
+        {showLoginButton && (
+          <button
+            className={s.btnAdmin}
+            onClick={() => {
+              openModal();
+            }}
+          >
+            Вхід для адміністратора.
           </button>
-        </div>
-      )}
+        )}
 
-      <div className={s.footerBottom}>
-        <p>© {new Date().getFullYear()} TyreStore. Усі права захищено.</p>
+        {isOpenModal && (
+          <Modal title="Адміністратор" onClose={closeModal}>
+            <LoginForm />
+          </Modal>
+        )}
+
+        {showLogoutButton && (
+          <div className={s.logoutButton}>
+            <button className={s.btnAdmin} onClick={handleLogout}>
+              Вийти з системи
+            </button>
+          </div>
+        )}
+
+        <div className={s.footerBottom}>
+          <p>© {new Date().getFullYear()} TyreStore. Усі права захищено.</p>
+        </div>
       </div>
     </footer>
   );

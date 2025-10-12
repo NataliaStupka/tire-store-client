@@ -79,7 +79,7 @@ export const CategoryList = ({
   }
 
   return (
-    <>
+    <div className="container">
       <p className={s.categoryText}>Переглянути каталог</p>
       <ul className={s.categoryList}>
         {categories.map((item) => {
@@ -106,6 +106,6 @@ export const CategoryList = ({
           );
         })}
       </ul>
-    </>
+    </div>
   );
 };

@@ -1,8 +1,8 @@
 .footer {
   background-color: var(--footer-bg);
   color: var(--white);
-  padding: 60px 20px;
-  margin-top: 60px;
+  padding-top: 60px;
+  padding-bottom: 60px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
@@ -70,7 +70,7 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-@media (max-width: 600px) {
+@media screen and (min-width: 768px) {
   .footer {
     padding: 40px 15px;
   }

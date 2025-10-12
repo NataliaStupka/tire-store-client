@@ -1,21 +1,22 @@
-.homePage {
-  /* ?? */
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  background-color: var(--background);
-  color: var(--main-text);
-  font-family: var(--font-family);
-}
-
+/* -- Hero -- */
 .hero {
-  background-color: var(--hero-bg); /* Світло-сірий фон, нейтральний і чистий */
-  padding: 80px 20px;
+  /* background-image: ; */
+
   text-align: center;
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
   transition: var(--transition);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--hero-bg); /* Світло-сірий фон, нейтральний і чистий */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  text-align: center;
 }
+
 .hero h1 {
   font-size: 42px;
   font-weight: 700;
@@ -30,23 +31,31 @@
   line-height: 1.6;
 }
 
+/* -- Category -- */
 .category {
-  padding: 60px 20px;
-  /* margin: 60px 0; */
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+/* -- SearchBar -- */
+.searchBar {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: var(--white); /* --hero-bg ??*/
 }
 
 /* tablet */
 @media screen and (min-width: 768px) {
   .category {
-    padding: 40px 30px;
-    /* padding: 60px 40px; */
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 }
 
 /* desctop */
-@media screen and (min-width: 1200px) {
+/* @media screen and (min-width: 1200px) {
   .category {
-    padding: 40px 20px;
-    /* padding: 80px 60px; */
+    padding-top: 40px;
+  padding-bottom: 40px;
   }
-}
+} */

@@ -35,35 +35,37 @@ const HomePage = () => {
 
   return (
     <main>
-      <div className={s.homePage}>
-        <section className={s.hero}>
+      {/* <div className={s.homePage}> */}
+      <section className={s.hero}>
+        <div className="container">
           <h1>Шини для будь-якої техніки</h1>
           <p>
             Великий вибір шин для навантажувачів, сільськогосподарської та
             промислової техніки.
           </p>
-        </section>
+        </div>
+      </section>
 
-        <section className={s.category}>
-          <CategoryList />
-        </section>
+      <section className={s.category}>
+        <CategoryList />
+      </section>
 
-        <section>
-          <SearchBar onSizeChange={setSearchSize} />
+      <section className={s.searchBar}>
+        <SearchBar onSizeChange={setSearchSize} />
 
-          {/* searchSize - користувач ввів щось у поле? */}
-          {isLoading ? (
-            <LoaderComponent />
-          ) : tiresBySize.length > 0 ? (
-            <>
-              <h2>Знайдені шини:</h2>
-              <TiresCatalog tires={tiresBySize} />
-            </>
-          ) : (
-            searchSize && <p>Нічого не знайдено.</p>
-          )}
-        </section>
-      </div>
+        {/* searchSize - користувач ввів щось у поле? */}
+        {isLoading ? (
+          <LoaderComponent />
+        ) : tiresBySize.length > 0 ? (
+          <>
+            <h2>Знайдені шини:</h2>
+            <TiresCatalog tires={tiresBySize} />
+          </>
+        ) : (
+          searchSize && <p>Нічого не знайдено.</p>
+        )}
+      </section>
+      {/* </div> */}
     </main>
   );
 };
