@@ -7,33 +7,55 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
-  max-width: 600px;
+  width: 100%;
+  max-width: 500px;
   margin: 0 auto;
 
-  & button {
-    padding: 10px 20px;
+  /* Адаптивність по висоті */
+  max-height: 90vh;
+  overflow-y: auto;
+
+  button {
+    padding: 12px;
     background-color: #007bff;
     color: var(--white);
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-  }
-  & button:disabled {
-    opacity: 0.5; /* Тьмяний вигляд при disabled */
-    cursor: not-allowed; /* Зміна курсора */
-  }
+    box-shadow: 2px 2px 4px 4px lightgray;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
 
-  & button:hover {
-    background-color: #0056b3;
+    &:hover {
+      background-color: #0056b3;
+    }
+    &:hover:not(:disabled) {
+      transform: scale(1.02);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.5; /* Тьмяний вигляд при disabled */
+      cursor: not-allowed; /* Зміна курсора */
+    }
   }
 }
+
+/* охайний скролбар */
+.form::-webkit-scrollbar {
+  width: 6px;
+}
+.form::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
 .formTitle {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--main-text);
   text-align: center;
-  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
 .grid {
@@ -45,7 +67,7 @@
 .group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .label {
@@ -53,12 +75,13 @@
   font-weight: 500;
   color: var(--color-text-secondary);
 }
+
 .field,
 .fileInput {
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
-  padding: 10px 14px;
-  font-size: 16px;
+  padding: 10px 12px;
+  font-size: 15px;
   background: #f9fafb;
   transition: var(--transition);
   cursor: pointer;
@@ -67,9 +90,25 @@
 .fileInput:focus,
 .field:hover,
 .fileInput:hover {
+  outline: none;
   border-color: var(--accent-color);
   box-shadow: 0 0 0 3px rgba(85, 130, 233, 0.2);
   outline: none;
+}
+
+.fileInput::file-selector-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.fileInput::file-selector-button:hover {
+  background-color: #1e40af;
 }
 
 .preview {
@@ -97,4 +136,33 @@ input[type="file"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   /* font-size: 16px; */
+}
+@media screen and (max-width: 768px) {
+  .form {
+    padding: 12px 10px;
+    gap: 12px;
+    max-height: 100vh;
+    overflow-y: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .formTitle {
+    font-size: 16px;
+  }
+
+  .label {
+    font-size: 12.5px;
+  }
+
+  .field,
+  .fileInput {
+    font-size: 13px;
+    padding: 7px 9px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }

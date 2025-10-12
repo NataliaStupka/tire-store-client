@@ -24,6 +24,7 @@
     font-size: 2rem;
   }
 }
+/* стилізація скролбару */
 .content::-webkit-scrollbar {
   width: 6px;
 }
