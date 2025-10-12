@@ -13,12 +13,25 @@
   background-color: var(--white);
   color: var(--main-text);
   padding: 40px 50px;
-  overflow: hidden;
+  /* overflow: hidden; */
   border-radius: var(--radius);
+
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
   h1 {
     font-size: 2rem;
   }
 }
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+.content::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
 .closeBtn {
   position: absolute;
   top: 11px;
@@ -31,10 +44,22 @@
   height: 25px;
   border-radius: 50%;
   transition: var(--transition);
+
+  &:hover {
+    background-color: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-hover);
+  }
 }
-.closeBtn:hover {
-  background-color: var(--primary);
-  color: var(--white);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-hover);
+
+/* ---------- Адаптивність ---------- */
+
+/* планшети */
+@media screen and (min-width: 768px) {
+  .content {
+    /* padding: 24px 20px; */
+    /* width: 95%; */
+    max-height: 100vh;
+  }
 }

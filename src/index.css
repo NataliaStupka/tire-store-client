@@ -141,20 +141,6 @@ select {
   margin: 0 auto;
 }
 
-/* tablet */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-/* desktop */
-@media screen and (min-width: 1200px) {
-  .container {
-    max-width: 1400px;
-  }
-}
-
 .button {
   background-color: var(--primary);
   color: var(--white);
@@ -183,4 +169,18 @@ textarea:focus,
 select:focus {
   outline: 2px solid var(--accent-color);
   outline-offset: 2px;
+}
+
+/* tablet */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 1400px;
+  }
 }
