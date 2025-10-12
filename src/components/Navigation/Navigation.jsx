@@ -60,7 +60,7 @@ const Navigation = () => {
       <div className={s.logoWrap}>
         <NavLink to="/" className={s.logo}>
           {/* <img src="/tire.svg" alt="Tire Store Логотип" width="40" height="40" /> */}
-          LOGO
+          new-Tires
         </NavLink>
 
         {userRole === "admin" && (
