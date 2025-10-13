@@ -16,6 +16,9 @@
   margin-bottom: 16px;
   text-transform: uppercase;
 }
+.logo .accent {
+  color: var(--cta);
+}
 
 .footer p {
   color: rgba(255, 255, 255, 0.9);
@@ -75,7 +78,7 @@
     padding: 40px 15px;
   }
   .footer h2 {
-    font-size: 18px;
+    font-size: 24px;
   }
   .footer p {
     font-size: 14px;

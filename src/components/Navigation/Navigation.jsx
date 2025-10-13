@@ -58,14 +58,16 @@ const Navigation = () => {
   return (
     <nav className={s.nav}>
       <div className={s.logoWrap}>
-        <NavLink to="/" className={s.logo}>
-          {/* <img src="/tire.svg" alt="Tire Store Логотип" width="40" height="40" /> */}
-          Tirestore
-          {/* Tire<span style={{ color: "#2563eb" }}>store</span> */}
-        </NavLink>
-        <NavLink to="/" className={s.logo2}>
+        {/* <NavLink to="/" className={s.logo}> */}
+        {/* <img src="/tire.svg" alt="Tire Store Логотип" width="40" height="40" /> */}
+        {/* Tirestore */}
+        {/* Tire<span style={{ color: "#2563eb" }}>store</span> */}
+        {/* </NavLink> */}
+
+        {/* <NavLink to="/" className={s.logo2}>
           TIREST<span>O</span>RE
-        </NavLink>
+        </NavLink> */}
+
         <NavLink to="/" className={s.logo3}>
           TIRE<span class={s.accent}>S</span>TORE
         </NavLink>

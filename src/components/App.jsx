@@ -13,28 +13,6 @@ import { useEffect } from "react";
 import { refreshUser } from "../redux/auth/operations";
 import { Footer } from "./Footer/Footer";
 
-//???????
-// PrivateRoute: Для /add-tire, /edit-tire, /delete-tire
-//???????? - RestrictedRoute: Для /login??
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <HomePage />,
-//   },
-//   {
-//     path: "/add-tire",
-//     element: (
-//       <PrivateRoute redirectTo="/login">
-//         <AddTireForm />
-//       </PrivateRoute>
-//     ),
-//   },
-//   {
-//     path: "/login",
-//     element: <RestrictedRoute component={<LoginForm />} redirectTo="/" />,
-//   },
-// ]);
-
 function App() {
   const dispatch = useDispatch();
   // const isRefreshing = useSelector(selectIsRefreshing);

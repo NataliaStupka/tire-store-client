@@ -23,7 +23,9 @@ export const Footer = () => {
   return (
     <footer className={s.footer}>
       <div className="container">
-        <h2>TireStore</h2>
+        <h2 className={s.logo}>
+          Tire<span class={s.accent}>S</span>tore
+        </h2>
 
         {/* <p>Міні-блог / поради з вибору шин — корисний для SEO</p> */}
         <p>📦 Доставка і оплата (коротко про умови)</p>

@@ -145,33 +145,3 @@ button:disabled {
     padding: 7px 9px;
   }
 }
-
-/* tablet */
-/* @media screen and (min-width: 768px) {
-  .form {
-    padding: 16px 12px;
-    gap: 14px;
-  }
-
-  .formTitle {
-    font-size: 18px;
-  }
-
-  .label {
-    font-size: 13px;
-  }
-
-  .input {
-    font-size: 14px;
-    padding: 8px 10px;
-  }
-
-  button {
-    padding: 10px;
-    font-size: 14px;
-  }
-} */
-
-/* desktop */
-@media screen and (min-width: 1200px) {
-}
