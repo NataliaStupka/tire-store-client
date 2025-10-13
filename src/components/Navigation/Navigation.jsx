@@ -69,7 +69,7 @@ const Navigation = () => {
         </NavLink> */}
 
         <NavLink to="/" className={s.logo3}>
-          TIRE<span class={s.accent}>S</span>TORE
+          TIRE<span className={s.accent}>S</span>TORE
         </NavLink>
 
         {userRole === "admin" && (

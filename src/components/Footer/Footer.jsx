@@ -24,7 +24,7 @@ export const Footer = () => {
     <footer className={s.footer}>
       <div className="container">
         <h2 className={s.logo}>
-          Tire<span class={s.accent}>S</span>tore
+          Tire<span className={s.accent}>S</span>tore
         </h2>
 
         {/* <p>Міні-блог / поради з вибору шин — корисний для SEO</p> */}
