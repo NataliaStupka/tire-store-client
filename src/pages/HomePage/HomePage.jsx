@@ -57,10 +57,9 @@ const HomePage = () => {
         {isLoading ? (
           <LoaderComponent />
         ) : tiresBySize.length > 0 ? (
-          <>
-            <h2>Знайдені шини:</h2>
+          <div className="container">
             <TiresCatalog tires={tiresBySize} />
-          </>
+          </div>
         ) : (
           searchSize && <p>Нічого не знайдено.</p>
         )}

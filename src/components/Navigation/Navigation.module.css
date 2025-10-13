@@ -16,12 +16,13 @@
 }
 
 .logo {
+  font-family: "Orbitron", sans-serif;
   font-size: 16px;
-  font-weight: bold;
-  /* color: var(--secondary); */
+  font-weight: 700;
   color: var(--cta);
   text-decoration: none;
-  letter-spacing: 1px;
+
+  letter-spacing: 2px;
   text-transform: uppercase;
   transition: transform 0.2s ease-in-out;
   margin-bottom: 10px;
@@ -29,6 +30,42 @@
   &:hover {
     transform: scale(1.05);
   }
+}
+/* logo-2 */
+.logo2 {
+  font-family: "Russo One", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #111;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #111 0%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+/* logo-3 */
+.logo3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #1e293b;
+
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    /* color: var(--footer-bg); */
+    transform: scale(1.05);
+  }
+}
+.logo3 .accent {
+  color: #2563eb;
+  color: var(--cta);
 }
 
 /* Admin */
@@ -137,6 +174,7 @@
 
 .active {
   color: #3470ff;
+
   font-weight: bold;
 }
 .active::after {
@@ -176,11 +214,14 @@
     gap: 15px;
   }
 
-  .logo {
+  .logo,
+  .logo2,
+  .logo3 {
     font-size: 22px;
     margin-bottom: 0;
   }
 
+  /* ---------- */
   .adminMenu {
     width: 100%;
     box-shadow: none;
@@ -197,7 +238,7 @@
 }
 
 /* desctop */
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1400px) {
   .wrapNav {
     flex-direction: row;
     align-items: center;
