@@ -6,7 +6,7 @@ import axios from "axios";
 //працюємо через окремо створенний axios (уникаємо 'конфлікту')
 export const tireApi = axios.create({
   baseURL: "https://tire-store-server.onrender.com",
-  //   withCredentials: true, // Дозволяє відправляти та отримувати кукі, забезпечить передачу кукі з фронтенду на бекенд.
+  withCredentials: true, // Дозволяє відправляти та отримувати кукі, забезпечить передачу кукі з фронтенду на бекенд.
 });
 
 //створюємо функцію (збереження токену) приймає token

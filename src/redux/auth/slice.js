@@ -16,6 +16,7 @@ const initialState = {
   token: null,
   isError: null,
   isLoggedIn: false, //чи залогований
+  isLoading: false,
   isRefreshing: false, //стан оновлення сторінки(візуал)
 };
 
@@ -38,6 +39,7 @@ const slice = createSlice({
       .addCase(login.fulfilled, (state, { payload }) => {
         console.log("login-payload", payload);
         state.user = payload.data.user; // { name, email, role }
+        state.isLoading = false;
         //    state.user = {
         //      ...state.user,
         //      ...payload.data,
@@ -53,6 +55,8 @@ const slice = createSlice({
       .addCase(refreshUser.fulfilled, (state, { payload }) => {
         state.user = { ...state.user, ...payload.user }; //???? payload
         state.token = payload.accessToken;
+        // state.user = payload.data.user;
+        // state.token = payload.data.accessToken;
         setAuthenticatedState(state);
       })
 
@@ -60,6 +64,7 @@ const slice = createSlice({
       .addMatcher(
         isAnyOf(register.pending, login.pending, refreshUser.pending),
         (state) => {
+          state.isLoading = true;
           state.isRefreshing = true;
           state.isError = null;
         }

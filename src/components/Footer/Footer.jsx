@@ -52,7 +52,7 @@ export const Footer = () => {
 
         {isOpenModal && (
           <Modal title="Адміністратор" onClose={closeModal}>
-            <LoginForm />
+            <LoginForm closeModal={closeModal} />
           </Modal>
         )}
 
