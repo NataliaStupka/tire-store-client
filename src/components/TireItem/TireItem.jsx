@@ -7,15 +7,27 @@ import {
   fetchTiresByCategory,
 } from "../../redux/tire/operations";
 import toast from "react-hot-toast";
-import { selectTireById } from "../../redux/tire/selectors";
+import {
+  selectFavoriteTires,
+  selectTireById,
+} from "../../redux/tire/selectors";
+import { addFavoriteTire, deleteFavoriteTire } from "../../redux/tire/slice";
 import { EditTireForm } from "../EditTireForm/EditTireForm";
 import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import { useModal } from "../../hooks/useModal";
 import { selectUserRole } from "../../redux/auth/selectors";
+import clsx from "clsx";
+import sprite from "../../assets/sprite.svg";
 
-export const TireItem = ({
-  tire: {
+export const TireItem = ({ tire }) => {
+  const dispatch = useDispatch();
+  const tireDetails = useSelector(selectTireById); // Не використовується, якщо ініціалізуємо з props
+  const { isOpenModal, openModal, closeModal } = useModal();
+  const userRole = useSelector(selectUserRole);
+
+  // Розпаковуємо поля для зручності рендеру
+  const {
     _id,
     title,
     size,
@@ -24,12 +36,21 @@ export const TireItem = ({
     price,
     category,
     image,
-  },
-}) => {
-  const dispatch = useDispatch();
-  const tireDetails = useSelector(selectTireById); // Не використовується, якщо ініціалізуємо з props
-  const { isOpenModal, openModal, closeModal } = useModal();
-  const userRole = useSelector(selectUserRole);
+  } = tire;
+
+  // -- ♥️ --
+  const favoriteTires = useSelector(selectFavoriteTires);
+  const isFavorite = favoriteTires.some((tire) => tire._id === _id);
+
+  const handleAddFavorite = () => {
+    dispatch(addFavoriteTire(tire));
+    console.log("♥️ Favorite +", favoriteTires);
+  };
+  const handleRemoveFavorite = () => {
+    dispatch(deleteFavoriteTire(_id));
+    console.log("♥️ Favorite -", favoriteTires);
+  };
+  //=======
 
   const handleDelete = () => {
     //визначаємо в якій категорії ця шина, щоб обновити та перемалювати сторінку
@@ -67,7 +88,7 @@ export const TireItem = ({
       toast.error(`Помилка оновлення: ${err.message}`);
     }
   };
-  //переделка ;;;;;
+
   return (
     <div className={s.tireItem}>
       {/* location -  pathname, search, hash , та ін. */}
@@ -77,12 +98,7 @@ export const TireItem = ({
         state={{ from: location.pathname }}
         className={s.link}
       >
-        <img
-          src={image}
-          alt={size}
-          // style={{ width: "80px" }}
-          className={s.image}
-        />
+        <img src={image} alt={size} className={s.image} />
 
         <div className={s.info}>
           <h3>
@@ -91,6 +107,16 @@ export const TireItem = ({
           <p className={s.price}>Ціна: {price}$</p>
         </div>
       </Link>
+
+      <button
+        className={s.heart}
+        onClick={isFavorite ? handleRemoveFavorite : handleAddFavorite}
+        type="button"
+      >
+        <svg className={isFavorite ? clsx(s.svg, s.svgFavorite) : s.svg}>
+          <use href={`${sprite}#${"icon-heart"}`} />
+        </svg>
+      </button>
 
       {userRole === "admin" && (
         <div className={s.adminBtns}>

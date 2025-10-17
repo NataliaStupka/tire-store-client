@@ -25,9 +25,17 @@ const authPersistConfig = {
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 // ---
 
+const tirePersistConfig = {
+  key: "tire",
+  storage,
+  whiteList: ["favoriteTires"], // зберігаємо тільки обране
+};
+const persistedTireReducer = persistReducer(tirePersistConfig, tiresReducer);
+// ---
+
 export const store = configureStore({
   reducer: {
-    tire: tiresReducer,
+    tire: persistedTireReducer,
     filter: filterReducer,
     auth: persistedAuthReducer,
   },

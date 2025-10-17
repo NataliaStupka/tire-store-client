@@ -37,17 +37,27 @@ const CategoryTirePage = () => {
 
   return (
     <main>
-      <div className="container">
-        <h2>Шини для категорії '{categoryTranslation[category]}'.</h2>
+      <section className={s.section}>
+        <div className="container">
+          <h1 className={s.title}>
+            {categoryTranslation[category] || "Категорія"}
+          </h1>
 
-        {isLoading ? (
-          <LoaderComponent />
-        ) : isError ? (
-          <p>Error: {isError}</p>
-        ) : (
-          <TiresCatalog tires={tiresByCategory} />
-        )}
-      </div>
+          {isLoading ? (
+            <div className={s.loaderWrap}>
+              <LoaderComponent />
+            </div>
+          ) : isError ? (
+            <p className={s.errorText}>
+              Сталася помилка: <span>{isError}</span>
+            </p>
+          ) : tiresByCategory.length > 0 ? (
+            <TiresCatalog tires={tiresByCategory} />
+          ) : (
+            <p className={s.emptyText}>Наразі в цій категорії немає товарів.</p>
+          )}
+        </div>
+      </section>
     </main>
   );
 };

@@ -50,6 +50,29 @@
   color: var(--accent-color);
   margin-top: 8px;
 }
+/* favorite */
+.heart {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+    transform: none;
+  }
+}
+.svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-text-secondary);
+  cursor: pointer;
+  background-color: transparent;
+}
+.svgFavorite {
+  fill: var(--accent-color);
+}
 
 /* === admin buttons === */
 .adminBtns {

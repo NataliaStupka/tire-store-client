@@ -24,15 +24,15 @@ const slice = createSlice({
   initialState,
   //action  //те що змінює локально
   reducers: {
-    addFavoriteTire: (state, action) => {
+    addFavoriteTire(state, action) {
       state.favoriteTires.push(action.payload);
     },
     deleteFavoriteTire: (state, action) => {
       state.favoriteTires = state.favoriteTires.filter(
-        (item) => item.id !== action.payload
+        (item) => item._id !== action.payload
       );
     },
-    clearTiresByCategory: (state) => {
+    clearTiresByCategory(state) {
       state.tiresByCategory = [];
     },
   },

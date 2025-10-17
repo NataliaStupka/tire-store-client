@@ -1,0 +1,32 @@
+.section {
+  padding: 40px 0;
+  background-color: #f8f9fa;
+  min-height: 70vh;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+  /* text-align: center; */
+  color: var(--color-text-secondary);
+  /* margin-bottom: 40px; */
+  letter-spacing: 0.5px;
+  /* text-transform: uppercase; */
+}
+
+.emptyText {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  background-color: #fff;
+  padding: 60px 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  line-height: 1.6;
+}
+
+.emptyText span {
+  color: #e63946;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
