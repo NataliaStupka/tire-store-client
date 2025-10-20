@@ -1,5 +1,11 @@
 .footer {
-  background-color: var(--footer-bg);
+  /* background-color: var(--footer-bg); */
+
+  background: linear-gradient(
+    to bottom right,
+    color-mix(in srgb, var(--footer-bg) 100%, white),
+    color-mix(in srgb, var(--footer-bg) 70%, black)
+  );
   color: var(--white);
   padding-top: 60px;
   padding-bottom: 60px;
