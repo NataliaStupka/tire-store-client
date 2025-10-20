@@ -46,6 +46,7 @@ The site has two main roles: User and Administrator.
 - **Render** - Backend
 - **Vercel** — Frontend
 - **Google Cloud Storage** — Tire image storage
+- **MongoDB Atlas** — Cloud database
 
 ---
 
@@ -90,3 +91,4 @@ The site has two main roles: User and Administrator.
   - Render (бекенд)
   - Vercel (фронтенд)
   - Google Cloud Storage (збереження фото шин)
+  - MongoDB Atlas — Cloud database
