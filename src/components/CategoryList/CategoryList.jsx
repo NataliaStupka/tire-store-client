@@ -44,14 +44,15 @@ export const CategoryList = ({
     }
   };
 
-  // Скидання значення select при поверненні на головну сторінку
+  // Скидання значення select при поверненні на 'головну' сторінку чи переході на 'favorite'
   useEffect(() => {
-    if (location.pathname === "/" && selectRef.current) {
+    const isMainOrFavorite =
+      location.pathname === "/" || location.pathname === "/favorite";
+    if (isMainOrFavorite && selectRef.current) {
       selectRef.current.value = ""; // Скидаємо до початкового значення
     } else if (selectRef.current && currentCategory) {
       // Встановлюємо вибрану категорію в select, синхронізує <select> із поточним маршрутом.
       selectRef.current.value = currentCategory;
-      console.log("Set select to:", currentCategory);
     }
   }, [location.pathname, currentCategory]);
 
