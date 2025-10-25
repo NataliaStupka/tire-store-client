@@ -8,14 +8,13 @@ import CategoryTirePage from "../pages/CategoryTirePage/CategoryTirePage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import { TireDetailsPage } from "../pages/TireDetailsPage/TireDetailsPage";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn, selectIsRefreshing } from "../redux/auth/selectors";
+import { selectIsLoggedIn } from "../redux/auth/selectors";
 import { useEffect } from "react";
 import { refreshUser } from "../redux/auth/operations";
 import { Footer } from "./Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
-  // const isRefreshing = useSelector(selectIsRefreshing);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ function App() {
         console.log("Refresh completed, isLoggedIn:", isLoggedIn);
       })
       .catch((err) => {
-        console.error("Refresh failed:", error.message);
+        console.error("Refresh failed:", err.message);
       });
   }, [dispatch]);
 
