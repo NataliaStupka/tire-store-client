@@ -27,7 +27,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(register.fulfilled, (state, { payload }) => {
-        console.log("register-payload", payload);
+        console.log("REGISTER-payload", payload);
         state.user = payload.user; // { name, email, role }
         //    state.user = {
         //      ...state.user,
@@ -37,7 +37,7 @@ const slice = createSlice({
         setAuthenticatedState(state);
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        console.log("login-payload", payload);
+        console.log("LOGIN-payload", payload);
         state.user = payload.data.user; // { name, email, role }
         state.isLoading = false;
         //    state.user = {
@@ -53,10 +53,12 @@ const slice = createSlice({
       })
       //refresh
       .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        state.user = { ...state.user, ...payload.user }; //???? payload
+        // state.user = { ...state.user, ...payload.user }; //???? payload
+        if (payload.user) {
+          state.user = payload.user;
+        }
         state.token = payload.accessToken;
-        // state.user = payload.data.user;
-        // state.token = payload.data.accessToken;
+        console.log("REFRESH-user.fulfilled:", payload); // accessToken
         setAuthenticatedState(state);
       })
 
