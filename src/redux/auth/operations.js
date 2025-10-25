@@ -3,13 +3,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:3000" //бекенд локально
+    : "https://tire-store-server.onrender.com"; // бекенд на Render
+
 //працюємо через окремо створенний axios (уникаємо 'конфлікту')
 export const tireApi = axios.create({
-  baseURL: "https://tire-store-server.onrender.com",
+  // baseURL: "https://tire-store-server.onrender.com",
+  baseURL: BASE_URL,
   withCredentials: true, // Дозволяє відправляти та отримувати кукі, забезпечить передачу кукі з фронтенду на бекенд.
 });
 
-//створюємо функцію (збереження токену) приймає token
+console.log("🔧 👀 Environment check:", {
+  MODE: import.meta.env.MODE, //"development" або "production"
+  BASE_URL: BASE_URL,
+});
+
+//(збереження токену) приймає token
 //в місця де логінемось/реєструємся
 const setAuthHeader = (token) => {
   if (token) {
@@ -85,25 +96,31 @@ export const refreshUser = createAsyncThunk(
     //thunkAPI.getState() - поверне весь store(auth(isLoggedIn, token), user, ...)
     const savedToken = thunkAPI.getState().auth.token; //отримуємо рядок token
     console.log("Attempting refresh with saved token:", savedToken);
+
     if (!savedToken) {
+      console.warn("⚠️ No token found in store");
       return thunkAPI.rejectWithValue("Token is not exist!");
     }
 
     try {
-      setAuthHeader(savedToken);
+      // // Не ставимо старий токен у заголовок — бекенд сам прочитає refreshToken з cookie
+      // setAuthHeader(savedToken); //може бути старим або простроченим.
+
       const { data } = await tireApi.post(
         "/auth/refresh",
         {},
         {
-          withCredentials: true, // Гарантує, що кукі будуть відправлені
+          withCredentials: true, // відправляємо кукі
         }
       );
-      console.log("Refresh response:", data);
-      setAuthHeader(data.data.accessToken); // Оновлюємо заголовок із новим токеном
+
+      console.log("✅ Refresh response:", data);
+      setAuthHeader(data.data.accessToken); // Оновлюємо заголовок із новим токеном (зберігаємо новий accessToken у axios)
       return data.data; // Повертаємо { accessToken, user }
     } catch (err) {
-      console.error("Refresh error:", err.response?.data || err.message);
-      return thunkAPI.rejectWithValue(err.message);
+      console.error("❌ Refresh error:", err.response?.data || err.message);
+      // return thunkAPI.rejectWithValue(err.message);
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
     }
   }
 );
