@@ -32,6 +32,12 @@ const slice = createSlice({
         (item) => item._id !== action.payload
       );
     },
+    updateFavoriteTire(state, action) {
+      const updatedTire = action.payload;
+      state.favoriteTires = state.favoriteTires.map((item) =>
+        item._id === updatedTire._id ? updatedTire : item
+      );
+    },
     clearTiresByCategory(state) {
       state.tiresByCategory = [];
     },
@@ -63,6 +69,7 @@ const slice = createSlice({
       .addCase(editTire.fulfilled, (state, { payload }) => {
         console.log("Edit fulfilled:", payload);
         const updatedTire = payload.data; //оновлена шина
+
         if (updatedTire) {
           state.items = state.items.map((item) =>
             item._id === updatedTire._id ? updatedTire : item
@@ -123,7 +130,12 @@ const slice = createSlice({
   },
 });
 
-export const { addFavoriteTire, deleteFavoriteTire, clearTiresByCategory } =
-  slice.actions;
+//console.log("caseReducers", slice.caseReducers);
+export const {
+  addFavoriteTire,
+  deleteFavoriteTire,
+  clearTiresByCategory,
+  updateFavoriteTire,
+} = slice.actions;
 
 export const tiresReducer = slice.reducer;

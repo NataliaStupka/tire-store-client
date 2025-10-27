@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
-// import { clearTiresByCategory } from "./slice.js";
 
 import { tireApi } from "../auth/operations.js";
+import { updateFavoriteTire } from "../../redux/tire/slice.js";
+
 // axios.defaults.baseURL = "https://tire-store-server.onrender.com";
 
 //fetch All Tires
@@ -92,17 +92,27 @@ export const deleteTire = createAsyncThunk(
 export const editTire = createAsyncThunk(
   "tire/editTire",
   async ({ id, formData }, thunkAPI) => {
+    const { dispatch } = thunkAPI; // ✅ дістаємо dispatch із thunkAPI
+
     console.log(
       "Starting editTire for id:",
       id,
       "Headers:",
       tireApi.defaults.headers
     );
+
     try {
       const response = await tireApi.patch(`/tires/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("Відповідь від бекенду:", response.data);
+
+      const updatedTire = response.data.data?.tire; // ✅ оновлена шина (якщо бек повертає { data: {...} })
+      if (updatedTire) {
+        console.log("🟢 Оновлюємо favoriteTires:", updatedTire._id);
+        dispatch(updateFavoriteTire(updatedTire));
+      }
+
       return response.data;
     } catch (err) {
       console.log("Помилка в editTire:", err.response?.data || err.message);
@@ -110,21 +120,3 @@ export const editTire = createAsyncThunk(
     }
   }
 );
-
-// ===================== content-type: application / json;
-// //add tire
-// export const addTire = createAsyncThunk(
-//   "tire/addTire",
-//   // body = newTire ?
-//   async (body, thunkAPI) => {
-//     try {
-//       console.log("ADD");
-//       const response = await axios.post(`/tires`, body);
-//       console.log("Add_Tire-body", body);
-//       console.log("Add_Tire???", body);
-//       return response.data.data; //??? return response.data
-//     } catch (err) {
-//       return thunkAPI.rejectWithValue(err.message);
-//     }
-//   }
-// );
