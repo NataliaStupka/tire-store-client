@@ -76,6 +76,10 @@ export const EditTireForm = ({ tire, onSubmit }) => {
         title: tire.title || "",
         price: tire.price || "",
         size: tire.size || "",
+        producer: tire.producer || "",
+        modelTire: tire.modelTire || "",
+        layering: tire.layering || "",
+        loadIndex: tire.loadIndex || "",
         tireType: tire.tireType || "",
         instock: tire.instock?.toString() || "false",
         photo: null,
@@ -106,7 +110,7 @@ export const EditTireForm = ({ tire, onSubmit }) => {
             </div>
 
             <div className={s.group}>
-              <label className={s.label}>Назва</label>
+              <label className={s.label}>Найменування</label>
               <Field as="select" name="title" className={s.field}>
                 {/* <option value="">Оберіть тип</option> */}
                 <option value="tire">Шина</option>
@@ -128,6 +132,47 @@ export const EditTireForm = ({ tire, onSubmit }) => {
             </div>
 
             <div className={s.group}>
+              <label className={s.label}>Виробник</label>
+              <Field className={s.field} type="text" name="producer" />
+              <ErrorMessage
+                name="producer"
+                component="span"
+                className={s.error}
+              />
+            </div>
+
+            <div className={s.group}>
+              <label className={s.label}>Модель шини</label>
+              <Field className={s.field} type="text" name="modelTire" />
+              <ErrorMessage
+                name="modelTire"
+                component="span"
+                className={s.error}
+              />
+            </div>
+
+            <div className={s.group}>
+              <label className={s.label}>Слойність шини</label>
+              <span></span>
+              <Field className={s.field} type="text" name="layering" />
+              <ErrorMessage
+                name="layering"
+                component="span"
+                className={s.error}
+              />
+            </div>
+
+            <div className={s.group}>
+              <label className={s.label}>Індекс</label>
+              <Field className={s.field} type="text" name="loadIndex" />
+              <ErrorMessage
+                name="loadIndex"
+                component="span"
+                className={s.error}
+              />
+            </div>
+
+            <div className={s.group}>
               <label className={s.label}>Тип шини</label>
               <Field as="select" name="tireType" className={s.field}>
                 <option value="">Не вказано</option>
@@ -145,7 +190,7 @@ export const EditTireForm = ({ tire, onSubmit }) => {
               <label className={s.label}>Наявність</label>
               <Field as="select" name="instock" className={s.field}>
                 <option value="true">В наявності</option>
-                <option value="false">Немає</option>
+                <option value="false">Уточнюйте наявність</option>
               </Field>
               <ErrorMessage
                 name="instock"
@@ -154,8 +199,9 @@ export const EditTireForm = ({ tire, onSubmit }) => {
               />
             </div>
           </div>
+
           <div className={s.group}>
-            <label className={s.label}>Поточне фото</label>
+            <label className={s.label}>Поточне зображення</label>
             {tire.image && (
               <img
                 src={tire.image}

@@ -35,6 +35,11 @@ export const TireItem = ({ tire }) => {
     producer,
     price,
     category,
+    tireType,
+    loadIndex,
+    layering,
+    instock,
+    diskModel,
     image,
   } = tire;
 
@@ -102,9 +107,17 @@ export const TireItem = ({ tire }) => {
 
         <div className={s.info}>
           <h3>
-            {title} {size} {model} {producer}
+            {title === "tire" ? "Шина" : "Диск"} {size} {model} {producer}
           </h3>
+          {tireType && <p>Тип шини: {tireType} </p>}
+          {layering && <p>Слойність шини: {layering} </p>}
+          {loadIndex && <p>Індекс: {loadIndex} </p>}
+          {tire.category === "rims" && <p>Модель диску: {diskModel} </p>}
+
           <p className={s.price}>Ціна: {price}$</p>
+          {typeof instock === "boolean" && (
+            <p>{instock ? "В наявності" : "Уточнюйте наявність"} </p>
+          )}
         </div>
       </Link>
 
@@ -139,11 +152,15 @@ export const TireItem = ({ tire }) => {
               _id,
               title,
               size,
-              model,
+              modelTire: model,
               producer,
               price,
               category,
               image, // Додаємо image для коректного відображення
+              layering,
+              loadIndex,
+              tireType,
+              instock,
             }}
             onSubmit={handleEdit}
           />
@@ -158,16 +175,16 @@ export const TireItem = ({ tire }) => {
 // category: "rims";
 // createdAt: "2025-06-06T16:56:23.806Z";
 // diskModel: "Kолесо дискове сталеве 16х17 160185 (6х205, dia 161, et -35)";
-// image: "https://res.cloudinary.com/deussughu/image/upload/v1749228984/tires/fxfgtkxhs20egkmhlpcb.jpg";
+// // image: "https://res.cloudinary.com/deussughu/image/upload/v1749228984/tires/fxfgtkxhs20egkmhlpcb.jpg";
 // imagePublicId: "tires/fxfgtkxhs20egkmhlpcb";
 // instock: false;
 // layering: "";
 // loadIndex: "";
-// modelTire: "";
-// price: 16000;
-// producer: "DISK-img";
-// size: "today-7";
+// // modelTire: "";
+// // price: 16000;
+// // producer: "DISK-img";
+// // size: "today-7";
 // tireType: "tt";
-// title: "tire";
+// // title: "tire";
 // updatedAt: "2025-06-07T16:45:29.270Z";
 // _id: "68431db7f78d402280db8805";
