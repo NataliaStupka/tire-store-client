@@ -6,6 +6,7 @@ import * as Yup from "yup"; //валідація форми
 import { useDispatch } from "react-redux";
 import { addTire } from "../../redux/tire/operations";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 export const AddTireForm = ({ onClose }) => {
   const initialValues = {
@@ -29,6 +30,8 @@ export const AddTireForm = ({ onClose }) => {
   const handleSubmit = async (values, options) => {
     options.setSubmitting(true);
     try {
+      console.log("🟡 Formik values:", values);
+
       const newTire = {
         //   id - автоматично генерується на бекенді (MongoDB)
         category: values.category,
@@ -40,10 +43,10 @@ export const AddTireForm = ({ onClose }) => {
         layering: values.layering || "",
         loadIndex: values.loadIndex || "",
         tireType: values.title === "tire" ? values.tireType : "", // '' - щоб було порожнім для дисків
-
         diskModel: values.diskModel || "",
         instock: values.instock, //// Конвертуємо у Boolean true/false
       };
+
       const formData = new FormData();
 
       // Додаємо всі поля з newTire до FormData
@@ -54,6 +57,12 @@ export const AddTireForm = ({ onClose }) => {
       if (values.image) {
         formData.append("image", values.image); // Завантаження зображення на бекенд
       }
+
+      console.log("🟢 FormData entries:");
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+
       await dispatch(addTire(formData)).unwrap();
       toast.success(
         `${newTire.title} ${newTire.size} додано в категорію ${newTire.category}.`
@@ -89,12 +98,15 @@ export const AddTireForm = ({ onClose }) => {
     modelTire: Yup.string().optional(), //??
     layering: Yup.string().optional(), //??
     loadIndex: Yup.string().optional(), //??
-    tireType: Yup.string().when("title", {
-      is: "tire",
-      then: (schema) =>
-        schema.oneOf(["tl", "tt"]).required("Тип шини обов’язковий"),
-      otherwise: (schema) => schema.oneOf([""]).optional(),
-    }),
+    tireType: Yup.string()
+      .nullable() // дозволяє null
+      .oneOf(["tl", "tt", "", null], "Невірний тип шини")
+      .when("title", {
+        is: "tire",
+        then: (schema) => schema.notRequired(),
+        // then: (schema) => schema.oneOf(["tl", "tt"]),
+        otherwise: (schema) => schema.strip(), // повністю прибирає поле з результату, якщо це не "tire"
+      }),
     // ЗАГРУЗКА ФОТО
     image: Yup.mixed()
       .test("fileSize", "Файл занадто великий", (value) => {
@@ -120,169 +132,202 @@ export const AddTireForm = ({ onClose }) => {
         initialValues={initialValues}
         validationSchema={tireSchema}
       >
-        {({ values, setFieldValue, isSubmitting }) => (
-          <Form className={s.form}>
-            <h2 className={s.formTitle}>Додавання товару</h2>
+        {({ values, setFieldValue, isSubmitting }) => {
+          // автоматично
+          useEffect(() => {
+            if (values.category === "rims") {
+              setFieldValue("title", "rims");
+            } else if (
+              values.category === "loader" ||
+              values.category === "industrial" ||
+              values.category === "agricultural"
+            ) {
+              setFieldValue("title", "tire");
+            }
+          }, [values.category, setFieldValue]);
 
-            <div className={s.group}>
-              <label className={s.label}>Категорія</label>
-              <Field className={s.input} as="select" name="category">
-                {/* disabled - не можемо обрати */}
-                <option disabled value="">
-                  Оберіть з варіантів:
-                </option>
-                <option value="loader">Шини для навантажувачів</option>
-                <option value="industrial">Шини індустріальні</option>
-                <option value="agricultural">
-                  Шини для сільскогосподарскої техніки
-                </option>
-                <option value="rims">Диски</option>
-              </Field>
-              <ErrorMessage
-                name="category"
-                component="span"
-                className={s.error}
-              />
-            </div>
+          return (
+            <Form className={s.form}>
+              <h2 className={s.formTitle}>Додавання товару</h2>
 
-            <div className={s.group}>
-              <label className={s.label}>Найменування</label>
-              <Field className={s.input} as="select" name="title">
-                <option disabled value="">
-                  Оберіть з варіантів:
-                </option>
-                {/* перевірити як буде записувати в базу даних, можливо брати value? */}
-                <option value="tire">Шина</option>
-                <option value="rims">Диск</option>
-              </Field>
-              <ErrorMessage name="title" component="span" className={s.error} />
-            </div>
-
-            <div className={s.group}>
-              <label className={s.label}>Ціна</label>
-              <Field className={s.input} type="number" name="price" />
-              <ErrorMessage name="price" component="span" className={s.error} />
-            </div>
-
-            <div className={s.group}>
-              <label className={s.label}>Розмір</label>
-              <Field className={s.input} type="string" name="size" />
-              <ErrorMessage name="size" component="span" className={s.error} />
-            </div>
-
-            <div className={s.group}>
-              <label className={s.label}>Виробник</label>
-              <Field className={s.input} type="string" name="producer" />
-              <ErrorMessage
-                name="producer"
-                component="span"
-                className={s.error}
-              />
-            </div>
-
-            <div className={s.group}>
-              <label className={s.label}>Модель шини</label>
-              <Field className={s.input} type="string" name="modelTire" />
-              <ErrorMessage
-                name="modelTire"
-                component="span"
-                className={s.error}
-              />
-            </div>
-
-            <div className={s.group}>
-              <label className={s.label}>Слойність</label>
-              <span></span>
-              <Field className={s.input} type="string" name="layering" />
-              <ErrorMessage
-                name="layering"
-                component="span"
-                className={s.error}
-              />
-            </div>
-
-            <div className={s.group}>
-              <label className={s.label}>Індекс</label>
-              <Field className={s.input} type="string" name="loadIndex" />
-              <ErrorMessage
-                name="loadIndex"
-                component="span"
-                className={s.error}
-              />
-            </div>
-
-            {values.title === "tire" && (
               <div className={s.group}>
-                <label className={s.label}>Тип шини</label>
-                {/* <Field className={s.input} type="string" name="tireType" /> */}
-
-                <Field className={s.input} as="select" name="tireType">
+                <label className={s.label}>Категорія</label>
+                <Field className={s.input} as="select" name="category">
+                  {/* disabled - не можемо обрати */}
                   <option disabled value="">
                     Оберіть з варіантів:
                   </option>
-                  {/* перевірити як буде записувати в базу даних, можливо брати value? */}
-                  <option value="tt">tt</option>
-                  <option value="tl">tl</option>
+                  <option value="loader">Шини для навантажувачів</option>
+                  <option value="industrial">Шини індустріальні</option>
+                  <option value="agricultural">
+                    Шини для сільскогосподарскої техніки
+                  </option>
+                  <option value="rims">Диски</option>
                 </Field>
                 <ErrorMessage
-                  name="tireType"
+                  name="category"
                   component="span"
                   className={s.error}
                 />
               </div>
-            )}
 
-            <div className={s.group}>
-              <label className={s.label}>Модель диску</label>
-              <Field className={s.input} type="string" name="diskModel" />
-              <ErrorMessage
-                name="diskModel"
-                component="span"
-                className={s.error}
-              />
-            </div>
+              <div className={s.group}>
+                <label className={s.label}>Найменування</label>
+                <Field className={s.input} as="select" name="title">
+                  <option disabled value="">
+                    Оберіть з варіантів:
+                  </option>
+                  {/* перевірити як буде записувати в базу даних, можливо брати value? */}
+                  <option value="tire">Шина</option>
+                  <option value="rims">Диск</option>
+                </Field>
+                <ErrorMessage
+                  name="title"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
 
-            <div className={s.group}>
-              <label className={s.label}>Навність </label>
-              <Field className={s.input} as="select" name="instock">
-                <option disabled value="">
-                  Оберіть з варіантів:
-                </option>
-                <option value="true">Є в наявності</option>
-                <option value="false">Уточнюйте наявність</option>
-              </Field>
-              <ErrorMessage
-                name="instock"
-                component="span"
-                className={s.error}
-              />
-            </div>
+              <div className={s.group}>
+                <label className={s.label}>Ціна</label>
+                <Field className={s.input} type="number" name="price" />
+                <ErrorMessage
+                  name="price"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
 
-            {/* ЗОБРАЖЕННЯ ПІДГРУЖАЄМО !!! */}
-            <div className={s.group}>
-              <label className={s.label}>Зображення</label>
-              <input
-                className={s.input}
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={(event) =>
-                  setFieldValue("image", event.currentTarget.files[0])
-                }
-              />
-              <ErrorMessage name="image" component="span" className={s.error} />
-            </div>
+              <div className={s.group}>
+                <label className={s.label}>Розмір</label>
+                <Field className={s.input} type="text" name="size" />
+                <ErrorMessage
+                  name="size"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
 
-            {/* className={s.button} */}
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <span className={s.loader}>Завантаження...</span>
-              ) : (
-                "Додати"
+              <div className={s.group}>
+                <label className={s.label}>Виробник</label>
+                <Field className={s.input} type="text" name="producer" />
+                <ErrorMessage
+                  name="producer"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
+
+              <div className={s.group}>
+                <label className={s.label}>Модель шини</label>
+                <Field className={s.input} type="text" name="modelTire" />
+                <ErrorMessage
+                  name="modelTire"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
+
+              <div className={s.group}>
+                <label className={s.label}>Слойність шини</label>
+                <span></span>
+                <Field className={s.input} type="text" name="layering" />
+                <ErrorMessage
+                  name="layering"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
+
+              <div className={s.group}>
+                <label className={s.label}>Індекс</label>
+                <Field className={s.input} type="text" name="loadIndex" />
+                <ErrorMessage
+                  name="loadIndex"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
+
+              {values.title === "tire" && (
+                <div className={s.group}>
+                  <label className={s.label}>Тип шини</label>
+                  {/* <Field className={s.input} type="text" name="tireType" /> */}
+
+                  <Field className={s.input} as="select" name="tireType">
+                    <option disabled value="">
+                      Оберіть з варіантів:
+                    </option>
+                    {/* перевірити як буде записувати в базу даних, можливо брати value? */}
+                    <option value="tt">tt</option>
+                    <option value="tl">tl</option>
+                  </Field>
+                  <ErrorMessage
+                    name="tireType"
+                    component="span"
+                    className={s.error}
+                  />
+                </div>
               )}
-            </button>
-          </Form>
-        )}
+
+              {values.category === "rims" && (
+                <div className={s.group}>
+                  <label className={s.label}>Модель диску</label>
+                  <Field className={s.input} type="text" name="diskModel" />
+                  <ErrorMessage
+                    name="diskModel"
+                    component="span"
+                    className={s.error}
+                  />
+                </div>
+              )}
+
+              <div className={s.group}>
+                <label className={s.label}>Навність </label>
+                <Field className={s.input} as="select" name="instock">
+                  <option disabled value="">
+                    Оберіть з варіантів:
+                  </option>
+                  <option value="true">Є в наявності</option>
+                  <option value="false">Уточнюйте наявність</option>
+                </Field>
+                <ErrorMessage
+                  name="instock"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
+
+              {/* ЗОБРАЖЕННЯ ПІДГРУЖАЄМО !!! */}
+              <div className={s.group}>
+                <label className={s.label}>Зображення</label>
+                <input
+                  className={s.input}
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={(event) =>
+                    setFieldValue("image", event.currentTarget.files[0])
+                  }
+                />
+                <ErrorMessage
+                  name="image"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
+
+              {/* className={s.button} */}
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <span className={s.loader}>Завантаження...</span>
+                ) : (
+                  "Додати"
+                )}
+              </button>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );
