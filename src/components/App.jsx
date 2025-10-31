@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     dispatch(refreshUser())
       .then(() => {
-        console.log("Refresh completed, isLoggedIn:", isLoggedIn);
+        // console.log("Refresh completed, isLoggedIn:", isLoggedIn);
       })
       .catch((err) => {
         console.error("Refresh failed:", err.message);

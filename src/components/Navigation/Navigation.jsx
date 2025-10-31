@@ -17,7 +17,7 @@ const Navigation = () => {
   const { isOpenModal, openModal, closeModal } = useModal();
   const adminWrapRef = useRef(null); //для відстеження контейнера adminWrap
   const userRole = useSelector(selectUserRole);
-  console.log("User role:", userRole);
+  // console.log("User role:", userRole);
 
   const toggleAdminMenu = () => {
     setIsOpenAdmin(!isOpenAdmin);

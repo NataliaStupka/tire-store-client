@@ -37,9 +37,9 @@ export const fetchTiresById = createAsyncThunk(
   "tire/fetchTiresById",
   async (id, thunkAPI) => {
     try {
-      console.log("Fetching tire with id:", id); // Дебаґ
+      // console.log("Fetching tire with id:", id); // Дебаґ
       const response = await tireApi.get(`/tires/${id}`);
-      console.log("Response data:", response.data); // Перевірка структури
+      // console.log("Response data:", response.data); // Перевірка структури
       return response.data;
     } catch (err) {
       console.error("Fetch error:", err.response?.data || err.message);
@@ -109,7 +109,7 @@ export const editTire = createAsyncThunk(
 
       const updatedTire = response.data.data?.tire; // ✅ оновлена шина (якщо бек повертає { data: {...} })
       if (updatedTire) {
-        console.log("🟢 Оновлюємо favoriteTires:", updatedTire._id);
+        // console.log("🟢 Оновлюємо favoriteTires:", updatedTire._id);
         dispatch(updateFavoriteTire(updatedTire));
       }
 

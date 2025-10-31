@@ -11,7 +11,7 @@ export const fetchTiresBySize = createAsyncThunk(
       const response = await tireApi.get(
         `/tires?size=${encodeURIComponent(size)}`
       );
-      console.log("oper.size", response.data.data.data);
+      // console.log("oper.size", response.data.data.data);
       return response.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);

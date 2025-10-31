@@ -15,17 +15,17 @@ export const tireApi = axios.create({
   withCredentials: true, // Дозволяє відправляти та отримувати кукі, забезпечить передачу кукі з фронтенду на бекенд.
 });
 
-console.log("🔧 👀 Environment check:", {
-  MODE: import.meta.env.MODE, //"development" або "production"
-  BASE_URL: BASE_URL,
-});
+// console.log("🔧 👀 Environment check:", {
+//   MODE: import.meta.env.MODE, //"development" або "production"
+//   BASE_URL: BASE_URL,
+// });
 
 //(збереження токену) приймає token
 //в місця де логінемось/реєструємся
 const setAuthHeader = (token) => {
   if (token) {
     tireApi.defaults.headers.common.Authorization = `Bearer ${token}`;
-    console.log("setAuthHeader called with token:", token); // Детальний дебаг
+    // console.log("setAuthHeader called with token:", token); // Детальний дебаг
   } else {
     console.warn("setAuthHeader called with no token");
   }
@@ -95,7 +95,7 @@ export const refreshUser = createAsyncThunk(
   async (_, thunkAPI) => {
     //thunkAPI.getState() - поверне весь store(auth(isLoggedIn, token), user, ...)
     const savedToken = thunkAPI.getState().auth.token; //отримуємо рядок token
-    console.log("Attempting refresh with saved token:", savedToken);
+    // console.log("Attempting refresh with saved token:", savedToken);
 
     if (!savedToken) {
       console.warn("⚠️ No token found in store");
@@ -114,7 +114,7 @@ export const refreshUser = createAsyncThunk(
         }
       );
 
-      console.log("✅ Refresh response:", data);
+      // console.log("✅ Refresh response:", data);
       setAuthHeader(data.data.accessToken); // Оновлюємо заголовок із новим токеном (зберігаємо новий accessToken у axios)
       return data.data; // Повертаємо { accessToken, user }
     } catch (err) {
@@ -146,3 +146,18 @@ export const refreshUser = createAsyncThunk(
 //     }
 //   }
 // );
+
+//перехоплювач для всіх інших 401 помилок (якщо refresh не спрацював), токен недійсний
+//явний вихід із сесії при просроченому токені
+tireApi.interceptors.response.use(
+  (response) => response, // ✅ успіх, повертає відповідь без змін
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      console.warn("⛔ Сесія прострочена. Виконується автоматичний вихід...");
+      import("../store").then(({ default: store }) => {
+        store.dispatch(logout()); //очистити токен з state, стерає авторизаційні заголовки (clearAuthHeader()), auth-стан до initialState
+      });
+    }
+    return Promise.reject(error);
+  }
+);

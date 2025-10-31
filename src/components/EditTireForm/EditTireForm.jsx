@@ -10,8 +10,11 @@ export const EditTireForm = ({ tire, onSubmit }) => {
   //formikBag містить setSubmitting - відправ форми true/false; resetForm - скид форми; setFieldValue - Динамічно змінює значення конкретного поля;
   //setFieldError - Встановлює помилку для конкретного поля; setValues - Оновлює всі значення форми одночасно; інші
   const handleSubmit = async (values, { setSubmitting }) => {
+    console.log("✅ VALUES", values);
     //values - дані з форми редагування
+
     const formData = new FormData();
+
     //Object.entries повертає масив пар ключ-значення [key, value]
     Object.entries(values).forEach(([key, value]) => {
       if (key !== "id") {
@@ -20,6 +23,7 @@ export const EditTireForm = ({ tire, onSubmit }) => {
         if (value !== originalValue) {
           //append - додає пару ключ-значення до об’єкта FormData
           console.log("Key-value:", key, value);
+
           if (key === "photo") {
             //перевіряє, чи користувач вибрав файл,
             if (value instanceof File && !formData.has("image")) {
@@ -81,6 +85,7 @@ export const EditTireForm = ({ tire, onSubmit }) => {
         layering: tire.layering || "",
         loadIndex: tire.loadIndex || "",
         tireType: tire.tireType || "",
+        diskModel: tire.diskModel || "",
         instock: tire.instock?.toString() || "false",
         photo: null,
       }}
@@ -153,7 +158,6 @@ export const EditTireForm = ({ tire, onSubmit }) => {
 
             <div className={s.group}>
               <label className={s.label}>Слойність шини</label>
-              <span></span>
               <Field className={s.field} type="text" name="layering" />
               <ErrorMessage
                 name="layering"
@@ -181,6 +185,28 @@ export const EditTireForm = ({ tire, onSubmit }) => {
               </Field>
               <ErrorMessage
                 name="tireType"
+                component="span"
+                className={s.error}
+              />
+            </div>
+            {/* 
+            {tire.category === "rims" && (
+              <div className={s.group}>
+                <label className={s.label}>Модель диску</label>
+                <Field className={s.input} type="text" name="diskModel" />
+                <ErrorMessage
+                  name="diskModel"
+                  component="span"
+                  className={s.error}
+                />
+              </div>
+            )} */}
+
+            <div className={s.group}>
+              <label className={s.label}>Модель диску</label>
+              <Field className={s.input} type="text" name="diskModel" />
+              <ErrorMessage
+                name="diskModel"
                 component="span"
                 className={s.error}
               />

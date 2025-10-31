@@ -259,8 +259,8 @@ export const AddTireForm = ({ onClose }) => {
                       Оберіть з варіантів:
                     </option>
                     {/* перевірити як буде записувати в базу даних, можливо брати value? */}
-                    <option value="tt">tt</option>
-                    <option value="tl">tl</option>
+                    <option value="tt">TT</option>
+                    <option value="tl">TL</option>
                   </Field>
                   <ErrorMessage
                     name="tireType"
