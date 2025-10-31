@@ -75,8 +75,8 @@ export const TireDetailsPage = () => {
 
             <div className={s.info}>
               <h3 className={s.name}>
-                {tire.title} {tire.producer} {tire.size}{" "}
-                {tire.modelTire || tire.diskModel}
+                {tire.title === "tire" ? "Шина" : "Диск"} {tire.producer}{" "}
+                {tire.size} {tire.modelTire || tire.diskModel}
               </h3>
 
               <ul className={s.list}>
@@ -127,6 +127,12 @@ export const TireDetailsPage = () => {
                   </li>
                 )}
 
+                {tire.layering && (
+                  <li>
+                    <span>Слойність шини:</span> {tire.layering}
+                  </li>
+                )}
+
                 {/* {isRim && <p className={s.name}>Модель диску: {tire.diskModel}</p>} */}
                 {isRim && tire.diskModel && (
                   <li>
@@ -138,6 +144,14 @@ export const TireDetailsPage = () => {
                 <li>
                   <span>Ціна:</span> {tire.price}$
                 </li>
+
+                {typeof tire.instock === "boolean" && (
+                  <li>
+                    <p>
+                      {tire.instock ? "В наявності" : "Уточнюйте наявність"}
+                    </p>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

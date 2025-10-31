@@ -11,6 +11,7 @@ import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
 import LoaderComponent from "../../components/Loader/Loader";
 import { clearTiresByCategory } from "../../redux/tire/slice";
 import s from "./CategoryTirePage.module.css";
+import { nanoid } from "@reduxjs/toolkit";
 
 const categoryTranslation = {
   loader: "Погрузочні шини",
@@ -18,6 +19,8 @@ const categoryTranslation = {
   agricultural: "Сільськогосподарські шини",
   rims: "Диски",
 };
+
+const diametrRims = [13, 15, 16, 17, 18, 20, 22, 26, 28, 30, 32, 38, 42];
 
 const CategoryTirePage = () => {
   const dispatch = useDispatch();
@@ -42,6 +45,27 @@ const CategoryTirePage = () => {
           <h1 className={s.title}>
             {categoryTranslation[category] || "Категорія"}
           </h1>
+
+          {category === "rims" && (
+            <div className={s.filterBlock}>
+              <p className={s.filterLabel}>Фільтр за діаметром:</p>
+              <ul className={s.diameterList}>
+                {diametrRims.map((item) => (
+                  <li key={nanoid()}>
+                    <button
+                      type="button"
+                      className={s.diameterButton}
+                      onClick={() =>
+                        console.log(`Диски діаметром ${item} дюймів`)
+                      }
+                    >
+                      {item}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {isLoading ? (
             <div className={s.loaderWrap}>
