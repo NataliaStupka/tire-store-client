@@ -5,13 +5,15 @@ import { tireApi } from "../auth/operations";
 
 export const fetchTiresBySize = createAsyncThunk(
   "filter/fetchTiresBySize",
-  async (size, thunkAPI) => {
+  async ({ size, category }, thunkAPI) => {
     try {
+      const query = new URLSearchParams();
+      if (size) query.append("size", size);
+      if (category) query.append("category", category);
+
       //encodeURIComponent - захищає URL від помилок, якщо size містить пробіли чи інші символи
-      const response = await tireApi.get(
-        `/tires?size=${encodeURIComponent(size)}`
-      );
-      // console.log("oper.size", response.data.data.data);
+      const response = await tireApi.get(`/tires?${query.toString()}`);
+      console.log("🟢 oper.size+category", response.data.data.data);
       return response.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);

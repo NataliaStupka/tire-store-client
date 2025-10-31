@@ -12,6 +12,9 @@ import LoaderComponent from "../../components/Loader/Loader";
 import { clearTiresByCategory } from "../../redux/tire/slice";
 import s from "./CategoryTirePage.module.css";
 import { nanoid } from "@reduxjs/toolkit";
+import { fetchTiresBySize } from "../../redux/filter/operations";
+import { selectTiresBySize } from "../../redux/filter/selectors";
+import { changeFilter } from "../../redux/filter/slice";
 
 const categoryTranslation = {
   loader: "Погрузочні шини",
@@ -31,10 +34,13 @@ const CategoryTirePage = () => {
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
 
+  const rimsFilter = useSelector(selectTiresBySize);
+
   useEffect(() => {
     if (category) {
       dispatch(clearTiresByCategory()); // очищаємо стан перед запитом
       dispatch(fetchTiresByCategory(category));
+      dispatch(changeFilter()); // очищає стан фільтра, при переході на іншу категорію
     }
   }, [dispatch, category]);
 
@@ -56,7 +62,9 @@ const CategoryTirePage = () => {
                       type="button"
                       className={s.diameterButton}
                       onClick={() =>
-                        console.log(`Диски діаметром ${item} дюймів`)
+                        dispatch(
+                          fetchTiresBySize({ size: item, category: "rims" })
+                        )
                       }
                     >
                       {item}
@@ -75,6 +83,8 @@ const CategoryTirePage = () => {
             <p className={s.errorText}>
               Сталася помилка: <span>{isError}</span>
             </p>
+          ) : rimsFilter.length > 0 ? (
+            <TiresCatalog tires={rimsFilter} />
           ) : tiresByCategory.length > 0 ? (
             <TiresCatalog tires={tiresByCategory} />
           ) : (

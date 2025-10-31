@@ -15,15 +15,15 @@ export const SearchBar = ({ onSizeChange }) => {
 
   //пошук при веденні символів
   const handleSearch = useCallback(
-    debounce((size) => {
-      if (size) {
-        console.log("Searching for size:", size);
-        dispatch(fetchTiresBySize(size));
+    debounce((size, category) => {
+      if (size || category) {
+        console.log("🟢 Searching for size+category:", size, category);
+        dispatch(fetchTiresBySize({ size, category }));
 
         if (onSizeChange) onSizeChange(size); // Викликаємо колбек для передачі size
       }
     }, 500), // Затримка 500 мс
-    [dispatch]
+    [dispatch, onSizeChange]
   );
 
   const handleReset = () => {
@@ -33,6 +33,7 @@ export const SearchBar = ({ onSizeChange }) => {
 
   const initialValues = {
     size: "", // Початкове значення для поля
+    category: "",
   };
 
   return (
@@ -44,25 +45,48 @@ export const SearchBar = ({ onSizeChange }) => {
         // validationSchema={validationSchema}
       >
         {/* ({ resetForm }) */}
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, resetForm }) => (
           <Form className={s.form}>
             <div className={s.group}>
               <label className={s.label}>
                 <Field
                   type="text"
                   name="size"
-                  className={clsx(s.searchInput)}
+                  className={s.searchInput}
                   placeholder="Введіть розмір"
                   aria-label="Пошук шин за розміром"
                   autoComplete="off" // Відключає автозаповнення
                   onChange={(e) => {
                     const size = e.target.value;
                     setFieldValue("size", size); // Оновлюємо значення в Formik
-                    handleSearch(size); //викликаємо пошук
+                    handleSearch(size, values.category); //викликаємо пошук
                   }}
                 />
               </label>
               <ErrorMessage name="size" component="div" className={s.error} />
+
+              <label className={s.label}>
+                <Field
+                  // type="text"
+                  as="select"
+                  name="category"
+                  className={s.searchInput}
+                  placeholder="Оберіть категорію"
+                  aria-label="Пошук за
+                  категорією"
+                  onChange={(e) => {
+                    const category = e.target.value;
+                    setFieldValue("category", category); // Оновлюємо значення в Formik
+                    handleSearch(values.size, category); //викликаємо пошук
+                  }}
+                >
+                  <option disabled value="">
+                    Оберіть категорію:
+                  </option>
+                  <option value="tire">Шини</option>
+                  <option value="rims">Диски</option>
+                </Field>
+              </label>
             </div>
 
             {/* <button type="submit" className={clsx("button", s.btnSearch)}>
@@ -71,9 +95,12 @@ export const SearchBar = ({ onSizeChange }) => {
 
             <button
               type="button"
-              onClick={() => {
+              onClick={(e) => {
                 handleReset();
-                setFieldValue("size", ""); // Скидаємо поле
+                // setFieldValue("size", ""); // Скидаємо поле
+                // setFieldValue("category", "");
+                resetForm(); // скидає всі поля
+                if (onSizeChange) onSizeChange(""); // очистить відображення результатів
               }}
               className={clsx("button", s.btnReset)}
             >

@@ -15,7 +15,7 @@
 
 .group {
   position: relative;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
 }
 
@@ -23,6 +23,7 @@
   color: var(--color-text-secondary);
   font-size: 14px;
   line-height: 16px;
+  margin-right: 8px;
 }
 
 .label .searchInput {
