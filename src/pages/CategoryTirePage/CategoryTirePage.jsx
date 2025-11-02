@@ -87,37 +87,39 @@ const CategoryTirePage = () => {
           {category === "rims" && (
             <div className={s.filterBlock}>
               <p className={s.filterLabel}>Фільтр за діаметром:</p>
-              <ul className={s.diameterList}>
-                {diametrRims.map((item) => (
-                  <li key={nanoid()}>
-                    <button
-                      type="button"
-                      className={`${s.diameterButton} ${
-                        selectedDiameter === item ? s.active : ""
-                      }`}
-                      onClick={() => handleDiametrClick(item)}
-                    >
-                      {item}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+              <div>
+                <ul className={s.diameterList}>
+                  {diametrRims.map((item) => (
+                    <li key={nanoid()}>
+                      <button
+                        type="button"
+                        className={`${s.diameterButton} ${
+                          selectedDiameter === item ? s.active : ""
+                        }`}
+                        onClick={() => handleDiametrClick(item)}
+                      >
+                        {item}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
 
-          {/* кнопка - показати всі диски */}
-          {selectedDiameter && (
-            <button
-              type="button"
-              className={s.resetButton}
-              onClick={() => {
-                setSelectedDiameter(null);
-                setNotFound(false);
-                dispatch(changeFilter()); // очищає фільтр
-              }}
-            >
-              Показати всі диски
-            </button>
+                {/* кнопка - показати всі диски */}
+                {selectedDiameter && (
+                  <button
+                    type="button"
+                    className={s.resetButton}
+                    onClick={() => {
+                      setSelectedDiameter(null);
+                      setNotFound(false);
+                      dispatch(changeFilter()); // очищає фільтр
+                    }}
+                  >
+                    Показати всі диски
+                  </button>
+                )}
+              </div>
+            </div>
           )}
 
           {/* 🌀 Loader під час фільтрації */}

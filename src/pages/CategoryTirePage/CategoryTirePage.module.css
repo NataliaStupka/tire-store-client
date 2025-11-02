@@ -29,6 +29,7 @@
   display: flex;
   flex-wrap: wrap; /* перенос при нестачі місця */
   gap: 12px; /* відстань між кнопками */
+  margin-bottom: 15px;
 }
 
 .diameterButton {
