@@ -68,3 +68,9 @@
   transition: background-color 0.3s ease, transform 0.1s ease;
   box-shadow: var(--shadow-soft);
 }
+
+@media screen and (max-width: 463px) {
+  .searchInput {
+    margin-bottom: 10px;
+  }
+}

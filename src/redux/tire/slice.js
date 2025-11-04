@@ -53,7 +53,7 @@ const slice = createSlice({
         state.tiresByCategory = action.payload.data;
       })
       .addCase(fetchTiresById.fulfilled, (state, action) => {
-        console.log("SLICE--", action.payload);
+        // console.log("SLICE--", action.payload);
         state.tireById = action.payload.data || action.payload;
         // state.tireById = action.payload.data;
       })
@@ -67,7 +67,7 @@ const slice = createSlice({
         });
       })
       .addCase(editTire.fulfilled, (state, { payload }) => {
-        console.log("Edit fulfilled:", payload);
+        // console.log("Edit fulfilled:", payload);
         const updatedTire = payload.data; //оновлена шина
 
         if (updatedTire) {

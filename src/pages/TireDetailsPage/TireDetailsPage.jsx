@@ -15,7 +15,7 @@ export const TireDetailsPage = () => {
   const dispatch = useDispatch();
 
   const { tireId } = useParams();
-  console.log(`Деталі про шину id - ${tireId}.`);
+  // console.log(`Деталі про шину id - ${tireId}.`);
 
   const location = useLocation();
   const tire = useSelector(selectTireById);
@@ -74,15 +74,23 @@ export const TireDetailsPage = () => {
             </div>
 
             <div className={s.info}>
-              <h3 className={s.name}>
-                {tire.title === "tire" ? "Шина" : "Диск"} {tire.producer}{" "}
-                {tire.size} {tire.modelTire || tire.diskModel}
-              </h3>
+              {isTire ? (
+                <h3 className={s.name}>
+                  Шина {tire.size}{" "}
+                  <span className={s.model}>{tire.modelTire}</span>{" "}
+                  <span className={s.producer}>{tire.producer}</span>
+                </h3>
+              ) : (
+                <h3 className={s.name}>
+                  Диск R{tire.size}{" "}
+                  <span className={s.producer}>{tire.producer}</span>
+                </h3>
+              )}
 
               <ul className={s.list}>
                 <li>
                   <span>Розмір:</span>
-                  {tire.size}
+                  {tire.size} {isRim && "(діаметр в дюймах)"}
                 </li>
 
                 {/* {isProducer && <p className={s.name}>Виробник: {tire.producer}</p>} */}
@@ -92,24 +100,6 @@ export const TireDetailsPage = () => {
                   </li>
                 )}
 
-                {/* {isTire && (
-              <>
-                {}
-                {tire.modelTire && (
-                  <p className={s.name}>Модель: {tire.modelTire}</p>
-                )}
-                {tire.tireType && (
-                  <p className={s.name}>Наявність камери: {tire.tireType}</p>
-                )}
-                {tire.loadIndex ||
-                  (tire.layering && (
-                    <p className={s.name}>
-                      Індекс навантаження/слойність:{" "}
-                      {tire.loadIndex || tire.layering}
-                    </p>
-                  ))}
-              </>
-            )} */}
                 {isTire && tire.modelTire && (
                   <li>
                     <span>Модель:</span> {tire.modelTire}
@@ -136,13 +126,17 @@ export const TireDetailsPage = () => {
                 {/* {isRim && <p className={s.name}>Модель диску: {tire.diskModel}</p>} */}
                 {isRim && tire.diskModel && (
                   <li>
-                    <span>Модель диску:</span> {tire.diskModel}
+                    <span className={s.connectingSize}>
+                      Найменування, приєднувальні розміри:
+                    </span>{" "}
+                    {tire.diskModel}
                   </li>
                 )}
 
                 {/* <p className={s.name}>Ціна: {tire.price}$</p> */}
                 <li>
-                  <span>Ціна:</span> {tire.price}$
+                  <span>Вартість:</span> {tire.price}{" "}
+                  {isTire ? "$" : "грн з ПДВ"}
                 </li>
 
                 {typeof tire.instock === "boolean" && (
