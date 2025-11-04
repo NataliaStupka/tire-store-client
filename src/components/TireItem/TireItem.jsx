@@ -106,25 +106,24 @@ export const TireItem = ({ tire }) => {
         <img src={image} alt={size} className={s.image} />
 
         <div className={s.info}>
-          {/* <h3>
-            {title === "tire" ? "Шина" : "Диск"} {size} {model}{" "}
-            <span style={{ color: "red" }}>{producer}</span>
-          </h3> */}
           {title === "tire" ? (
             <h3>
-              Шина {size} {model}{" "}
-              <span style={{ color: "red" }}>{producer}</span>
+              Шина {size} <span className={s.model}>{model}</span>{" "}
+              <span className={s.producer}>{producer}</span>
             </h3>
           ) : (
             <h3>
-              Диск R{size} <span style={{ color: "red" }}>{producer}</span>
+              Диск R{size} <span className={s.producer}>{producer}</span>
             </h3>
           )}
           {tireType && <p>Тип шини: {tireType} </p>}
           {layering && <p>Слойність шини: {layering} </p>}
           {loadIndex && <p>Індекс: {loadIndex} </p>}
           {tire.category === "rims" && (
-            <p>Приєднувальні розміри: {diskModel} </p>
+            <p>
+              <span className={s.connectingSize}>Приєднувальні розміри:</span>{" "}
+              {diskModel}{" "}
+            </p>
           )}
 
           <p className={s.price}>

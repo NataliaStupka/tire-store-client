@@ -44,6 +44,17 @@
   color: var(--main-text);
 }
 
+.model {
+  text-decoration: underline;
+}
+.producer {
+  color: var(--cta);
+}
+.connectingSize {
+  font-weight: 600;
+  color: var(--border-color-dark);
+}
+
 .price {
   font-size: 20px;
   font-weight: 700;

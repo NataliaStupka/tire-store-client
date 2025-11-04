@@ -11,7 +11,6 @@ import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
 import LoaderComponent from "../../components/Loader/Loader";
 import { clearTiresByCategory } from "../../redux/tire/slice";
 import s from "./CategoryTirePage.module.css";
-import { nanoid } from "@reduxjs/toolkit";
 import {
   fetchRimsDiameters,
   fetchTiresBySize,
@@ -21,6 +20,7 @@ import {
   selectTiresBySize,
 } from "../../redux/filter/selectors";
 import { changeFilter } from "../../redux/filter/slice";
+import { FilterDiametersRims } from "../../components/FilterDiametersRims/FilterDiametersRims";
 
 const categoryTranslation = {
   loader: "Погрузочні шини",
@@ -73,13 +73,18 @@ const CategoryTirePage = () => {
 
     const data = resultAction.payload?.data || resultAction.payload;
     if (!data || data.length === 0) setNotFound(true);
-
     setIsFiltering(false); // ховаємо loader після завершення запиту
   };
 
   //що показуємо
   const tiresToShow =
     selectedDiameter && !notFound ? rimsFilter : tiresByCategory;
+
+  const resetDiameters = () => {
+    setSelectedDiameter(null);
+    setNotFound(false);
+    dispatch(changeFilter()); // очищає фільтр
+  };
 
   return (
     <main>
@@ -91,42 +96,12 @@ const CategoryTirePage = () => {
 
           {/* кнопки діаметрів */}
           {category === "rims" && (
-            <div className={s.filterBlock}>
-              <p className={s.filterLabel}>Фільтр за діаметром:</p>
-
-              <div>
-                <ul className={s.diameterList}>
-                  {rimsDiameters.map((item) => (
-                    <li key={nanoid()}>
-                      <button
-                        type="button"
-                        className={`${s.diameterButton} ${
-                          selectedDiameter === item ? s.active : ""
-                        }`}
-                        onClick={() => handleDiametrClick(item)}
-                      >
-                        {item}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* кнопка - показати всі диски */}
-                {selectedDiameter && (
-                  <button
-                    type="button"
-                    className={s.resetButton}
-                    onClick={() => {
-                      setSelectedDiameter(null);
-                      setNotFound(false);
-                      dispatch(changeFilter()); // очищає фільтр
-                    }}
-                  >
-                    Показати всі диски
-                  </button>
-                )}
-              </div>
-            </div>
+            <FilterDiametersRims
+              rimsDiameters={rimsDiameters}
+              selectedDiameter={selectedDiameter}
+              onSelect={handleDiametrClick}
+              onReset={resetDiameters}
+            />
           )}
 
           {/* Loader під час фільтрації */}
