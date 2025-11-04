@@ -17,7 +17,7 @@ export const SearchBar = ({ onSizeChange }) => {
   const handleSearch = useCallback(
     debounce((size, category) => {
       if (size || category) {
-        console.log("🟢 Searching for size+category:", size, category);
+        // console.log("🟢 Searching for size+category:", size, category);
         dispatch(fetchTiresBySize({ size, category }));
 
         if (onSizeChange) onSizeChange(size); // Викликаємо колбек для передачі size
@@ -27,7 +27,7 @@ export const SearchBar = ({ onSizeChange }) => {
   );
 
   const handleReset = () => {
-    console.log("Скидуємо фільтр");
+    // console.log("Скидуємо фільтр");
     dispatch(changeFilter());
   };
 

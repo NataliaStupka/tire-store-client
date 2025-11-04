@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTiresBySize } from "./operations";
+import { fetchRimsDiameters, fetchTiresBySize } from "./operations";
 
 const initialState = {
   tiresBySize: [],
+  rimsDiameters: [],
   isLoading: false,
+  error: null,
 };
 
 const slice = createSlice({
@@ -31,6 +33,19 @@ const slice = createSlice({
       .addCase(fetchTiresBySize.rejected, (state) => {
         state.isLoading = false;
         state.tiresBySize = []; // У разі помилки очищаємо
+      })
+
+      // отримати всі можливі діаметри дисків
+      .addCase(fetchRimsDiameters.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchRimsDiameters.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.rimsDiameters = action.payload || [];
+      })
+      .addCase(fetchRimsDiameters.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

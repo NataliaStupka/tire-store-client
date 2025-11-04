@@ -12,8 +12,14 @@ import LoaderComponent from "../../components/Loader/Loader";
 import { clearTiresByCategory } from "../../redux/tire/slice";
 import s from "./CategoryTirePage.module.css";
 import { nanoid } from "@reduxjs/toolkit";
-import { fetchTiresBySize } from "../../redux/filter/operations";
-import { selectTiresBySize } from "../../redux/filter/selectors";
+import {
+  fetchRimsDiameters,
+  fetchTiresBySize,
+} from "../../redux/filter/operations";
+import {
+  selectRimsDiameters,
+  selectTiresBySize,
+} from "../../redux/filter/selectors";
 import { changeFilter } from "../../redux/filter/slice";
 
 const categoryTranslation = {
@@ -23,50 +29,50 @@ const categoryTranslation = {
   rims: "Диски",
 };
 
-const diametrRims = [13, 15, 16, 17, 18, 20, 22, 26, 28, 30, 32, 38, 42];
-
 const CategoryTirePage = () => {
   const dispatch = useDispatch();
-  const tiresByCategory = useSelector(selectTiresByCategory);
-
   const { item: category } = useParams(); //яка категорія
 
+  const tiresByCategory = useSelector(selectTiresByCategory);
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
 
   //обраний діаметр
+  const rimsDiameters = useSelector(selectRimsDiameters);
+  const rimsFilter = useSelector(selectTiresBySize);
+
   const [selectedDiameter, setSelectedDiameter] = useState(null);
   const [notFound, setNotFound] = useState(false);
   const [isFiltering, setIsFiltering] = useState(false);
 
-  const rimsFilter = useSelector(selectTiresBySize);
-
   // завантажуємо всі товари категорії при першому рендері або зміні категорії
   useEffect(() => {
-    if (category) {
-      dispatch(clearTiresByCategory()); // очищаємо стан перед запитом
-      dispatch(fetchTiresByCategory(category));
-      dispatch(changeFilter()); // очищає стан фільтра, при переході на іншу категорію
+    if (!category) return;
 
-      setSelectedDiameter(null); //скидаємо вибір діаметра
-      setNotFound(false);
+    dispatch(clearTiresByCategory()); // очищаємо стан перед запитом
+    dispatch(fetchTiresByCategory(category));
+    dispatch(changeFilter()); // очищає стан фільтра, при переході на іншу категорію
+
+    setSelectedDiameter(null); //скидаємо вибір діаметра
+    setNotFound(false);
+
+    if (category === "rims") {
+      dispatch(fetchRimsDiameters());
     }
   }, [dispatch, category]);
 
-  // при виборі діаметра
+  // клік по діаметру
   const handleDiametrClick = async (diameter) => {
     setSelectedDiameter(diameter);
     setNotFound(false);
     setIsFiltering(true); // показуємо loader
+
     const resultAction = await dispatch(
       fetchTiresBySize({ size: diameter, category: "rims" })
     );
 
-    console.log("🔥 resultAction", resultAction);
     const data = resultAction.payload?.data || resultAction.payload;
-    if (!data || data.length === 0) {
-      setNotFound(true);
-    }
+    if (!data || data.length === 0) setNotFound(true);
 
     setIsFiltering(false); // ховаємо loader після завершення запиту
   };
@@ -87,9 +93,10 @@ const CategoryTirePage = () => {
           {category === "rims" && (
             <div className={s.filterBlock}>
               <p className={s.filterLabel}>Фільтр за діаметром:</p>
+
               <div>
                 <ul className={s.diameterList}>
-                  {diametrRims.map((item) => (
+                  {rimsDiameters.map((item) => (
                     <li key={nanoid()}>
                       <button
                         type="button"
@@ -122,7 +129,7 @@ const CategoryTirePage = () => {
             </div>
           )}
 
-          {/* 🌀 Loader під час фільтрації */}
+          {/* Loader під час фільтрації */}
           {isFiltering && (
             <div className={s.loaderWrap}>
               <LoaderComponent />
