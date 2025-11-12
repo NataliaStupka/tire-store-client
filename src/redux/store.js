@@ -20,7 +20,7 @@ const authPersistConfig = {
   key: "auth",
   version: 1,
   storage,
-  whiteList: ["token", "user", "isLoggedIn"], //зберігаємо, для оновлення сторінки
+  whitelist: ["token", "user", "isLoggedIn"], //зберігаємо, для оновлення сторінки
 };
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 // ---
@@ -28,7 +28,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 const tirePersistConfig = {
   key: "tire",
   storage,
-  whiteList: ["favoriteTires"], // зберігаємо тільки обране
+  whitelist: ["favoriteTires"], // зберігаємо тільки обране
 };
 const persistedTireReducer = persistReducer(tirePersistConfig, tiresReducer);
 // ---
