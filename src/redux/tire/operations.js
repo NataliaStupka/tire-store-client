@@ -21,11 +21,17 @@ export const fetchAllTires = createAsyncThunk(
 //fetch Tires By Category
 export const fetchTiresByCategory = createAsyncThunk(
   "tire/fetchTiresByCategory",
-  async (category, thunkAPI) => {
+  async ({ category, page = 1, append = false }, thunkAPI) => {
     try {
       // thunkAPI.dispatch(clearTiresByCategory()); // Скидаємо стан перед новим запитом
-      const response = await tireApi.get(`/tires?category=${category}`);
-      return response.data.data;
+
+      const perPage = thunkAPI.getState().tire.perPage; // 1️⃣ поточний state із slice, витягуємо perPage
+
+      const response = await tireApi.get(
+        `/tires?category=${category}&page=${page}&perPage=${perPage}`
+      );
+      console.log("☘️ response:", { ...response.data.data });
+      return { ...response.data.data, append };
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
     }

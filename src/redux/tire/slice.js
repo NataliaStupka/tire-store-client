@@ -7,6 +7,7 @@ import {
   fetchTiresByCategory,
   fetchTiresById,
 } from "./operations.js";
+import { REHYDRATE } from "redux-persist";
 
 const initialState = {
   items: [],
@@ -14,6 +15,10 @@ const initialState = {
   tireById: null,
 
   favoriteTires: [],
+
+  currentPage: 1, //page
+  perPage: 12,
+  totalPages: null,
 
   isLoading: false,
   isError: null,
@@ -40,6 +45,7 @@ const slice = createSlice({
     },
     clearTiresByCategory(state) {
       state.tiresByCategory = [];
+      state.currentPage = 1;
     },
   },
 
@@ -50,12 +56,23 @@ const slice = createSlice({
         state.items = action.payload.data;
       })
       .addCase(fetchTiresByCategory.fulfilled, (state, action) => {
-        state.tiresByCategory = action.payload.data;
+        const { data, page, totalPages, append } = action.payload;
+
+        if (append) {
+          // LoadMore
+          state.tiresByCategory = [...state.tiresByCategory, ...data];
+        } else {
+          // Page buttons
+          // state.tiresByCategory = [...data];
+          state.tiresByCategory = data;
+          console.log("💄", data); //????
+        }
+
+        state.currentPage = page;
+        state.totalPages = totalPages;
       })
       .addCase(fetchTiresById.fulfilled, (state, action) => {
-        // console.log("SLICE--", action.payload);
         state.tireById = action.payload.data || action.payload;
-        // state.tireById = action.payload.data;
       })
       .addCase(addTire.fulfilled, (state, action) => {
         state.items.push(action.payload);
@@ -67,7 +84,6 @@ const slice = createSlice({
         });
       })
       .addCase(editTire.fulfilled, (state, { payload }) => {
-        // console.log("Edit fulfilled:", payload);
         const updatedTire = payload.data; //оновлена шина
 
         if (updatedTire) {
@@ -80,6 +96,15 @@ const slice = createSlice({
           state.tireById = updatedTire;
         } else {
           console.warn("No updated tire data received:", payload);
+        }
+      })
+      // очищаємо все, крім обраних, при старті
+      .addCase(REHYDRATE, (state, action) => {
+        if (action.key === "tire") {
+          return {
+            ...initialState,
+            favoriteTires: state.favoriteTires,
+          };
         }
       })
       //-- addMatcher --//

@@ -4,5 +4,8 @@ export const selectTiresByCategory = (state) => state.tire.tiresByCategory;
 export const selectTireById = (state) => state.tire.tireById;
 export const selectFavoriteTires = (state) => state.tire.favoriteTires;
 
+export const selectCurrentPage = (state) => state.tire.currentPage;
+export const selectTotalPages = (state) => state.tire.totalPages;
+
 export const selectIsLoading = (state) => state.tire.isLoading;
 export const selectIsError = (state) => state.tire.isError;

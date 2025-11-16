@@ -8,6 +8,7 @@ export const FilterDiametersRims = ({
   onReset,
 }) => {
   return (
+    // фільтр диаметр диску
     <div className={s.filterBlock}>
       <p className={s.filterLabel}>Фільтр за діаметром:</p>
 

@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchTiresByCategory } from "../../redux/tire/operations";
 import {
+  selectCurrentPage,
   selectIsError,
   selectIsLoading,
   selectTiresByCategory,
+  selectTotalPages,
 } from "../../redux/tire/selectors";
 import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
 import LoaderComponent from "../../components/Loader/Loader";
@@ -34,6 +36,12 @@ const CategoryTirePage = () => {
   const { item: category } = useParams(); //яка категорія
 
   const tiresByCategory = useSelector(selectTiresByCategory);
+
+  //page
+  const currentPage = useSelector(selectCurrentPage);
+  const totalPages = useSelector(selectTotalPages);
+  console.log("‼️State_Page ==", currentPage);
+
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
 
@@ -50,7 +58,7 @@ const CategoryTirePage = () => {
     if (!category) return;
 
     dispatch(clearTiresByCategory()); // очищаємо стан перед запитом
-    dispatch(fetchTiresByCategory(category));
+    dispatch(fetchTiresByCategory({ category, page: 1 }));
     dispatch(changeFilter()); // очищає стан фільтра, при переході на іншу категорію
 
     setSelectedDiameter(null); //скидаємо вибір діаметра
@@ -85,6 +93,16 @@ const CategoryTirePage = () => {
     setNotFound(false);
     dispatch(changeFilter()); // очищає фільтр
   };
+
+  const handleLoadMore = () => {
+    console.log("LoadMore");
+
+    dispatch(
+      fetchTiresByCategory({ category, page: currentPage + 1, append: true })
+    ); //append - додасть в кінець списку
+  };
+
+  const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <main>
@@ -135,6 +153,36 @@ const CategoryTirePage = () => {
               </p>
             )
           )}
+          <div>
+            <ul className={s.pagination}>
+              {pagesArray.map((pageNum) => {
+                return (
+                  <li key={pageNum}>
+                    <button
+                      className={`${s.pageButton} ${
+                        currentPage === pageNum ? s.activePage : ""
+                      }`}
+                      onClick={() => {
+                        console.log(`Button ${pageNum}`);
+                        dispatch(
+                          fetchTiresByCategory({
+                            category,
+                            page: pageNum,
+                            append: false,
+                          })
+                        );
+                      }}
+                    >
+                      {pageNum}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* {currentPage < totalPages && ()} */}
+            <button onClick={handleLoadMore}>Load more</button>
+          </div>
         </div>
       </section>
     </main>

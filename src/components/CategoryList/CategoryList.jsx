@@ -1,4 +1,3 @@
-import { nanoid } from "@reduxjs/toolkit";
 import s from "./CategoryList.module.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
@@ -85,7 +84,6 @@ export const CategoryList = ({
       <ul className={s.categoryList}>
         {categories.map((item) => {
           return (
-            // <li key={nanoid()} className={s.categoryItem}></li>
             <li key={item} className={s.categoryItem}>
               <NavLink
                 to={`/category/${item}`}
