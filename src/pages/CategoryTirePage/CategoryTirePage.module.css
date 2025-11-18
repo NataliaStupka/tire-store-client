@@ -56,10 +56,6 @@
   list-style: none;
 }
 
-/* .pagination li {
-  list-style: none;
-} */
-
 .pageButton {
   background-color: #f9fafb;
   color: #101828;
@@ -80,4 +76,28 @@
   background-color: var(--accent-color);
   color: #ffffff;
   border-color: #344054;
+}
+
+.loadMoreBtn {
+  display: block;
+  margin: 24px auto 0;
+  background-color: #cbdff3;
+  color: #101828;
+  border: 1px solid #c3ceda;
+  border-radius: 10px;
+  padding: 10px 18px;
+
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease, transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Hover */
+.loadMoreBtn:hover {
+  background-color: #a7c4e2;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }

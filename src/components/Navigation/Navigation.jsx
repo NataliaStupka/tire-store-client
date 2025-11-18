@@ -71,6 +71,9 @@ const Navigation = () => {
         <NavLink to="/" className={s.logo3}>
           TIRE<span className={s.accent}>S</span>TORE
         </NavLink>
+        <p style={{ color: "red", fontWeight: "bold" }}>
+          --- Сайт у розробці ---
+        </p>
 
         {userRole === "admin" && (
           <div className={s.adminWrap} ref={adminWrapRef}>

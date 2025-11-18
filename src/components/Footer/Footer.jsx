@@ -65,7 +65,7 @@ export const Footer = () => {
         )}
 
         <div className={s.footerBottom}>
-          <p>© {new Date().getFullYear()} TyreStore. Усі права захищено.</p>
+          <p>© {new Date().getFullYear()} TireStore. Усі права захищено.</p>
         </div>
       </div>
     </footer>

@@ -30,7 +30,7 @@ export const fetchTiresByCategory = createAsyncThunk(
       const response = await tireApi.get(
         `/tires?category=${category}&page=${page}&perPage=${perPage}`
       );
-      console.log("☘️ response:", { ...response.data.data });
+      console.log("☘️ response-tire:", response.data.data);
       return { ...response.data.data, append };
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);

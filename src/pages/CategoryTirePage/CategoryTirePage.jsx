@@ -19,6 +19,8 @@ import {
 } from "../../redux/filter/operations";
 import {
   selectRimsDiameters,
+  selectSizePage,
+  selectSizeTotalPages,
   selectTiresBySize,
 } from "../../redux/filter/selectors";
 import { changeFilter } from "../../redux/filter/slice";
@@ -40,7 +42,10 @@ const CategoryTirePage = () => {
   //page
   const currentPage = useSelector(selectCurrentPage);
   const totalPages = useSelector(selectTotalPages);
-  console.log("‼️State_Page ==", currentPage);
+  //page-filter
+  const sizeTotalPages = useSelector(selectSizeTotalPages);
+  const sizePage = useSelector(selectSizePage);
+  // console.log("‼️State_Page ==", currentPage);
 
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
@@ -85,8 +90,10 @@ const CategoryTirePage = () => {
   };
 
   //що показуємо
-  const tiresToShow =
-    selectedDiameter && !notFound ? rimsFilter : tiresByCategory;
+  const isFilterActive = selectedDiameter && !notFound; //обрано діаметр і щось знайдено
+  const tiresToShow = isFilterActive ? rimsFilter : tiresByCategory;
+  const pagesToShow = (isFilterActive ? sizeTotalPages : totalPages) || 1; //пагінація
+  const pageNow = isFilterActive ? sizePage : currentPage;
 
   const resetDiameters = () => {
     setSelectedDiameter(null);
@@ -94,15 +101,28 @@ const CategoryTirePage = () => {
     dispatch(changeFilter()); // очищає фільтр
   };
 
+  // LoadMore
   const handleLoadMore = () => {
     console.log("LoadMore");
 
-    dispatch(
-      fetchTiresByCategory({ category, page: currentPage + 1, append: true })
-    ); //append - додасть в кінець списку
+    if (isFilterActive) {
+      dispatch(
+        fetchTiresBySize({
+          size: selectedDiameter,
+          category: "rims",
+          page: sizePage + 1,
+          append: true,
+        })
+      );
+    } else {
+      dispatch(
+        fetchTiresByCategory({ category, page: currentPage + 1, append: true })
+      ); //append - додасть в кінець списку
+    }
   };
 
-  const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+  //кількість сторінок для пагінації (при фільтрі за діаметром/при всіх дисках)
+  const pagesArray = Array.from({ length: pagesToShow }, (_, i) => i + 1);
 
   return (
     <main>
@@ -153,6 +173,7 @@ const CategoryTirePage = () => {
               </p>
             )
           )}
+
           <div>
             <ul className={s.pagination}>
               {pagesArray.map((pageNum) => {
@@ -160,17 +181,29 @@ const CategoryTirePage = () => {
                   <li key={pageNum}>
                     <button
                       className={`${s.pageButton} ${
-                        currentPage === pageNum ? s.activePage : ""
+                        pageNow === pageNum ? s.activePage : ""
                       }`}
                       onClick={() => {
                         console.log(`Button ${pageNum}`);
-                        dispatch(
-                          fetchTiresByCategory({
-                            category,
-                            page: pageNum,
-                            append: false,
-                          })
-                        );
+
+                        if (isFilterActive) {
+                          dispatch(
+                            fetchTiresBySize({
+                              size: selectedDiameter,
+                              category: "rims",
+                              page: pageNum,
+                              append: false,
+                            })
+                          );
+                        } else {
+                          dispatch(
+                            fetchTiresByCategory({
+                              category,
+                              page: pageNum,
+                              append: false,
+                            })
+                          );
+                        }
                       }}
                     >
                       {pageNum}
@@ -180,8 +213,11 @@ const CategoryTirePage = () => {
               })}
             </ul>
 
-            {/* {currentPage < totalPages && ()} */}
-            <button onClick={handleLoadMore}>Load more</button>
+            {pageNow < pagesToShow && (
+              <button onClick={handleLoadMore} className={s.loadMoreBtn}>
+                Load more
+              </button>
+            )}
           </div>
         </div>
       </section>

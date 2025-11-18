@@ -18,7 +18,7 @@ export const TiresCatalog = ({ tires: propTires }) => {
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
 
-  console.log("🎃 tires/disks -=-", ...tires);
+  // console.log("🎃 tires/disks -=-", ...tires);
 
   return (
     <section>
