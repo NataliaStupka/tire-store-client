@@ -9,7 +9,7 @@ const initialState = {
   sizePage: 1,
   sizeTotalPages: 1,
   sizeTotalItems: 0,
-  sizePerPage: 3,
+  sizePerPage: 12,
 
   isLoading: false,
   error: null,
@@ -34,33 +34,23 @@ const slice = createSlice({
     builder
       .addCase(fetchTiresBySize.pending, (state, action) => {
         state.isLoading = true;
-        const { append } = action.meta.arg;
-        // очищаємо масив тільки коли append=false
-        if (!append) {
-          state.tiresBySize = [];
-        }
 
-        // state.tiresBySize = []; // Очищаємо перед новим запитом
+        state.tiresBySize = []; // Очищаємо перед новим запитом
       })
       .addCase(fetchTiresBySize.fulfilled, (state, action) => {
-        const { data, page, totalItems, perPage, totalPages, append } =
-          action.payload;
+        const { data, page, totalItems, perPage, totalPages } = action.payload;
         console.log("Flter_size-payload", action.payload);
         state.isLoading = false;
 
-        if (append) {
-          state.tiresBySize = [...state.tiresBySize, ...data];
-        } else {
-          state.tiresBySize = data || [];
-        }
+        state.tiresBySize = data || [];
 
         state.sizePage = page;
         state.sizeTotalPages = totalPages;
         state.sizeTotalItems = totalItems;
-        state.sizePerPage = perPage;
+        // state.sizePerPage = perPage;
         console.log("Flter_size-payload", action.payload);
       })
-      .addCase(fetchTiresBySize.rejected, (state) => {
+      .addCase(fetchTiresBySize.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         state.tiresBySize = []; // У разі помилки очищаємо

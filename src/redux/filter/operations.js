@@ -5,7 +5,7 @@ import { tireApi } from "../auth/operations";
 
 export const fetchTiresBySize = createAsyncThunk(
   "filter/fetchTiresBySize",
-  async ({ size, category, page = 1, append = false }, thunkAPI) => {
+  async ({ size, category, page = 1 }, thunkAPI) => {
     try {
       const perPage = thunkAPI.getState().filter.sizePerPage;
 
@@ -18,7 +18,7 @@ export const fetchTiresBySize = createAsyncThunk(
       //encodeURIComponent - захищає URL від помилок, якщо size містить пробіли чи інші символи
       const response = await tireApi.get(`/tires?${query.toString()}`);
       console.log("🍁 response-filter-size:", response.data.data);
-      return { ...response.data.data, append };
+      return response.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
     }

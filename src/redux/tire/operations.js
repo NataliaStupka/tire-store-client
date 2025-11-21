@@ -21,7 +21,7 @@ export const fetchAllTires = createAsyncThunk(
 //fetch Tires By Category
 export const fetchTiresByCategory = createAsyncThunk(
   "tire/fetchTiresByCategory",
-  async ({ category, page = 1, append = false }, thunkAPI) => {
+  async ({ category, page = 1 }, thunkAPI) => {
     try {
       // thunkAPI.dispatch(clearTiresByCategory()); // Скидаємо стан перед новим запитом
 
@@ -31,7 +31,7 @@ export const fetchTiresByCategory = createAsyncThunk(
         `/tires?category=${category}&page=${page}&perPage=${perPage}`
       );
       console.log("☘️ response-tire:", response.data.data);
-      return { ...response.data.data, append };
+      return response.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
     }

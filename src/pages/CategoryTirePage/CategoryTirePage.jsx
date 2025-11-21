@@ -101,26 +101,6 @@ const CategoryTirePage = () => {
     dispatch(changeFilter()); // очищає фільтр
   };
 
-  // LoadMore
-  const handleLoadMore = () => {
-    console.log("LoadMore");
-
-    if (isFilterActive) {
-      dispatch(
-        fetchTiresBySize({
-          size: selectedDiameter,
-          category: "rims",
-          page: sizePage + 1,
-          append: true,
-        })
-      );
-    } else {
-      dispatch(
-        fetchTiresByCategory({ category, page: currentPage + 1, append: true })
-      ); //append - додасть в кінець списку
-    }
-  };
-
   //кількість сторінок для пагінації (при фільтрі за діаметром/при всіх дисках)
   const pagesArray = Array.from({ length: pagesToShow }, (_, i) => i + 1);
 
@@ -192,7 +172,6 @@ const CategoryTirePage = () => {
                               size: selectedDiameter,
                               category: "rims",
                               page: pageNum,
-                              append: false,
                             })
                           );
                         } else {
@@ -200,7 +179,6 @@ const CategoryTirePage = () => {
                             fetchTiresByCategory({
                               category,
                               page: pageNum,
-                              append: false,
                             })
                           );
                         }
@@ -212,12 +190,6 @@ const CategoryTirePage = () => {
                 );
               })}
             </ul>
-
-            {pageNow < pagesToShow && (
-              <button onClick={handleLoadMore} className={s.loadMoreBtn}>
-                Load more
-              </button>
-            )}
           </div>
         </div>
       </section>

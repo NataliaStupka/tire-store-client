@@ -56,15 +56,10 @@ const slice = createSlice({
         state.items = action.payload.data;
       })
       .addCase(fetchTiresByCategory.fulfilled, (state, action) => {
-        const { data, page, totalPages, append } = action.payload;
+        const { data, page, totalPages } = action.payload;
         console.log("Payload_totalPages", totalPages);
 
-        if (append) {
-          // LoadMore
-          state.tiresByCategory = [...state.tiresByCategory, ...data];
-        } else {
-          state.tiresByCategory = data;
-        }
+        state.tiresByCategory = data;
 
         state.currentPage = page;
         state.totalPages = totalPages;
