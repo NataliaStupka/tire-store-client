@@ -136,7 +136,7 @@ export const TireDetailsPage = () => {
                 {/* <p className={s.name}>Ціна: {tire.price}$</p> */}
                 <li>
                   <span>Вартість:</span> {tire.price}{" "}
-                  {isTire ? "$" : "грн з ПДВ"}
+                  {isTire ? "$" : "грн (з ПДВ)"}
                 </li>
 
                 {typeof tire.instock === "boolean" && (
