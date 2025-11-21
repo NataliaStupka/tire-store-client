@@ -46,7 +46,6 @@ const CategoryTirePage = () => {
   //page-filter
   const sizeTotalPages = useSelector(selectSizeTotalPages);
   const sizePage = useSelector(selectSizePage);
-  // console.log("‼️State_Page ==", currentPage);
 
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
@@ -56,7 +55,6 @@ const CategoryTirePage = () => {
   const rimsFilter = useSelector(selectTiresBySize);
 
   const [selectedDiameter, setSelectedDiameter] = useState(null);
-  const [notFound, setNotFound] = useState(false);
   const [isFiltering, setIsFiltering] = useState(false);
 
   // завантажуємо всі товари категорії при першому рендері або зміні категорії
@@ -68,7 +66,6 @@ const CategoryTirePage = () => {
     dispatch(changeFilter()); // очищає стан фільтра, при переході на іншу категорію
 
     setSelectedDiameter(null); //скидаємо вибір діаметра
-    setNotFound(false);
 
     if (category === "rims") {
       dispatch(fetchRimsDiameters());
@@ -78,29 +75,28 @@ const CategoryTirePage = () => {
   // клік по діаметру
   const handleDiametrClick = async (diameter) => {
     setSelectedDiameter(diameter);
-    setNotFound(false);
     setIsFiltering(true); // показуємо loader
 
-    const resultAction = await dispatch(
-      fetchTiresBySize({ size: diameter, category: "rims" })
-    );
+    await dispatch(fetchTiresBySize({ size: diameter, category: "rims" }));
 
-    const data = resultAction.payload?.data || resultAction.payload;
-    if (!data || data.length === 0) setNotFound(true);
     setIsFiltering(false); // ховаємо loader після завершення запиту
   };
 
-  //що показуємо
-  const isFilterActive = selectedDiameter && !notFound; //обрано діаметр і щось знайдено
-  const tiresToShow = isFilterActive ? rimsFilter : tiresByCategory;
-  const pagesToShow = (isFilterActive ? sizeTotalPages : totalPages) || 1; //пагінація
-  const pageNow = isFilterActive ? sizePage : currentPage;
-
   const resetDiameters = () => {
     setSelectedDiameter(null);
-    setNotFound(false);
     dispatch(changeFilter()); // очищає фільтр
   };
+
+  //що показуємо
+  const isFilterActive = selectedDiameter !== null; //обрано діаметр і щось знайдено
+  const tiresToShow = isFilterActive ? rimsFilter : tiresByCategory;
+  // Pagination logic
+  const pagesToShow = (isFilterActive ? sizeTotalPages : totalPages) || 1;
+  const pageNow = isFilterActive ? sizePage : currentPage;
+
+  // Порожній результат + фільтр активний + невідбувається завантаження/фільтрація
+  const notFound =
+    isFilterActive && !isFiltering && !isLoading && rimsFilter?.length === 0;
 
   //кількість сторінок для пагінації (при фільтрі за діаметром/при всіх дисках)
   const pagesArray = useMemo(
