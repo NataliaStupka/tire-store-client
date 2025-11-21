@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchTiresByCategory } from "../../redux/tire/operations";
@@ -25,6 +25,7 @@ import {
 } from "../../redux/filter/selectors";
 import { changeFilter } from "../../redux/filter/slice";
 import { FilterDiametersRims } from "../../components/FilterDiametersRims/FilterDiametersRims";
+import Pagination from "../../components/Pagination/Pagination";
 
 const categoryTranslation = {
   loader: "Погрузочні шини",
@@ -102,7 +103,28 @@ const CategoryTirePage = () => {
   };
 
   //кількість сторінок для пагінації (при фільтрі за діаметром/при всіх дисках)
-  const pagesArray = Array.from({ length: pagesToShow }, (_, i) => i + 1);
+  const pagesArray = useMemo(
+    () => Array.from({ length: pagesToShow }, (_, i) => i + 1),
+    [pagesToShow]
+  );
+  const handlePageChange = (pageNum) => {
+    if (isFilterActive) {
+      dispatch(
+        fetchTiresBySize({
+          size: selectedDiameter,
+          category: "rims",
+          page: pageNum,
+        })
+      );
+    } else {
+      dispatch(
+        fetchTiresByCategory({
+          category,
+          page: pageNum,
+        })
+      );
+    }
+  };
 
   return (
     <main>
@@ -122,75 +144,43 @@ const CategoryTirePage = () => {
             />
           )}
 
-          {/* Loader під час фільтрації */}
-          {isFiltering && (
+          {/* Loader → Error → NotFound → Data → Empty */}
+
+          {/* Loader під час фільтрації/завантаження */}
+          {(isFiltering || isLoading) && (
             <div className={s.loaderWrap}>
               <LoaderComponent />
             </div>
           )}
 
-          {isLoading ? ( // якщо йде запит — показуємо Loader
-            <div className={s.loaderWrap}>
-              <LoaderComponent />
-            </div>
-          ) : isError ? ( // якщо сталася помилка
-            <p className={s.errorText}>
-              Сталася помилка: <span>{isError}</span>
-            </p>
-          ) : notFound ? ( // якщо запит повернув порожній масив
+          {!isFiltering && !isLoading && (
             <>
-              <p className={s.emptyText}>
-                Нічого не знайдено для цього діаметра.
-              </p>
-              <TiresCatalog tires={tiresByCategory} />
+              {isError ? ( // Помилка
+                <p className={s.errorText}>
+                  Сталася помилка: <span>{isError}</span>
+                </p>
+              ) : notFound ? ( // Порожній результат фільтру
+                <>
+                  <p className={s.emptyText}>
+                    Нічого не знайдено для цього діаметра.
+                  </p>
+                  <TiresCatalog tires={tiresByCategory} />
+                </>
+              ) : tiresToShow.length > 0 ? ( // якщо є результати для вибраного діаметра
+                <TiresCatalog tires={tiresToShow} />
+              ) : (
+                <p className={s.emptyText}>
+                  Наразі в цій категорії немає товарів.
+                </p>
+              )}
             </>
-          ) : tiresToShow.length > 0 ? ( // якщо є результати для вибраного діаметра
-            <TiresCatalog tires={tiresToShow} />
-          ) : (
-            !isFiltering && (
-              <p className={s.emptyText}>
-                Наразі в цій категорії немає товарів.
-              </p>
-            )
           )}
 
-          <div>
-            <ul className={s.pagination}>
-              {pagesArray.map((pageNum) => {
-                return (
-                  <li key={pageNum}>
-                    <button
-                      className={`${s.pageButton} ${
-                        pageNow === pageNum ? s.activePage : ""
-                      }`}
-                      onClick={() => {
-                        console.log(`Button ${pageNum}`);
-
-                        if (isFilterActive) {
-                          dispatch(
-                            fetchTiresBySize({
-                              size: selectedDiameter,
-                              category: "rims",
-                              page: pageNum,
-                            })
-                          );
-                        } else {
-                          dispatch(
-                            fetchTiresByCategory({
-                              category,
-                              page: pageNum,
-                            })
-                          );
-                        }
-                      }}
-                    >
-                      {pageNum}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <Pagination
+            pages={pagesArray}
+            currentPage={pageNow}
+            onPageChange={handlePageChange}
+          />
         </div>
       </section>
     </main>
