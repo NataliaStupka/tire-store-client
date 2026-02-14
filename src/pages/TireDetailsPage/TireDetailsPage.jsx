@@ -1,43 +1,14 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import s from "./TireDetailsPage.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
-import { fetchTiresById } from "../../redux/tire/operations";
-import {
-  selectIsError,
-  selectIsLoading,
-  selectTireById,
-} from "../../redux/tire/selectors";
+
 import LoaderComponent from "../../components/Loader/Loader";
 import clsx from "clsx";
+import { useTireDetails } from "../../hooks/useTireDetails";
 
 export const TireDetailsPage = () => {
-  const dispatch = useDispatch();
+  const { tire, isTire, isRim, isLoading, isError, goBackLink } =
+    useTireDetails();
 
-  const { tireId } = useParams();
-  // console.log(`Деталі про шину id - ${tireId}.`);
-
-  const location = useLocation();
-  const tire = useSelector(selectTireById);
-  console.log("tire", tire);
-
-  const isLoading = useSelector(selectIsLoading);
-  const isError = useSelector(selectIsError);
-
-  useEffect(() => {
-    if (tireId) {
-      dispatch(fetchTiresById(tireId));
-    }
-  }, [dispatch, tireId]);
-
-  // const { title, size, modelTire, producer, price, category, image } = tire;
-
-  const goBackLink = useRef(location.state?.from || "/");
-  // const goBackLink = location.state?.from || "/";
-  console.log("goBackLink -", goBackLink);
-  // if (!tire) {
-  //   return <h2>Завантажуємо ...</h2>;
-  // }
   // //???
   if (isLoading) {
     return <LoaderComponent />;
@@ -51,11 +22,8 @@ export const TireDetailsPage = () => {
     );
   }
 
-  // ЯКЩО ДИСК ТО ІНША РОЗМІТКА  ????
-  const isTire = tire.title === "tire";
-  const isRim = tire.title === "rims";
   //відображає поле "Виробник" лише якщо воно є
-  const isProducer = !!tire.producer;
+  // const isProducer = !!tire.producer;
 
   return (
     <section className={s.details}>

@@ -1,37 +1,16 @@
 import s from "./HomePage.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectAllTires,
-  selectIsError,
-  // selectIsLoading,
-} from "../../redux/tire/selectors";
-import { selectFilterLoading } from "../../redux/filter/selectors";
-import { useEffect, useState } from "react";
-import { fetchAllTires } from "../../redux/tire/operations";
+
 import LoaderComponent from "../../components/Loader/Loader";
 import { CategoryList } from "../../components/CategoryList/CategoryList";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
-import { selectTiresBySize } from "../../redux/filter/selectors";
 import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
+import { useHomeTires } from "../../hooks/useHomeTires";
 // import { Helmet } from "react-helmet";
 
 // const category = ["loader", "industrial", "agricultural", "rims"];
 
 const HomePage = () => {
-  //
-  const dispatch = useDispatch();
-  const allTires = useSelector(selectAllTires);
-  const tiresBySize = useSelector(selectTiresBySize);
-
-  const isLoading = useSelector(selectFilterLoading); //filter
-  const isError = useSelector(selectIsError);
-
-  const [searchSize, setSearchSize] = useState(""); // Стан для size
-
-  useEffect(() => {
-    // document.title = "Tire Store | Home"; ////???
-    dispatch(fetchAllTires());
-  }, [dispatch]);
+  const { tiresBySize, isLoading, searchSize, setSearchSize } = useHomeTires();
 
   return (
     <main>
@@ -48,7 +27,7 @@ const HomePage = () => {
             <TiresCatalog tires={tiresBySize} />
           </div>
         ) : (
-          searchSize && <p>Нічого не знайдено.</p>
+          searchSize && tiresBySize.length === 0 && <p>Нічого не знайдено.</p>
         )}
       </section>
 
