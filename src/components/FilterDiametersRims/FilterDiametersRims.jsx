@@ -21,7 +21,7 @@ export const FilterDiametersRims = ({
                 className={`${s.diameterButton} ${
                   selectedDiameter === item ? s.active : ""
                 }`}
-                onClick={() => onSelect(item)} //handleDiametrClick
+                onClick={() => onSelect(item)} //handleDiameterClick
               >
                 {item}
               </button>
