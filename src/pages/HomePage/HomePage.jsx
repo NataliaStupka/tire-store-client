@@ -10,8 +10,15 @@ import { useHomeTires } from "../../hooks/useHomeTires";
 // const category = ["loader", "industrial", "agricultural", "rims"];
 
 const HomePage = () => {
-  const { tiresBySize, isLoading, searchSize, setSearchSize } = useHomeTires();
-
+  const {
+    tiresBySize,
+    isLoading,
+    searchSize,
+    setSearchSize,
+    currentPage,
+    totalPages,
+  } = useHomeTires();
+  console.log("--???--", currentPage, totalPages);
   return (
     <main>
       {/* <div className={s.homePage}> */}

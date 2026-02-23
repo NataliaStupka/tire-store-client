@@ -69,7 +69,7 @@ const slice = createSlice({
           state.isLoading = true;
           state.isRefreshing = true;
           state.isError = null;
-        }
+        },
       )
       .addMatcher(
         isAnyOf(register.rejected, login.rejected, refreshUser.rejected),
@@ -77,7 +77,7 @@ const slice = createSlice({
           state.isLoading = false;
           state.isRefreshing = false;
           state.isError = payload;
-        }
+        },
       );
   },
 });

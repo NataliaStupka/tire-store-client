@@ -61,6 +61,10 @@ export const TireItem = ({ tire }) => {
     //визначаємо в якій категорії ця шина, щоб обновити та перемалювати сторінку
     const categoryMatch = window.location.pathname.match(/\/category\/(.+)/); //['/category/loader', 'loader'] - наприклад якщо знаходимось на loader
 
+    // ??? переробити на ⬇️
+    // import { useLocation } from "react-router-dom";
+    // const location = useLocation();
+
     dispatch(deleteTire(_id))
       .then(() => {
         if (categoryMatch) {

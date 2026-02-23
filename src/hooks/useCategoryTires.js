@@ -4,6 +4,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
 import {
   selectCurrentPage,
@@ -26,7 +27,6 @@ import {
   fetchRimsDiameters,
   fetchTiresBySize,
 } from "../redux/filter/operations";
-import { useMemo } from "react";
 
 export const useCategoryTires = () => {
   const dispatch = useDispatch();

@@ -10,7 +10,7 @@ import {
 import { REHYDRATE } from "redux-persist";
 
 const initialState = {
-  items: [],
+  items: [], // список що зараз показується
   tiresByCategory: [],
   tireById: null,
 
@@ -34,13 +34,13 @@ const slice = createSlice({
     },
     deleteFavoriteTire: (state, action) => {
       state.favoriteTires = state.favoriteTires.filter(
-        (item) => item._id !== action.payload
+        (item) => item._id !== action.payload,
       );
     },
     updateFavoriteTire(state, action) {
       const updatedTire = action.payload;
       state.favoriteTires = state.favoriteTires.map((item) =>
-        item._id === updatedTire._id ? updatedTire : item
+        item._id === updatedTire._id ? updatedTire : item,
       );
     },
     clearTiresByCategory(state) {
@@ -57,7 +57,7 @@ const slice = createSlice({
       })
       .addCase(fetchTiresByCategory.fulfilled, (state, action) => {
         const { data, page, totalPages } = action.payload;
-        console.log("Payload_totalPages", totalPages);
+        // console.log("Payload_totalPages", totalPages);
 
         state.tiresByCategory = data;
 
@@ -81,10 +81,10 @@ const slice = createSlice({
 
         if (updatedTire) {
           state.items = state.items.map((item) =>
-            item._id === updatedTire._id ? updatedTire : item
+            item._id === updatedTire._id ? updatedTire : item,
           );
           state.tiresByCategory = state.tiresByCategory.map((item) =>
-            item._id === updatedTire._id ? updatedTire : item
+            item._id === updatedTire._id ? updatedTire : item,
           );
           state.tireById = updatedTire;
         } else {
@@ -109,12 +109,12 @@ const slice = createSlice({
           fetchTiresById.pending,
           addTire.pending,
           deleteTire.pending,
-          editTire.pending
+          editTire.pending,
         ),
         (state) => {
           state.isLoading = true;
           state.isError = false;
-        }
+        },
       )
       //== стан успіх - fulfilled
       .addMatcher(
@@ -124,11 +124,11 @@ const slice = createSlice({
           fetchTiresById.fulfilled,
           addTire.fulfilled,
           deleteTire.fulfilled,
-          editTire.fulfilled
+          editTire.fulfilled,
         ),
         (state) => {
           state.isLoading = false;
-        }
+        },
       )
       //== стан помилка - regected
       .addMatcher(
@@ -138,12 +138,13 @@ const slice = createSlice({
           fetchTiresById.rejected,
           addTire.rejected,
           deleteTire.rejected,
-          editTire.rejected
+          editTire.rejected,
         ),
         (state, action) => {
           state.isLoading = false;
-          state.isError = action.payload || true; //??
-        }
+          state.isError =
+            action.payload || action.error?.message || "Помилка завантаження"; //??
+        },
       );
   },
 });
