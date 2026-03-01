@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
-import s from "./TireDetailsPage.module.css";
+import clsx from "clsx";
+import s from "./ProductDetailsPage.module.css";
 
 import LoaderComponent from "../../components/Loader/Loader";
-import clsx from "clsx";
-import { useTireDetails } from "../../hooks/useTireDetails";
 
-export const TireDetailsPage = () => {
-  const { tire, isTire, isRim, isLoading, isError, goBackLink } =
-    useTireDetails();
+import { useProductDetailsPage } from "../../hooks/useProductDetailsPage";
+
+export const ProductDetailsPage = () => {
+  const { product, isTire, isRim, isLoading, isError, goBackLink } =
+    useProductDetailsPage();
 
   // //???
   if (isLoading) {
     return <LoaderComponent />;
   }
-  if (isError || !tire) {
+  if (isError || !product) {
     return (
       <div className={clsx("container", s.details)}>
         <Link to={goBackLink.current}>Повернутися назад</Link>
@@ -23,7 +24,7 @@ export const TireDetailsPage = () => {
   }
 
   //відображає поле "Виробник" лише якщо воно є
-  // const isProducer = !!tire.producer;
+  // const isProducer = !!product.producer;
 
   return (
     <section className={s.details}>
@@ -38,79 +39,79 @@ export const TireDetailsPage = () => {
 
           <div className={s.detailsContainer}>
             <div className={s.imageWrapper}>
-              <img src={tire.image} alt={tire.size} className={s.img} />
+              <img src={product.image} alt={product.size} className={s.img} />
             </div>
 
             <div className={s.info}>
               {isTire ? (
                 <h3 className={s.name}>
-                  Шина {tire.size}{" "}
-                  <span className={s.model}>{tire.modelTire}</span>{" "}
-                  <span className={s.producer}>{tire.producer}</span>
+                  Шина {product.size}{" "}
+                  <span className={s.model}>{product.modelTire}</span>{" "}
+                  <span className={s.producer}>{product.producer}</span>
                 </h3>
               ) : (
                 <h3 className={s.name}>
-                  Диск R{tire.size}{" "}
-                  <span className={s.producer}>{tire.producer}</span>
+                  Диск R{product.size}{" "}
+                  <span className={s.producer}>{product.producer}</span>
                 </h3>
               )}
 
               <ul className={s.list}>
                 <li>
                   <span>Розмір:</span>
-                  {tire.size} {isRim && "(діаметр в дюймах)"}
+                  {product.size} {isRim && "(діаметр в дюймах)"}
                 </li>
 
-                {/* {isProducer && <p className={s.name}>Виробник: {tire.producer}</p>} */}
-                {tire.producer && (
+                {/* {isProducer && <p className={s.name}>Виробник: {product.producer}</p>} */}
+                {product.producer && (
                   <li>
-                    <span>Виробник:</span> {tire.producer}
+                    <span>Виробник:</span> {product.producer}
                   </li>
                 )}
 
-                {isTire && tire.modelTire && (
+                {isTire && product.modelTire && (
                   <li>
-                    <span>Модель:</span> {tire.modelTire}
+                    <span>Модель:</span> {product.modelTire}
                   </li>
                 )}
-                {isTire && tire.tireType && (
+                {isTire && product.tireType && (
                   <li>
-                    <span>Тип:</span> {tire.tireType}
+                    <span>Тип:</span> {product.tireType}
                   </li>
                 )}
-                {isTire && (tire.loadIndex || tire.layering) && (
+                {isTire && (product.loadIndex || product.layering) && (
                   <li>
                     <span>Індекс навантаження / слойність:</span>{" "}
-                    {tire.loadIndex || tire.layering}
+                    {product.loadIndex || product.layering}
                   </li>
                 )}
 
-                {tire.layering && (
+                {product.layering && (
                   <li>
-                    <span>Слойність шини:</span> {tire.layering}
+                    <span>Слойність шини:</span> {product.layering}
                   </li>
                 )}
 
-                {/* {isRim && <p className={s.name}>Модель диску: {tire.diskModel}</p>} */}
-                {isRim && tire.diskModel && (
+                {/* {isRim && <p className={s.name}>Модель диску: {product.diskModel}</p>} */}
+                {isRim && product.diskModel && (
                   <li>
                     <span className={s.connectingSize}>
                       Найменування, приєднувальні розміри:
                     </span>{" "}
-                    {tire.diskModel}
+                    {product.diskModel}
                   </li>
                 )}
 
-                {/* <p className={s.name}>Ціна: {tire.price}$</p> */}
+                {/* <p className={s.name}>Ціна: {product.price}$</p> */}
                 <li>
-                  <span>Вартість:</span> {tire.price}{" "}
+                  <span>Вартість:</span> {product.price}{" "}
                   {isTire ? "$" : "грн (з ПДВ)"}
                 </li>
 
-                {typeof tire.instock === "boolean" && (
+                {typeof product.instock === "boolean" && (
                   <li>
                     <p>
-                      {tire.instock ? "В наявності" : "Уточнюйте наявність"}
+                      {product.instock ? "В наявності" : "Уточнюйте наявність"}
                     </p>
                   </li>
                 )}

@@ -1,16 +1,16 @@
 import toast from "react-hot-toast";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup"; //валідація форми
-import s from "./EditTireForm.module.css";
+import s from "./EditProductForm.module.css";
 import LoaderComponent from "../Loader/Loader";
 
-export const EditTireForm = ({ tire, onSubmit }) => {
-  console.log("Форма для зміни шини/диска", tire);
+export const EditProductForm = ({ product, onSubmit }) => {
+  console.log("Форма для зміни шини/диска", product);
 
   //formikBag містить setSubmitting - відправ форми true/false; resetForm - скид форми; setFieldValue - Динамічно змінює значення конкретного поля;
   //setFieldError - Встановлює помилку для конкретного поля; setValues - Оновлює всі значення форми одночасно; інші
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log("✅ VALUES", values);
+    // console.log("✅ VALUES", values);
     //values - дані з форми редагування
 
     const formData = new FormData();
@@ -18,11 +18,11 @@ export const EditTireForm = ({ tire, onSubmit }) => {
     //Object.entries повертає масив пар ключ-значення [key, value]
     Object.entries(values).forEach(([key, value]) => {
       if (key !== "id") {
-        const originalValue = tire[key];
+        const originalValue = product[key];
 
         if (value !== originalValue) {
           //append - додає пару ключ-значення до об’єкта FormData
-          console.log("Key-value:", key, value);
+          // console.log("Key-value:", key, value);
 
           if (key === "photo") {
             //перевіряє, чи користувач вибрав файл,
@@ -43,12 +43,12 @@ export const EditTireForm = ({ tire, onSubmit }) => {
     } catch (err) {
       console.log("Помилка в handleSubmit:", err.message);
       setSubmitting(false); // Скидаємо стан у випадку помилки
-      throw err; // Передаємо помилку вгору для обробки в TireItem
+      throw err; // Передаємо помилку вгору для обробки в ProductItem
       // toast.error(`Помилка: ${err.message}`);
     }
   };
 
-  // const tireSchema = Yup.object().shape({
+  // const productSchema = Yup.object().shape({
   //   category: Yup.string()
   //     .oneOf(["loader", "industrial", "agricultural", "rims"])
   //     .required("Обов’язкове поле"),
@@ -75,22 +75,22 @@ export const EditTireForm = ({ tire, onSubmit }) => {
   return (
     <Formik
       initialValues={{
-        id: tire._id || "",
-        category: tire.category || "",
-        title: tire.title || "",
-        price: tire.price || "",
-        size: tire.size || "",
-        producer: tire.producer || "",
-        modelTire: tire.modelTire || "",
-        layering: tire.layering || "",
-        loadIndex: tire.loadIndex || "",
-        tireType: tire.tireType || "",
-        diskModel: tire.diskModel || "",
-        instock: tire.instock?.toString() || "false",
+        id: product._id || "",
+        category: product.category || "",
+        title: product.title || "",
+        price: product.price || "",
+        size: product.size || "",
+        producer: product.producer || "",
+        modelTire: product.modelTire || "",
+        layering: product.layering || "",
+        loadIndex: product.loadIndex || "",
+        tireType: product.tireType || "",
+        diskModel: product.diskModel || "",
+        instock: product.instock?.toString() || "false",
         photo: null,
       }}
       onSubmit={handleSubmit}
-      // validationSchema={tireSchema}
+      // validationSchema={productSchema}
     >
       {/* setFieldValue - метод Formik */}
       {({ setFieldValue, isSubmitting }) => (
@@ -190,7 +190,7 @@ export const EditTireForm = ({ tire, onSubmit }) => {
               />
             </div>
             {/* 
-            {tire.category === "rims" && (
+            {category === "rims" && (
               <div className={s.group}>
                 <label className={s.label}>Модель диску</label>
                 <Field className={s.input} type="text" name="diskModel" />
@@ -228,9 +228,9 @@ export const EditTireForm = ({ tire, onSubmit }) => {
 
           <div className={s.group}>
             <label className={s.label}>Поточне зображення</label>
-            {tire.image && (
+            {product.image && (
               <img
-                src={tire.image}
+                src={product.image}
                 alt="Поточне зображення"
                 // style={{ width: "100px", marginBottom: "10px" }}
                 className={s.preview}

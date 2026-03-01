@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { tiresReducer } from "./tire/slice";
+import { catalogReducer } from "./catalog/slice";
 import { filterReducer } from "./filter/slice";
 import { authReducer } from "./auth/slice";
 
@@ -25,17 +25,20 @@ const authPersistConfig = {
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 // ---
 
-const tirePersistConfig = {
-  key: "tire",
+const catalogPersistConfig = {
+  key: "catalog",
   storage,
-  whitelist: ["favoriteTires"], // зберігаємо тільки обране
+  whitelist: ["favoriteProducts"], // зберігаємо тільки обране
 };
-const persistedTireReducer = persistReducer(tirePersistConfig, tiresReducer);
+const persistedCatalogReducer = persistReducer(
+  catalogPersistConfig,
+  catalogReducer,
+);
 // ---
 
 export const store = configureStore({
   reducer: {
-    tire: persistedTireReducer,
+    catalog: persistedCatalogReducer,
     filter: filterReducer,
     auth: persistedAuthReducer,
   },

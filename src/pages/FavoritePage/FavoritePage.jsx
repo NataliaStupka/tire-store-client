@@ -1,22 +1,23 @@
 import { useEffect } from "react";
-import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
 import { useSelector } from "react-redux";
-import { selectFavoriteTires } from "../../redux/tire/selectors";
 import s from "./FavoritePage.module.css";
+
+import { ProductsCatalog } from "../../components/ProductsCatalog/ProductsCatalog";
+import { selectFavoriteProducts } from "../../redux/catalog/selectors";
 
 const FavoritePage = () => {
   useEffect(() => {
     document.title = "Tires Store | Selected";
   }, []);
 
-  const favoriteTires = useSelector(selectFavoriteTires);
+  const favoriteProducts = useSelector(selectFavoriteProducts);
 
   return (
     <section className={s.section}>
       <div className="container">
-        <h1 className={s.title}>Обрані шини</h1>
-        {favoriteTires.length > 0 ? (
-          <TiresCatalog tires={favoriteTires} />
+        <h1 className={s.title}>Обрані товари</h1>
+        {favoriteProducts.length > 0 ? (
+          <ProductsCatalog products={favoriteProducts} />
         ) : (
           <p className={s.emptyText}>
             💔 У вас поки немає обраних шин.

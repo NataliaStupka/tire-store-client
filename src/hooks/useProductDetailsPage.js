@@ -1,44 +1,46 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
+
 import {
   selectIsError,
   selectIsLoading,
-  selectTireById,
-} from "../redux/tire/selectors";
-import { useEffect, useRef } from "react";
-import { fetchTiresById } from "../redux/tire/operations";
+  selectProductById,
+} from "../redux/catalog/selectors";
+import { fetchProductById } from "../redux/catalog/operations";
 
-export const useTireDetails = () => {
+export const useProductDetailsPage = () => {
   // ---------- ACTIONS ------------ //
   const dispatch = useDispatch();
 
   // ---------- ROUTER STATE ------------ //
-  const { tireId } = useParams();
+  const { tireId, productId } = useParams();
   // console.log(`Деталі про шину id - ${tireId}.`);
+  const id = productId || tireId;
 
   const location = useLocation();
 
   // ---------- STATE ------------ //
-  const tire = useSelector(selectTireById);
+  const product = useSelector(selectProductById);
 
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
 
   // ЯКЩО ДИСК ТО ІНША РОЗМІТКА  ????
-  const isTire = tire?.title === "tire";
-  const isRim = tire?.title === "rims";
+  const isTire = product?.title === "tire";
+  const isRim = product?.title === "rims";
 
   // ---------- EFFECT ------------ //
   useEffect(() => {
     //   запобігає зайвим запитам
-    if (tireId && (!tire || tire._id !== tireId)) {
-      dispatch(fetchTiresById(tireId));
+    if (id && (!product || product._id !== id)) {
+      dispatch(fetchProductById(id));
     }
-  }, [dispatch, tireId, tire]);
+  }, [dispatch, id, product]);
 
   // ==========  LOCAL STATE ========== //
   const goBackLink = useRef(location.state?.from || "/");
 
   // ========== RETURN ========== //
-  return { tire, isTire, isRim, isLoading, isError, goBackLink };
+  return { product, isTire, isRim, isLoading, isError, goBackLink };
 };

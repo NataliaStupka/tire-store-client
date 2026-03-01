@@ -1,10 +1,10 @@
 // Page збирає все разом
-import { useCategoryTires } from "../../hooks/useCategoryTires"; //redux, dispatch, selectors, useParams, useEffect, локальний state, (notFound, tiresToShow, pagesArray)
+import { useCategoryProductsPage } from "../../hooks/useCategoryProductsPage"; //redux, dispatch, selectors, useParams, useEffect, локальний state, (notFound pagesArray)
 
-import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
+import s from "./CategoryProductsPage.module.css";
+
+import { ProductsCatalog } from "../../components/ProductsCatalog/ProductsCatalog";
 import LoaderComponent from "../../components/Loader/Loader";
-import s from "./CategoryTirePage.module.css";
-
 import { FilterDiametersRims } from "../../components/FilterDiametersRims/FilterDiametersRims";
 import Pagination from "../../components/Pagination/Pagination";
 
@@ -15,23 +15,20 @@ const categoryTranslation = {
   rims: "Диски",
 };
 
-const CategoryTirePage = () => {
+const CategoryProductsPage = () => {
   const {
     category,
-    tiresToShow,
-    tiresByCategory,
+    products, // ДАТИ ІНШУ НАЗВУ???????
     rimsDiameters,
-    isLoading,
-    isFiltering,
-    isError,
     selectedDiameter,
-    notFound,
+    isLoading,
+    isError,
     pagesArray,
-    pageNow,
+    currentPage,
     handleDiameterClick,
     resetDiameters,
     handlePageChange,
-  } = useCategoryTires();
+  } = useCategoryProductsPage();
 
   return (
     <main>
@@ -54,27 +51,27 @@ const CategoryTirePage = () => {
           {/* Loader → Error → NotFound → Data → Empty */}
 
           {/* Loader під час фільтрації/завантаження */}
-          {(isFiltering || isLoading) && (
+          {isLoading && (
             <div className={s.loaderWrap}>
               <LoaderComponent />
             </div>
           )}
 
-          {!isFiltering && !isLoading && (
+          {!isLoading && (
             <>
               {isError ? ( // Помилка
                 <p className={s.errorText}>
                   Сталася помилка: <span>{isError}</span>
                 </p>
-              ) : notFound ? ( // Порожній результат фільтру
+              ) : products.length === 0 ? ( // Порожній результат фільтру
                 <>
                   <p className={s.emptyText}>
                     Нічого не знайдено для цього діаметра.
                   </p>
-                  <TiresCatalog tires={tiresByCategory} />
+                  <ProductsCatalog products={products} />
                 </>
-              ) : tiresToShow.length > 0 ? ( // якщо є результати для вибраного діаметра
-                <TiresCatalog tires={tiresToShow} />
+              ) : products.length > 0 ? ( // якщо є результати для вибраного діаметра
+                <ProductsCatalog products={products} />
               ) : (
                 <p className={s.emptyText}>
                   Наразі в цій категорії немає товарів.
@@ -85,7 +82,7 @@ const CategoryTirePage = () => {
 
           <Pagination
             pages={pagesArray}
-            currentPage={pageNow}
+            currentPage={currentPage}
             onPageChange={handlePageChange}
           />
         </div>
@@ -94,4 +91,4 @@ const CategoryTirePage = () => {
   );
 };
 
-export default CategoryTirePage;
+export default CategoryProductsPage;

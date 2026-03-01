@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn, selectUserRole } from "../../redux/auth/selectors";
-import s from "./Footer.module.css";
-import { logout } from "../../redux/auth/operations";
 import { useModal } from "../../hooks/useModal";
+import s from "./Footer.module.css";
+
 import Modal from "../Modal/Modal";
 import LoginForm from "../LoginForm/LoginForm";
+
+import { selectIsLoggedIn, selectUserRole } from "../../redux/auth/selectors";
+import { logout } from "../../redux/auth/operations";
 
 export const Footer = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-.tireItem {
+.productItem {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -122,7 +122,7 @@
 
 /* ??? */
 @media screen and (max-width: 619px) {
-  .tireItem {
+  .productItem {
     max-width: 400px;
     margin: 0 auto;
   }

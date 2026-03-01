@@ -1,14 +1,15 @@
 import { ErrorMessage, Field, Formik, Form } from "formik";
-import s from "./SearchBar.module.css";
-import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAllTires } from "../../redux/tire/selectors";
-import { useCallback, useEffect } from "react";
-import { fetchAllTires } from "../../redux/tire/operations";
-import { fetchTiresBySize } from "../../redux/filter/operations";
-import { selectTiresBySize } from "../../redux/filter/selectors";
+import { useDispatch } from "react-redux";
+import { useCallback } from "react";
 import debounce from "lodash.debounce";
-import { changeFilter } from "../../redux/filter/slice";
+
+import clsx from "clsx";
+import s from "./SearchBar.module.css";
+
+import { resetFilter, setFilter } from "../../redux/filter/slice";
+
+import { fetchProducts } from "../../redux/catalog/operations";
+import { clearSearchResult, resetPagination } from "../../redux/catalog/slice";
 
 export const SearchBar = ({ onSizeChange }) => {
   const dispatch = useDispatch();
@@ -16,19 +17,28 @@ export const SearchBar = ({ onSizeChange }) => {
   //пошук при веденні символів
   const handleSearch = useCallback(
     debounce((size, category) => {
+      console.log("size", size);
+      console.log("category", category);
+
+      //чи обов'язкове це якщо в state perPage вказано 12
+      const page = 1;
+
+      dispatch(setFilter({ size, category }));
+      dispatch(resetPagination());
+
       if (size || category) {
-        // console.log("🟢 Searching for size+category:", size, category);
-        dispatch(fetchTiresBySize({ size, category }));
+        dispatch(fetchProducts({ size, category, page: 1, target: "SEARCH" }));
 
         if (onSizeChange) onSizeChange(size); // Викликаємо колбек для передачі size
       }
     }, 500), // Затримка 500 мс
-    [dispatch, onSizeChange]
+    [dispatch, onSizeChange],
   );
 
   const handleReset = () => {
-    // console.log("Скидуємо фільтр");
-    dispatch(changeFilter());
+    dispatch(resetFilter());
+    dispatch(clearSearchResult());
+    dispatch(fetchProducts({ page: 1 }));
   };
 
   const initialValues = {

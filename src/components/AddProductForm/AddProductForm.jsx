@@ -1,14 +1,14 @@
-import s from "./AddTireForm.module.css";
+import s from "./AddProductForm.module.css";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup"; //валідація форми
 
 import { useDispatch } from "react-redux";
-import { addTire } from "../../redux/tire/operations";
+import { addProduct } from "../../redux/catalog/operations";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 
-export const AddTireForm = ({ onClose }) => {
+export const AddProductForm = ({ onClose }) => {
   const initialValues = {
     category: "",
     title: "",
@@ -32,7 +32,7 @@ export const AddTireForm = ({ onClose }) => {
     try {
       console.log("🟡 Formik values:", values);
 
-      const newTire = {
+      const newProduct = {
         //   id - автоматично генерується на бекенді (MongoDB)
         category: values.category,
         title: values.title,
@@ -49,8 +49,8 @@ export const AddTireForm = ({ onClose }) => {
 
       const formData = new FormData();
 
-      // Додаємо всі поля з newTire до FormData
-      Object.entries(newTire).forEach(([key, value]) => {
+      // Додаємо всі поля з newProduct до FormData
+      Object.entries(newProduct).forEach(([key, value]) => {
         formData.append(key, value.toString());
       });
       // Додаємо image окремо, якщо воно є
@@ -63,9 +63,9 @@ export const AddTireForm = ({ onClose }) => {
         console.log(`${key}:`, value);
       }
 
-      await dispatch(addTire(formData)).unwrap();
+      await dispatch(addProduct(formData)).unwrap();
       toast.success(
-        `${newTire.title} ${newTire.size} додано в категорію ${newTire.category}.`
+        `${newProduct.title} ${newProduct.size} додано в категорію ${newProduct.category}.`,
       );
       options.resetForm(); // очистка форми
       onClose(); // Закриваємо модалку
@@ -77,14 +77,10 @@ export const AddTireForm = ({ onClose }) => {
     }
     //   dublicate ?? попередження якщо вже така шина є??
     //як шина нова то повідамлення що додали
-
-    ////   дублюється
-    // dispatch(addTire(newTire));
-    // toast.success(`${newTire.title} ${newTire.size} додано.`);
   };
 
   //валідація для Form через Formik - ПЕРЕВІРИТИ НА ПРАКТИЦІ КОЛИ БУДУ ЗАПОВНЮВАТИ ШИНИ
-  const tireSchema = Yup.object().shape({
+  const productSchema = Yup.object().shape({
     category: Yup.string()
       .oneOf(["loader", "industrial", "agricultural", "rims"])
       .required("Це поле обов'язкове"), //обираємо з чотирьох
@@ -130,7 +126,7 @@ export const AddTireForm = ({ onClose }) => {
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        validationSchema={tireSchema}
+        validationSchema={productSchema}
       >
         {({ values, setFieldValue, isSubmitting }) => {
           // автоматично

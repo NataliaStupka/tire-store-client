@@ -1,33 +1,31 @@
 import { useSelector } from "react-redux";
-import { TireItem } from "../TireItem/TireItem";
+import { ProductItem } from "../ProductItem/ProductItem";
+
+import s from "./ProductsCatalog.module.css";
+import LoaderComponent from "../Loader/Loader";
+
 import {
+  // selectCatalog,
   selectIsError,
   selectIsLoading,
-  selectTiresByCategory,
-} from "../../redux/tire/selectors";
+} from "../../redux/catalog/selectors";
 
-import s from "./TiresCatalog.module.css";
-import LoaderComponent from "../Loader/Loader";
 import { nanoid } from "@reduxjs/toolkit";
 
-export const TiresCatalog = ({ tires: propTires }) => {
-  const tiresByCategory = useSelector(selectTiresByCategory);
-
-  const tires = propTires || tiresByCategory;
+export const ProductsCatalog = ({ products: propProducts }) => {
+  const products = propProducts ?? [];
 
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectIsError);
 
-  // console.log("🎃 tires/disks -=-", ...tires);
-
   return (
     <section>
-      <ul className={s.tireList}>
+      <ul className={s.productsList}>
         {/* ---- перенести в окремий компонент ---- */}
-        {tires.length > 0 ? (
-          tires.map((tire) => (
-            <li key={tire._id}>
-              <TireItem tire={tire} />
+        {products.length > 0 ? (
+          products.map((product) => (
+            <li key={product._id}>
+              <ProductItem product={product} />
             </li>
           ))
         ) : (
@@ -35,7 +33,7 @@ export const TiresCatalog = ({ tires: propTires }) => {
         )}
       </ul>
 
-      {isLoading && !tires.length && <LoaderComponent />}
+      {isLoading && !products.length && <LoaderComponent />}
       {isError && <p>Error: {isError}</p>}
     </section>
   );

@@ -3,22 +3,23 @@ import s from "./HomePage.module.css";
 import LoaderComponent from "../../components/Loader/Loader";
 import { CategoryList } from "../../components/CategoryList/CategoryList";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
-import { TiresCatalog } from "../../components/TiresCatalog/TiresCatalog";
-import { useHomeTires } from "../../hooks/useHomeTires";
+import { ProductsCatalog } from "../../components/ProductsCatalog/ProductsCatalog";
+
+import { useHomeProductsPage } from "../../hooks/useHomeProductsPage";
 // import { Helmet } from "react-helmet";
 
 // const category = ["loader", "industrial", "agricultural", "rims"];
 
 const HomePage = () => {
   const {
-    tiresBySize,
+    products,
     isLoading,
     searchSize,
     setSearchSize,
     currentPage,
     totalPages,
-  } = useHomeTires();
-  console.log("--???--", currentPage, totalPages);
+  } = useHomeProductsPage();
+
   return (
     <main>
       {/* <div className={s.homePage}> */}
@@ -29,12 +30,12 @@ const HomePage = () => {
         {/* searchSize - користувач ввів щось у поле? */}
         {isLoading ? (
           <LoaderComponent />
-        ) : tiresBySize.length > 0 ? (
+        ) : products.length > 0 ? (
           <div className="container">
-            <TiresCatalog tires={tiresBySize} />
+            <ProductsCatalog products={products} />
           </div>
         ) : (
-          searchSize && tiresBySize.length === 0 && <p>Нічого не знайдено.</p>
+          searchSize && products.length === 0 && <p>Нічого не знайдено.</p>
         )}
       </section>
 

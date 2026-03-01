@@ -1,29 +1,30 @@
-import { Link } from "react-router-dom";
-import s from "./TireItem.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTire,
-  editTire,
-  fetchTiresByCategory,
-} from "../../redux/tire/operations";
-import toast from "react-hot-toast";
-import {
-  selectFavoriteTires,
-  selectTireById,
-} from "../../redux/tire/selectors";
-import { addFavoriteTire, deleteFavoriteTire } from "../../redux/tire/slice";
-import { EditTireForm } from "../EditTireForm/EditTireForm";
-import { useEffect, useState } from "react";
-import Modal from "../Modal/Modal";
-import { useModal } from "../../hooks/useModal";
-import { selectUserRole } from "../../redux/auth/selectors";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import s from "./ProductItem.module.css";
 import clsx from "clsx";
 import sprite from "../../assets/sprite.svg";
 
-export const TireItem = ({ tire }) => {
-  const dispatch = useDispatch();
-  const tireDetails = useSelector(selectTireById); // Не використовується, якщо ініціалізуємо з props
-  const { isOpenModal, openModal, closeModal } = useModal();
+import { EditProductForm } from "../EditProductForm/EditProductForm";
+import Modal from "../Modal/Modal";
+
+import { selectUserRole } from "../../redux/auth/selectors";
+import { useProductActions } from "../../hooks/useProductActions";
+
+export const ProductItem = ({ product }) => {
+  const {
+    isFavorite,
+    addToFavorites,
+    removeFromFavorites,
+    removeProduct,
+    updateProduct,
+    isOpenModal,
+    openModal,
+    closeModal,
+  } = useProductActions(product);
+
+  const location = useLocation();
+
   const userRole = useSelector(selectUserRole);
 
   // Розпаковуємо поля для зручності рендеру
@@ -41,69 +42,14 @@ export const TireItem = ({ tire }) => {
     instock,
     diskModel,
     image,
-  } = tire;
-
-  // -- ♥️ --
-  const favoriteTires = useSelector(selectFavoriteTires);
-  const isFavorite = favoriteTires.some((tire) => tire._id === _id);
-
-  const handleAddFavorite = () => {
-    dispatch(addFavoriteTire(tire));
-    console.log("♥️ Favorite +", favoriteTires);
-  };
-  const handleRemoveFavorite = () => {
-    dispatch(deleteFavoriteTire(_id));
-    console.log("♥️ Favorite -", favoriteTires);
-  };
-  //=======
-
-  const handleDelete = () => {
-    //визначаємо в якій категорії ця шина, щоб обновити та перемалювати сторінку
-    const categoryMatch = window.location.pathname.match(/\/category\/(.+)/); //['/category/loader', 'loader'] - наприклад якщо знаходимось на loader
-
-    // ??? переробити на ⬇️
-    // import { useLocation } from "react-router-dom";
-    // const location = useLocation();
-
-    dispatch(deleteTire(_id))
-      .then(() => {
-        if (categoryMatch) {
-          const category = categoryMatch[1];
-
-          dispatch(fetchTiresByCategory(category)); // Оновлюємо категорію
-        }
-        toast(`${title} ${size} ${model} видалено.`);
-      })
-      .catch((error) => {
-        toast.error(`Помилка видалення: ${error.message}`);
-      });
-  };
-
-  const handleEdit = async (formData) => {
-    //formData - [['size', '+++++'], ['tireType', '']]
-
-    try {
-      await dispatch(editTire({ id: _id, formData })).unwrap();
-
-      const categoryMatch = window.location.pathname.match(/\/category\/(.+)/); //['/category/loader', 'loader'] - наприклад якщо знаходимось на loader
-
-      if (categoryMatch) {
-        const category = categoryMatch[1];
-        dispatch(fetchTiresByCategory(category)); // Оновлюємо список
-      }
-      toast.success(`${title} ${size} ${model} оновлено.`);
-      closeModal();
-    } catch (err) {
-      toast.error(`Помилка оновлення: ${err.message}`);
-    }
-  };
+  } = product;
 
   return (
-    <div className={s.tireItem}>
+    <div className={s.productItem}>
       {/* location -  pathname, search, hash , та ін. */}
       {/* location.pathname - /category/agricultural - шлях, звідки прийшов */}
       <Link
-        to={`/tire/${_id}`}
+        to={`/product/${_id}`}
         state={{ from: location.pathname }}
         className={s.link}
       >
@@ -123,7 +69,7 @@ export const TireItem = ({ tire }) => {
           {tireType && <p>Тип шини: {tireType} </p>}
           {layering && <p>Слойність шини: {layering} </p>}
           {loadIndex && <p>Індекс: {loadIndex} </p>}
-          {tire.category === "rims" && (
+          {product.category === "rims" && (
             <p>
               <span className={s.connectingSize}>Приєднувальні розміри:</span>{" "}
               {diskModel}{" "}
@@ -141,7 +87,7 @@ export const TireItem = ({ tire }) => {
 
       <button
         className={s.heart}
-        onClick={isFavorite ? handleRemoveFavorite : handleAddFavorite}
+        onClick={isFavorite ? removeFromFavorites : addToFavorites}
         type="button"
       >
         <svg className={isFavorite ? clsx(s.svg, s.svgFavorite) : s.svg}>
@@ -156,7 +102,7 @@ export const TireItem = ({ tire }) => {
           </button>
           <button
             className={`${s.button} ${s.deleteBtn}`}
-            onClick={handleDelete}
+            onClick={removeProduct}
           >
             Delete
           </button>
@@ -165,8 +111,8 @@ export const TireItem = ({ tire }) => {
 
       {isOpenModal && (
         <Modal title="Редагування" onClose={closeModal}>
-          <EditTireForm
-            tire={{
+          <EditProductForm
+            product={{
               _id,
               title,
               size,
@@ -181,7 +127,7 @@ export const TireItem = ({ tire }) => {
               diskModel,
               instock,
             }}
-            onSubmit={handleEdit}
+            onSubmit={updateProduct}
           />
         </Modal>
       )}
@@ -190,7 +136,7 @@ export const TireItem = ({ tire }) => {
   );
 };
 
-//tire:
+//product:
 // category: "rims";
 // createdAt: "2025-06-06T16:56:23.806Z";
 // diskModel: "Kолесо дискове сталеве 16х17 160185 (6х205, dia 161, et -35)";

@@ -1,13 +1,16 @@
 import { NavLink } from "react-router-dom";
-import clsx from "clsx";
-import s from "./Navigation.module.css";
-import { CategoryList } from "../CategoryList/CategoryList";
-import sprite from "../../assets/sprite.svg";
 import { useEffect, useRef, useState } from "react";
-import Modal from "../Modal/Modal";
-import { AddTireForm } from "../AddTireForm/AddTireForm";
-import { useModal } from "../../hooks/useModal";
 import { useSelector } from "react-redux";
+
+import clsx from "clsx";
+import sprite from "../../assets/sprite.svg";
+import s from "./Navigation.module.css";
+
+import { CategoryList } from "../CategoryList/CategoryList";
+import { AddProductForm } from "../AddProductForm/AddProductForm";
+import Modal from "../Modal/Modal";
+
+import { useModal } from "../../hooks/useModal";
 import { selectUserRole } from "../../redux/auth/selectors";
 
 const buildLinkClass = ({ isActive }) => clsx(s.link, { [s.active]: isActive });
@@ -87,7 +90,7 @@ const Navigation = () => {
             </button>
             <div className={`${s.adminMenu} ${isOpenAdmin ? s.open : ""}`}>
               <button className={s.addButton} onClick={handleAddButton}>
-                + Додати шину/диск
+                + Додати продукт
               </button>
             </div>
           </div>
@@ -95,7 +98,7 @@ const Navigation = () => {
 
         {isOpenModal && (
           <Modal title="Додаємо шину/диск" onClose={closeModal}>
-            <AddTireForm onClose={closeModal} />
+            <AddProductForm onClose={closeModal} />
           </Modal>
         )}
       </div>

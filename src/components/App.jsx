@@ -11,9 +11,9 @@ import LoaderComponent from "./Loader/Loader";
 // PAGES
 import HomePage from "../pages/HomePage/HomePage";
 import FavoritePage from "../pages/FavoritePage/FavoritePage";
-import CategoryTirePage from "../pages/CategoryTirePage/CategoryTirePage";
+import CategoryProductsPage from "../pages/CategoryProductsPage/CategoryProductsPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
-import { TireDetailsPage } from "../pages/TireDetailsPage/TireDetailsPage";
+import { ProductDetailsPage } from "../pages/ProductDetailsPage/ProductDetailsPage";
 // STATE
 import { selectIsLoggedIn } from "../redux/auth/selectors";
 import { refreshUser } from "../redux/auth/operations";
@@ -38,10 +38,13 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/category/:item" element={<CategoryTirePage />} />
+        <Route path="/category/:item" element={<CategoryProductsPage />} />
 
-        {/* переробити на category/loader/tire/title_size/ */}
-        <Route path="/tire/:tireId" element={<TireDetailsPage />}></Route>
+        {/* переробити на category/loader/product/title_size/ */}
+        <Route
+          path="/product/:productId"
+          element={<ProductDetailsPage />}
+        ></Route>
 
         <Route path="/favorite" element={<FavoritePage />} />
 
