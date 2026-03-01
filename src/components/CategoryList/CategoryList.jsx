@@ -1,6 +1,7 @@
 import s from "./CategoryList.module.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { routes } from "../../routes/routes";
 
 // поміняти з масиву на об'єкт
 // const categories = [
@@ -86,7 +87,8 @@ export const CategoryList = ({
           return (
             <li key={item} className={s.categoryItem}>
               <NavLink
-                to={`/category/${item}`}
+                // to={`/category/${item}`}
+                to={routes.category(item)}
                 aria-label={`Переглянути категорію ${categoryTranslation[item]}`}
                 title={`Категорія: ${categoryTranslation[item]}`}
                 className={s.categoryLink}

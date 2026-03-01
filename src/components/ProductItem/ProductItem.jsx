@@ -11,6 +11,8 @@ import Modal from "../Modal/Modal";
 import { selectUserRole } from "../../redux/auth/selectors";
 import { useProductActions } from "../../hooks/useProductActions";
 
+import { routes } from "../../routes/routes";
+
 export const ProductItem = ({ product }) => {
   const {
     isFavorite,
@@ -49,7 +51,8 @@ export const ProductItem = ({ product }) => {
       {/* location -  pathname, search, hash , та ін. */}
       {/* location.pathname - /category/agricultural - шлях, звідки прийшов */}
       <Link
-        to={`/product/${_id}`}
+        // to={`/product/${_id}`}
+        to={routes.product(_id)}
         state={{ from: location.pathname }}
         className={s.link}
       >
