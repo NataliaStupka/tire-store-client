@@ -1,8 +1,6 @@
 import { ProductForm } from "../ProductForm/ProductForm";
 
 export const EditProductForm = ({ product, onSubmit }) => {
-  console.log("Форма для зміни шини/диска", product);
-
   const initialValues = {
     id: product._id || "",
     category: product.category || "",
@@ -31,19 +29,6 @@ export const EditProductForm = ({ product, onSubmit }) => {
     Object.entries(values).forEach(([key, value]) => {
       if (key === "id") return;
       const originalValue = product[key];
-
-      // //Якщо користувач змінив поле.
-      // if (value !== originalValue) {
-      //   //append - додає пару ключ-значення до об’єкта FormData
-      //   if (key === "image") {
-      //     //перевіряє, чи користувач вибрав файл,
-      //     if (value instanceof File && !formData.has("image")) {
-      //       formData.append("image", value); // бекенд очікує photo ⁉️
-      //     }
-      //   } else {
-      //     formData.append(key, value.toString());
-      //   }
-      // }
 
       if (key === "image") {
         //перевіряє, чи користувач вибрав файл,

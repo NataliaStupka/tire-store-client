@@ -26,8 +26,6 @@ export const AddProductForm = ({ onClose }) => {
   const handleSubmit = async (values, options) => {
     options.setSubmitting(true);
     try {
-      console.log("🟡 Formik values:", values);
-
       const newProduct = {
         //   id - автоматично генерується на бекенді (MongoDB)
         category: values.category,
@@ -55,9 +53,8 @@ export const AddProductForm = ({ onClose }) => {
         formData.append("image", values.image); // Завантаження зображення на бекенд, очікує photo
       }
 
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      // //подивитися, що в всередині formData,
+      // console.log("🟠🟠", [...formData.entries()]);
 
       await dispatch(addProduct(formData)).unwrap();
       toast.success(
