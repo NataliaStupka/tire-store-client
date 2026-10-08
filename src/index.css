@@ -1,62 +1,37 @@
 :root {
-  /* 🎨 Основна кольорова палітра */
   --main-text: #101828; /* Основний текст - Темно-графітовий */
-  /* --main-text: #f4f4f4; */ /* світлий */
-
   --color-text-secondary: #6b7280; /* Другорядний текст - Сірий */
 
-  --background: #f2f4f7; /* Світлий фон сторінки */
-  --hero-bg: #e0e4eb;
-
-  /*--background: #0f1114;  /* Темний фон сторінки */
-  /*--dark-grey: #333333; /* Темно-сірий (для темної теми браузера) */
   --white: #ffffff; /* Фон картки або блоку */
-  --card-bg: #1b1e22; /*заміна white*/
 
-  /* 🔵 Primary (основний акцент — синій) */
-  --primary: #2563eb; /* Основний колір кнопок, лінків, hover-ефектів */
-  --primary-hover: #1e40af; /* Темніший відтінок при hover */
+  /* ===== БРЕНДОВІ КОЛЬОРИ ===== */
+  --color-accent: #fff215; /* основний жовтий акцент */
+  --color-brand-dark: #0c1e29; /* header, footer */
 
-  /* 🟠 CTA (заклик до дії — помаранчевий) */
-  --cta: #f97316; /* Кнопки типу “Buy now” */
-  --cta-hover: #ea580c; /* Hover CTA */
+  /* ===== ОСНОВНІ ДІЇ ===== */
+  --color-primary: #2563eb; /* Основний колір кнопок, лінків, GoBack */
+  --color-primary-hover: #1e40af; /* hover основних кнопок */
 
-  /* 🟦 SECONDARY (бірюзовий акцент) */
-  --secondary: #06b6d4;
+  /* ===== ДРУГОРЯДНІ АКТИВНІ ЕЛЕМЕНТИ ===== */
+  --color-secondary: #5582e9; /* select, favorite, pagination, price тощо */
 
-  /* ⚙️ Додаткові кольори та деталі */
-  --border-color: #ddd; /* Легкі роздільники */
-  /*--border-color-light: #d3d0d0; /* ??? */
-  --border-color-dark: #2a2e33;
+  /* ===== ФОНИ ===== */
+  --color-background-card: #f2f4f7;
+  --color-hero-background: #e0e4eb;
 
-  --footer-bg: #1e3a8a; /* Темно-синій футер */
+  /* ===== РАМКИ ===== */
+  --color-border: #ddd; /* Легкі роздільники */
+  --color-border-dark: #2a2e33;
+
+  /* ===== СПЕЦІАЛЬНІ КОЛЬОРИ ===== */
+  --color-contact: #06b6d4; /* використовуємо в fotter: адреса, viber, telegram */
+  --producer: #f97316;
 
   /* 🕶️ Ефекти */
-  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
   --radius: 12px;
   --transition: all 0.25s ease; /* !!!!  на своє */
-
-  /* -------------------????------------------------------------ */
-
-  --accent-text: #5582e9; /* Акцентний колір для посилань, заголовків */
-
-  /* 🟢 Акценти */
-  --accent-color: #5582e9; /* 1 Акцентний колір для елементів (наприклад, кнопок) */
-  /* --accent-color: #f59e0b; /*Акцентний колір оранжевий(кнопок, CTA) */
-
-  /* 🟠 Другий акцент (CTA, hover, важливі елементи) */
-  /*   --cta-color: #e77e23; /* Теплий помаранчевий — для дії */
-  --cta-hover: #c86715; /* Темніший при наведенні */
-
-  /* ⚙️ Допоміжні */
-  /*  --neutral-dark: #2b2f36; /* Для тіней, тексту в темних блоках */
-  /*  --neutral-light: #f9fafb; /* Для контрастного підсвічування */
-
-  /* --icon: #94a3b8; Іконки або тонкі лінії */
-
-  --hover: #d97706; /* Hover-ефект для акценту */
-  /* --hover: #3aa89b;  */
 
   /* Шрифти */
   --font-family: "Montserrat", sans-serif; /* Основний шрифт */
@@ -110,9 +85,9 @@ a {
   color: inherit;
   transition: color 0.3s ease;
 }
-a:hover {
-  color: var(--accent-text);
-}
+/* a:hover {
+  color: var(--color-accent);
+} */
 
 button {
   border: none;
@@ -135,23 +110,25 @@ select {
 }
 
 .button {
-  background-color: var(--primary);
+  background-color: var(--color-primary);
   color: var(--white);
   padding: 12px 48px;
   border-radius: var(--radius);
   font-family: var(--font-family);
   font-weight: 600;
   /* transition: var(--transition); */
-  transition: background-color 0.3s ease, transform 0.1s ease; /* Плавний ефект */
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease; /* Плавний ефект */
 }
 .button:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--color-primary-hover);
   transform: scale(1.02); /* Легке збільшення при наведенні */
   box-shadow: var(--shadow-hover);
 }
 
 .button:focus {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--color-secondary);
   outline-offset: 2px; /* Для доступності */
 }
 /* Доступність для фокусу */
@@ -160,7 +137,7 @@ button:focus,
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
 }
 

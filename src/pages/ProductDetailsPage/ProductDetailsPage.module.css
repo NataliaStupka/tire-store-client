@@ -53,11 +53,11 @@
   text-decoration: underline;
 }
 .producer {
-  color: var(--cta);
+  color: var(--producer);
 }
 .connectingSize {
   font-weight: 600;
-  color: var(--border-color-dark);
+  color: var(--color-border-dark);
 }
 
 .list {
@@ -81,7 +81,7 @@
 .goBack {
   display: inline-block;
   margin-bottom: 24px;
-  color: var(--primary);
+  color: var(--color-primary);
   font-weight: 600;
   text-decoration: none;
   border: 1px solid var(--accent);
@@ -91,5 +91,5 @@
 }
 
 .goBack:hover {
-  color: var(--primary-hover);
+  color: var(--color-primary-hover);
 }

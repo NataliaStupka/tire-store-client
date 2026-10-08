@@ -69,6 +69,9 @@ export const ProductItem = ({ product }) => {
               Диск R{size} <span className={s.producer}>{producer}</span>
             </h3>
           )}
+
+          <p>Категорія: {category}</p>
+
           {tireType && <p>Тип шини: {tireType} </p>}
           {layering && <p>Слойність шини: {layering} </p>}
           {loadIndex && <p>Індекс: {loadIndex} </p>}
@@ -83,7 +86,9 @@ export const ProductItem = ({ product }) => {
             Ціна: {price} {title === "tire" ? "$" : "грн"}
           </p>
           {typeof instock === "boolean" && (
-            <p>{instock ? "В наявності" : "Уточнюйте наявність"} </p>
+            <p className={s.instock}>
+              {instock ? "В наявності" : "Уточнюйте наявність"}{" "}
+            </p>
           )}
         </div>
       </Link>

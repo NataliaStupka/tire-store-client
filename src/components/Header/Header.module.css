@@ -3,10 +3,12 @@
   top: 0;
   z-index: 50;
 
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
-  background: linear-gradient(135deg, #f8faff, #e9eef6);
-  border-bottom: 2px solid var(--border-color);
+  /* background: linear-gradient(135deg, #f8faff, #e9eef6); */
+  background-color: var(--color-brand-dark);
+
+  border-bottom: 2px solid var(--color-border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }

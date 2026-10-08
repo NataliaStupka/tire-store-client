@@ -25,7 +25,9 @@ export const AddProductForm = ({ onClose }) => {
   //values це initialValues
   const handleSubmit = async (values, options) => {
     options.setSubmitting(true);
+
     try {
+      // const newProduct = {...values} // ?
       const newProduct = {
         //   id - автоматично генерується на бекенді (MongoDB)
         category: values.category,
@@ -46,7 +48,7 @@ export const AddProductForm = ({ onClose }) => {
       // Додаємо всі поля з newProduct до FormData
       Object.entries(newProduct).forEach(([key, value]) => {
         //if (key !== "image") {formData.append(key, value.toString());} //???
-        formData.append(key, value.toString());
+        formData.append(key, String(value)); // null.toString() може впасти
       });
       // Додаємо image окремо, якщо воно є
       if (values.image) {

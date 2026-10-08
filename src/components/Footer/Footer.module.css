@@ -1,17 +1,24 @@
 .footer {
-  /* background-color: var(--footer-bg); */
-
-  background: linear-gradient(
-    to bottom right,
-    color-mix(in srgb, var(--footer-bg) 100%, white),
-    color-mix(in srgb, var(--footer-bg) 70%, black)
-  );
+  background-color: var(--color-brand-dark);
   color: var(--white);
-  padding-top: 60px;
-  padding-bottom: 60px;
+  /* padding-top: 60px;
+  padding-bottom: 60px; */
+  padding: 48px 0 24px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.footerContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Ліва частина */
+.footerBrand {
+  text-align: left;
 }
 
 .footer h2 {
@@ -22,61 +29,100 @@
   margin-bottom: 16px;
   text-transform: uppercase;
 }
-.logo .accent {
-  color: var(--cta);
+.logo {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
+.logo .accent {
+  color: var(--color-accent);
+}
+
+.footerDescription {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+/* Центр */
+.footerInfo {
+  text-align: left; /*center*/
+}
 .footer p {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 8px;
 }
-
+.footerInfo p:last-child {
+  margin-bottom: 0;
+}
 .footer a {
-  color: var(--secondary);
+  color: var(--color-contact);
   font-weight: 500;
   transition: color 0.3s ease;
+  font-weight: 500;
 }
-
 .footer a:hover {
-  color: var(--accent-color);
+  color: var(--color-secondary);
 }
 
 /* ------------------ */
 
+/* Права частина */
+
+/* .footerAdmin {
+  text-align: right;
+} */
+.footerAdmin {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Кнопка адміністратора */
 .btnAdmin {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 22px;
-  border-radius: var(--radius);
-  border: 1px solid var(--white);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+
+  padding: 9px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
   background: transparent;
   color: var(--white);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
   transition: var(--transition);
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .btnAdmin:hover,
 .btnAdmin:focus {
   background: var(--white);
-  color: var(--footer-bg);
+  color: var(--color-primary);
   transform: scale(1.03);
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  border-color: var(--white);
 }
 
 .logoutButton {
   margin-top: 16px;
 }
 
+/* Нижня лінія */
 .footerBottom {
   margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.footerBottom p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
 }
 
 @media screen and (min-width: 768px) {
@@ -92,5 +138,16 @@
   .btnAdmin {
     font-size: 14px;
     padding: 8px 18px;
+  }
+
+  .footerContent {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footerInfo,
+  .footerAdmin {
+    text-align: center;
   }
 }

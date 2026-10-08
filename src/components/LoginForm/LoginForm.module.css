@@ -24,7 +24,7 @@
   }
   button {
     cursor: pointer;
-    background-color: var(--primary);
+    background-color: var(--color-primary);
     color: var(--white);
     padding: 12px 24px;
     border-radius: var(--radius);
@@ -35,14 +35,14 @@
 
 .form input:focus,
 .form input:hover {
-  border-color: var(--accent-color);
+  border-color: var(--color-secondary);
   outline: none;
   background-color: var(--white);
   box-shadow: 0 0 0 3px rgba(85, 130, 233, 0.2);
 }
 .form button:focus,
 .form button:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--color-primary-hover);
   box-shadow: var(--shadow-hover);
   transform: scale(1.02);
 }

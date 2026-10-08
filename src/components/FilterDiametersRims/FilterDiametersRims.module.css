@@ -19,7 +19,7 @@
 .diameterButton {
   background-color: var(--white);
   color: var(--main-text);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: 8px 20px;
   font-weight: 600;
@@ -28,14 +28,14 @@
 }
 
 .diameterButton.active {
-  background-color: var(--accent-color);
+  background-color: var(--color-secondary);
   color: white;
 }
 
 .diameterButton:hover {
-  background-color: var(--primary);
+  background-color: var(--color-primary);
   color: var(--white);
-  border-color: var(--primary);
+  border-color: var(--color-primary);
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
@@ -43,7 +43,7 @@
   margin-top: 12px;
   padding: 8px 16px;
   font-weight: 500;
-  background-color: var(--accent-color);
+  background-color: var(--color-secondary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -54,8 +54,8 @@
 
 .resetButton:hover {
   background-color: #fff;
-  color: var(--accent-color);
-  border: 1px solid var(--accent-color);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   transform: scale(1.02);
 }

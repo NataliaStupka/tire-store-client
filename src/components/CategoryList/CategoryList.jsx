@@ -2,6 +2,7 @@ import s from "./CategoryList.module.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { routes } from "../../routes/routes";
+import sprite from "../../assets/sprite.svg";
 
 // поміняти з масиву на об'єкт
 // const categories = [
@@ -82,6 +83,7 @@ export const CategoryList = ({
   return (
     <div className="container">
       <p className={s.categoryText}>Переглянути каталог</p>
+
       <ul className={s.categoryList}>
         {categories.map((item) => {
           return (
@@ -93,14 +95,21 @@ export const CategoryList = ({
                 title={`Категорія: ${categoryTranslation[item]}`}
                 className={s.categoryLink}
               >
-                <div className={s.imageWrapper}>
-                  {/* src={item.image} */}
-                  <img src="/tire.jpg" alt={item} />
+                <div className={s.iconWrapper}>
+                  <svg className={s.categoryIcon}>
+                    <use href={`${sprite}#icon-${item}`}></use>
+                  </svg>
                 </div>
-                <div>
+
+                <div className={s.categoryFooter}>
                   <h3 className={s.categoryTitle}>
                     {categoryTranslation[item]}
                   </h3>
+
+                  {/* -> */}
+                  <svg className={s.categoryArrow}>
+                    <use href={`${sprite}#icon-arrow-right`}></use>
+                  </svg>
                 </div>
               </NavLink>
             </li>

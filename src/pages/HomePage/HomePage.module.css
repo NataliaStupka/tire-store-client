@@ -1,33 +1,64 @@
 /* -- Hero -- */
 .hero {
-  /* background-image: ; */
+  /* max-width: 1200px; */
+  background-image:
+    linear-gradient(rgba(47, 48, 58, 0.3), rgba(47, 48, 58, 0.3)),
+    url("../../../public/img/photo_2.jpeg");
 
-  text-align: center;
-  border-radius: var(--radius);
+  background-image:
+    linear-gradient(rgba(47, 48, 58, 0.2), rgba(47, 48, 58, 0.2)),
+    url("../../../public/img/photo_3.jpeg");
+
+  background-color: var(
+    --color-hero-background
+  ); /* Світло-сірий фон, нейтральний і чистий */
+  background-repeat: no-repeat;
+  background-size: cover;
+
   box-shadow: var(--shadow-soft);
   transition: var(--transition);
-  padding-top: 80px;
-  padding-bottom: 80px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: var(--hero-bg); /* Світло-сірий фон, нейтральний і чистий */
-  background-repeat: no-repeat;
+
+  padding-top: 180px;
+  padding-bottom: 180px;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
   background-position: center;
-  background-size: cover;
-  text-align: center;
+
+  min-height: 500px;
+  /* padding: 60px; */
 }
 
 .hero h1 {
-  font-size: 42px;
+  font-size: 45px;
   font-weight: 700;
-  color: var(--main-text);
+  font-weight: 800;
+
+  line-height: 1.05;
+
   margin-bottom: 16px;
+  margin: 0 0 16px;
+
+  max-width: 480px;
+
+  text-align: left;
+  padding-left: 25px;
+
+  color: var(--main-text);
+  color: var(--white);
 }
+
+.hero h1 span {
+  color: var(--color-accent);
+}
+
 .hero p {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--color-text-secondary);
+  color: var(--white);
+
   max-width: 600px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  padding-left: 25px;
   line-height: 1.6;
 }
 
@@ -41,7 +72,7 @@
 .searchBar {
   padding-top: 60px;
   padding-bottom: 60px;
-  background-color: var(--white); /* --hero-bg ??*/
+  background-color: var(--white); /* --color-hero-background ??*/
 }
 
 /* tablet */
