@@ -2,31 +2,44 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  width: 100%;
+  min-width: 0;
 }
 
 .select {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 600;
+  display: block;
+  /* display: flex; */
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  padding: 6px 34px 6px 12px;
+  /* padding: 6px 12px; */
   font-size: 16px;
+  font-weight: 600;
   color: var(--color-text);
-  background: var(--white);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
-  box-shadow: var(--shadow-soft);
-  transition: var(--transition);
-  appearance: none; /* прибираємо системну стрілку */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("../../assets/chevron-down.svg"); /* можна підставити свою іконку */
+
+  background-color: var(--white);
+  background-image: url("../../assets/chevron-down.svg");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 16px;
-  min-width: 150px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+
+  appearance: none; /* прибираємо системну стрілку */
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: var(--transition);
+
+  /* align-items: center; */
+  /* gap: 5px; */
+  /* -moz-appearance: none; */
+  /* min-width: 150px; */
 
   &:hover {
     border-color: var(--color-secondary);
