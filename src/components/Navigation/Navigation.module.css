@@ -1,7 +1,9 @@
 .nav {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
 
   .active {
     color: var(--white);
@@ -16,16 +18,18 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 8px;
+  min-width: 0;
 }
 
 /* logo */
 .logo {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 1px;
-  /* color: #1e293b; */
+  font-size: 17px;
+  letter-spacing: 0.5px;
   color: var(--white);
+  white-space: nowrap; /* ??? */
   transition: transform 0.2s ease-in-out;
 
   &:hover {
@@ -117,18 +121,24 @@
 .wrapNav {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 0;
 }
 .pagesInHeader {
   display: flex;
-  gap: 18px;
-  margin-bottom: 10px;
+  /* justify-content: flex-end; */
+  /* flex-wrap: wrap; */
+  gap: 12px;
+  margin-bottom: 0;
 }
 .link {
+  font-size: 13px;
   text-decoration: none;
   font-weight: 500;
   color: var(--white);
   position: relative;
+  white-space: nowrap;
   transition: color 0.2s ease-in-out;
 
   &:link:hover {
@@ -164,10 +174,31 @@
   }
 }
 
+@media screen and (min-width: 480px) {
+  .logo {
+    font-size: 19px;
+  }
+
+  .link {
+    font-size: 14px;
+  }
+
+  .nav {
+    gap: 16px;
+  }
+
+  .wrapNav {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
 /* tablet*/
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .nav {
     align-items: flex-start;
+    gap: 20px;
   }
 
   .logoWrap {
@@ -175,12 +206,10 @@
     align-items: center;
 
     flex-direction: row;
-    gap: 15px;
+    gap: 12px;
   }
 
-  .logo,
-  .logo2,
-  .logo3 {
+  .logo {
     font-size: 22px;
     margin-bottom: 0;
   }
@@ -194,21 +223,30 @@
   .wrapNav {
     flex-direction: row;
     align-items: center;
-    gap: 30px;
+    gap: 18px;
   }
   .pagesInHeader {
+    gap: 16px;
     margin-bottom: 0;
+  }
+  .link {
+    font-size: 15px;
   }
 }
 
 /* desctop */
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1200px) {
   .wrapNav {
+    gap: 24px;
     flex-direction: row;
     align-items: center;
   }
   .pagesInHeader {
+    gap: 18px;
     margin-bottom: 0px;
+  }
+  .link {
+    font-size: 16px;
   }
 }
 
