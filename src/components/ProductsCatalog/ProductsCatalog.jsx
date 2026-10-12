@@ -20,18 +20,17 @@ export const ProductsCatalog = ({ products: propProducts }) => {
 
   return (
     <section>
-      <ul className={s.productsList}>
-        {/* ---- перенести в окремий компонент ---- */}
-        {products.length > 0 ? (
-          products.map((product) => (
+      {products.length > 0 ? (
+        <ul className={s.productsList}>
+          {products.map((product) => (
             <li key={product._id}>
               <ProductItem product={product} />
             </li>
-          ))
-        ) : (
-          <p>Шин у цій категорії ще немає.</p>
-        )}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <p>Шин у цій категорії ще немає.</p>
+      )}
 
       {isLoading && !products.length && <LoaderComponent />}
       {isError && <p>Error: {isError}</p>}

@@ -70,7 +70,7 @@ export const ProductItem = ({ product }) => {
             </h3>
           )}
 
-          <p>Категорія: {category}</p>
+          {/* <p>Категорія: {category}</p> */}
 
           {tireType && <p>Тип шини: {tireType} </p>}
           {layering && <p>Слойність шини: {layering} </p>}

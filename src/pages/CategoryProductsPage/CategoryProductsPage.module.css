@@ -5,10 +5,9 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 15px;
   font-weight: 700;
-  /* text-align: center; */
-  color: var(--color-text-secondary);
+  color: var(--color-secondary);
   /* text-transform: uppercase; */
   letter-spacing: 0.5px;
 }
@@ -76,4 +75,18 @@
   background-color: var(--color-secondary);
   color: #ffffff;
   border-color: #344054;
+}
+
+/* tablet */
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 25px;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 1200px) {
+  .title {
+    font-size: 25px;
+  }
 }

@@ -39,7 +39,7 @@ export const ProductDetailsPage = () => {
 
           <div className={s.detailsContainer}>
             <div className={s.imageWrapper}>
-              <img src={product.image} alt={product.size} className={s.img} />
+              <img src={product.image} alt={product.size} className={s.image} />
             </div>
 
             <div className={s.info}>
