@@ -1,95 +1,300 @@
 .details {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding: 28px 0 48px;
+  background: #f5f7f9;
 }
 
-.pageTitle {
-  font-size: 28px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 32px;
-  color: var(--main-text);
-}
-
-.detailsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: center;
-  align-items: flex-start;
-
-  box-shadow: var(--shadow, 0 4px 10px rgba(0, 0, 0, 0.1));
-  padding: 60px 30px;
-}
-
-.imageWrapper {
-  flex: 1 1 300px;
-  display: flex;
-  justify-content: center;
-}
-
-.image {
-  max-width: 320px;
+.detailsInner {
   width: 100%;
-  border-radius: var(--radius, 16px);
-  box-shadow: var(--shadow, 0 4px 10px rgba(0, 0, 0, 0.1));
-  object-fit: contain;
-}
-
-.info {
-  flex: 1 1 300px; /* елемент буде займати мінімум 300px, але може розтягуватись, якщо є місце */
-  /* padding: 24px; */
-}
-
-.name {
-  font-size: 20px;
-  font-weight: 600;
-  /* text-align: center; */
-  margin-bottom: 14px;
-  color: var(--main-text);
-}
-
-.model {
-  text-decoration: underline;
-}
-.producer {
-  color: var(--producer);
-}
-.connectingSize {
-  font-weight: 600;
-  color: var(--color-border-dark);
-}
-
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.list li {
-  font-size: 16px;
-  margin-bottom: 12px;
-  color: var(--main-text);
-}
-
-.list span {
-  font-weight: 600;
-  color: var(--accent);
-  margin-right: 8px;
 }
 
 .goBack {
-  display: inline-block;
-  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 22px;
+  padding: 7px 0;
   color: var(--color-primary);
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  border: 1px solid var(--accent);
-  border-radius: var(--radius, 12px);
-  padding: 6px 16px;
-  transition: all 0.25s ease;
+  transition: color 0.2s ease;
 }
 
 .goBack:hover {
   color: var(--color-primary-hover);
+}
+
+.pageTitle {
+  margin: 0 0 24px;
+  color: var(--main-text);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.detailsContainer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius, 12px);
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(16, 35, 45, 0.06);
+}
+
+.imageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  max-height: 390px;
+  object-fit: contain;
+}
+
+.info {
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.productType {
+  margin: 0 0 8px;
+  color: var(--color-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.name {
+  margin: 0 0 16px;
+  color: var(--main-text);
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.model {
+  font-weight: 600;
+}
+
+.producer {
+  color: var(--producer);
+}
+
+.availability {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  color: var(--main-text);
+  font-size: 14px;
+}
+
+.stockDot,
+.stockDotUnavailable {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+}
+
+.stockDot {
+  background: #299764;
+}
+
+.stockDotUnavailable {
+  background: #d99a2b;
+}
+
+.priceBlock {
+  margin-bottom: 26px;
+  padding: 16px 18px;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: #fafbfc;
+}
+
+.priceLabel {
+  display: block;
+  margin-bottom: 5px;
+  color: #667085;
+  font-size: 13px;
+}
+
+.price {
+  margin: 0;
+  color: var(--color-secondary);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.priceNote {
+  margin: 5px 0 0;
+  color: #667085;
+  font-size: 12px;
+}
+
+.specificationsTitle {
+  margin: 0 0 12px;
+  color: var(--main-text);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.85fr) minmax(0, 1.15fr);
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid #edf0f2;
+  overflow-wrap: anywhere;
+}
+
+.specRow:last-child {
+  border-bottom: 0;
+}
+
+.specRow dt {
+  color: #667085;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.specRow dd {
+  margin: 0;
+  color: var(--main-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.errorContainer {
+  min-height: 45vh;
+}
+
+.errorText {
+  padding: 24px;
+  border-radius: 10px;
+  background: #fff;
+  color: #b42318;
+  text-align: center;
+}
+
+/* Планшет */
+@media screen and (max-width: 900px) {
+  .detailsContainer {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 22px;
+    padding: 24px;
+  }
+
+  .imageWrapper {
+    min-height: 240px;
+    padding: 10px;
+  }
+
+  .image {
+    max-height: 320px;
+  }
+
+  .name {
+    font-size: 21px;
+  }
+
+  .price {
+    font-size: 25px;
+  }
+
+  .specRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3px;
+  }
+  .longLabel {
+    max-width: 180px;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Телефон */
+@media screen and (max-width: 620px) {
+  .details {
+    padding: 18px 0 32px;
+  }
+
+  .goBack {
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+
+  .pageTitle {
+    margin-bottom: 16px;
+    font-size: 22px;
+  }
+
+  .detailsContainer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 16px;
+  }
+
+  .imageWrapper {
+    min-height: 0;
+    padding: 8px;
+  }
+
+  .image {
+    max-height: 260px;
+  }
+
+  .name {
+    font-size: 21px;
+  }
+
+  .availability {
+    margin-bottom: 16px;
+  }
+
+  .priceBlock {
+    margin-bottom: 22px;
+    padding: 14px;
+  }
+
+  .price {
+    font-size: 25px;
+  }
+
+  .specRow {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 10px;
+  }
+
+  .specRow dt,
+  .specRow dd {
+    font-size: 13px;
+  }
 }

@@ -16,109 +16,165 @@ export const ProductDetailsPage = () => {
   }
   if (isError || !product) {
     return (
-      <div className={clsx("container", s.details)}>
-        <Link to={goBackLink.current}>Повернутися назад</Link>
-        <p>Не вдалося завантажити дані. Спробуйте ще раз.</p>
-      </div>
+      <section className={s.details}>
+        <div className={clsx("container", s.errorContainer)}>
+          <Link to={goBackLink.current} className={s.goBack}>
+            ← Повернутися назад
+          </Link>
+          <p>Не вдалося завантажити дані. Спробуйте ще раз.</p>
+        </div>
+      </section>
     );
   }
+
+  // const price = product.price;
+  const {
+    title,
+    price,
+    image,
+    producer,
+    size,
+    modelTire,
+    tireType,
+    loadIndex,
+    layering,
+    diskModel,
+    instock,
+  } = product;
 
   //відображає поле "Виробник" лише якщо воно є
   // const isProducer = !!product.producer;
 
   return (
     <section className={s.details}>
-      <div className="container">
+      <div className={clsx("container", s.detailsInner)}>
         <Link to={goBackLink.current} className={s.goBack}>
-          ← Назад
+          ← Назад до каталогу
         </Link>
-        <div>
-          <h2 className={s.pageTitle}>
-            Деталі про {isTire ? "шину" : "диск"}.
-          </h2>
 
-          <div className={s.detailsContainer}>
-            <div className={s.imageWrapper}>
-              <img src={product.image} alt={product.size} className={s.image} />
+        <h2 className={s.pageTitle}>Деталі про {isTire ? "шину" : "диск"}.</h2>
+
+        <article className={s.detailsContainer}>
+          <div className={s.imageWrapper}>
+            <img
+              src={image}
+              alt={`${title} ${producer ?? ""}`.trim()}
+              className={s.image}
+            />
+          </div>
+
+          <div className={s.info}>
+            {/* name */}
+            {isTire ? (
+              <h3 className={s.name}>
+                Шина {size} <span className={s.model}>{modelTire}</span>{" "}
+                <span className={s.producer}>{producer}</span>
+              </h3>
+            ) : (
+              <h3 className={s.name}>
+                Диск R{size} <span className={s.producer}>{producer}</span>
+              </h3>
+            )}
+
+            {/* <div className={s.availability}>
+              <span className={instock ? s.stockDot : s.stockDotUnavailable}>
+                {typeof instock === "boolean" && (
+                  <p>{instock ? "В наявності" : "Уточнюйте наявність"}</p>
+                )}
+              </span>
+            </div> */}
+            {typeof instock === "boolean" && (
+              <div className={s.availability}>
+                <span
+                  className={instock ? s.stockDot : s.stockDotUnavailable}
+                  aria-hidden="true"
+                />
+                <span>{instock ? "В наявності" : "Уточнюйте наявність"}</span>
+              </div>
+            )}
+
+            <div className={s.priceBlock}>
+              <span className={s.priceLabel}>Вартість:</span>
+              <p className={s.price}>
+                {price} {isTire ? "$" : "грн (з ПДВ)"}
+              </p>
             </div>
 
-            <div className={s.info}>
-              {isTire ? (
-                <h3 className={s.name}>
-                  Шина {product.size}{" "}
-                  <span className={s.model}>{product.modelTire}</span>{" "}
-                  <span className={s.producer}>{product.producer}</span>
-                </h3>
-              ) : (
-                <h3 className={s.name}>
-                  Диск R{product.size}{" "}
-                  <span className={s.producer}>{product.producer}</span>
-                </h3>
-              )}
-
-              <ul className={s.list}>
-                <li>
-                  <span>Розмір:</span>
-                  {product.size} {isRim && "(діаметр в дюймах)"}
-                </li>
-
-                {/* {isProducer && <p className={s.name}>Виробник: {product.producer}</p>} */}
-                {product.producer && (
-                  <li>
-                    <span>Виробник:</span> {product.producer}
-                  </li>
+            <div className={s.specifications}>
+              <h3 className={s.specificationsTitle}>Характеристики</h3>
+              <dl className={s.list}>
+                {size && (
+                  <div className={s.specRow}>
+                    <dt>Розмір</dt>
+                    <dd>
+                      {product.size} {isRim && "(діаметр в дюймах)"}
+                    </dd>
+                  </div>
                 )}
 
-                {isTire && product.modelTire && (
-                  <li>
-                    <span>Модель:</span> {product.modelTire}
-                  </li>
-                )}
-                {isTire && product.tireType && (
-                  <li>
-                    <span>Тип:</span> {product.tireType}
-                  </li>
-                )}
-                {isTire && (product.loadIndex || product.layering) && (
-                  <li>
-                    <span>Індекс навантаження / слойність:</span>{" "}
-                    {product.loadIndex || product.layering}
-                  </li>
+                {producer && (
+                  <div className={s.specRow}>
+                    <dt>Виробник:</dt>
+                    <dd>{producer}</dd>
+                  </div>
                 )}
 
-                {product.layering && (
-                  <li>
-                    <span>Слойність шини:</span> {product.layering}
-                  </li>
+                {isTire && modelTire && (
+                  <div className={s.specRow}>
+                    <dt>Модель:</dt>
+                    <dd>{modelTire}</dd>
+                  </div>
                 )}
 
-                {/* {isRim && <p className={s.name}>Модель диску: {product.diskModel}</p>} */}
-                {isRim && product.diskModel && (
-                  <li>
-                    <span className={s.connectingSize}>
-                      Найменування, приєднувальні розміри:
-                    </span>{" "}
-                    {product.diskModel}
-                  </li>
+                {isTire && tireType && (
+                  <div className={s.specRow}>
+                    <dt>Тип:</dt>
+                    <dd>{tireType}</dd>
+                  </div>
                 )}
 
-                {/* <p className={s.name}>Ціна: {product.price}$</p> */}
-                <li>
-                  <span>Вартість:</span> {product.price}{" "}
-                  {isTire ? "$" : "грн (з ПДВ)"}
-                </li>
-
-                {typeof product.instock === "boolean" && (
-                  <li>
-                    <p>
-                      {product.instock ? "В наявності" : "Уточнюйте наявність"}
-                    </p>
-                  </li>
+                {/* ???????????? окремо? */}
+                {isTire && (loadIndex || layering) && (
+                  <div className={s.specRow}>
+                    <dt className={s.longLabel}>
+                      Індекс навантаження / слойність:
+                    </dt>
+                    <dd> {loadIndex || layering}</dd>
+                  </div>
                 )}
-              </ul>
+                {/* 
+                {isTire && loadIndex && (
+                  <div className={s.specRow}>
+                    <dt>Індекс навантаження</dt>
+                    <dd>{loadIndex}</dd>
+                  </div>
+                )}
+
+                {isTire && layering && (
+                  <div className={s.specRow}>
+                    <dt>Слойність шини</dt>
+                    <dd>{layering}</dd>
+                  </div>
+                )} */}
+
+                {/* тут ↓ перевірити чи не задіяно layering в дисках???? чи це тільки для шини, тоді видалити */}
+                {/* {layering && (
+                  <div className={s.specRow}>
+                    <dt>Слойність шини:</dt>
+                    <dd>{layering}</dd>
+                  </div>
+                )} */}
+
+                {isRim && diskModel && (
+                  <div className={s.specRow}>
+                    <dt>Найменування та приєднувальні розміри</dt>
+                    <dd>{diskModel}</dd>
+                  </div>
+                )}
+              </dl>
             </div>
           </div>
-        </div>
+        </article>
       </div>
     </section>
   );
