@@ -1,4 +1,6 @@
 .details {
+  box-sizing: border-box;
+  min-height: 77vh;
   padding: 28px 0 48px;
   background: #f5f7f9;
 }
