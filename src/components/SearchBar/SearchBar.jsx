@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import { useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { useEffect, useMemo } from "react";
 import debounce from "lodash.debounce";
 
 import clsx from "clsx";
@@ -8,37 +8,29 @@ import s from "./SearchBar.module.css";
 
 import { resetFilter, setFilter } from "../../redux/filter/slice";
 
-import { fetchProducts } from "../../redux/catalog/operations";
 import { clearSearchResult, resetPagination } from "../../redux/catalog/slice";
 
-export const SearchBar = ({ onSizeChange }) => {
+export const SearchBar = () => {
   const dispatch = useDispatch();
 
   //пошук при веденні символів
-  const handleSearch = useCallback(
-    debounce((size, category) => {
-      console.log("size", size);
-      console.log("category", category);
-
-      //чи обов'язкове це якщо в state perPage вказано 12
-      const page = 1;
-
+  const handleSearch = useMemo(() => {
+    return debounce((size, category) => {
       dispatch(setFilter({ size, category }));
       dispatch(resetPagination());
-
-      if (size || category) {
-        dispatch(fetchProducts({ size, category, page: 1, target: "SEARCH" }));
-
-        if (onSizeChange) onSizeChange(size); // Викликаємо колбек для передачі size
-      }
-    }, 500), // Затримка 500 мс
-    [dispatch, onSizeChange],
-  );
+    }, 500);
+  }, [dispatch]);
+  // скасовує всі заплановані debounce виклики, якщо компонент зник або debounce змінився
+  useEffect(() => {
+    return () => {
+      handleSearch.cancel();
+    };
+  }, [handleSearch]);
 
   const handleReset = () => {
     dispatch(resetFilter());
     dispatch(clearSearchResult());
-    dispatch(fetchProducts({ page: 1 }));
+    dispatch(resetPagination());
   };
 
   const initialValues = {
@@ -52,6 +44,7 @@ export const SearchBar = ({ onSizeChange }) => {
       <Formik
         // onSubmit={handleSubmit} //якщо пошук після натискання кнопки
         initialValues={initialValues}
+        enableReinitialize //коли initialValues змінюється — форма перезавантажиться.
         // validationSchema={validationSchema}
       >
         {/* ({ resetForm }) */}
@@ -110,7 +103,6 @@ export const SearchBar = ({ onSizeChange }) => {
                 // setFieldValue("size", ""); // Скидаємо поле
                 // setFieldValue("category", "");
                 resetForm(); // скидає всі поля
-                if (onSizeChange) onSizeChange(""); // очистить відображення результатів
               }}
               className={clsx("button", s.btnReset)}
             >

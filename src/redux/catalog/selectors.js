@@ -1,4 +1,5 @@
 export const selectSearchResults = (state) => state.catalog.searchResults;
+export const selectHasSearched = (state) => state.catalog.hasSearched;
 export const selectCategoryResults = (state) => state.catalog.categoryResults;
 
 // export const selectProductById = (state) => state.catalog.productById?.tire || null;

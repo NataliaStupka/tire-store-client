@@ -11,6 +11,7 @@ import { REHYDRATE } from "redux-persist";
 
 const initialState = {
   searchResults: [], // пошук
+  hasSearched: false,
   categoryResults: [], // сторінка категорії
 
   productById: null,
@@ -34,6 +35,9 @@ const catalogSlice = createSlice({
     resetPagination(state) {
       state.currentPage = 1;
     },
+    setPage(state, action) {
+      state.currentPage = action.payload;
+    },
     addFavoriteProduct(state, action) {
       state.favoriteProducts.push(action.payload);
     },
@@ -55,6 +59,8 @@ const catalogSlice = createSlice({
     },
     clearSearchResult(state) {
       state.searchResults = [];
+      state.hasSearched = false;
+      state.currentPage = 1;
     },
   },
 
@@ -64,10 +70,10 @@ const catalogSlice = createSlice({
       //один основний і все ??
       .addCase(fetchProducts.fulfilled, (state, action) => {
         const { data, target } = action.payload;
-        console.log("👀 ⬇ DATA", action.payload);
 
         if (target === "SEARCH") {
           state.searchResults = data.data;
+          state.hasSearched = true;
         }
         if (target === "CATEGORY") {
           state.categoryResults = data.data;
@@ -88,7 +94,6 @@ const catalogSlice = createSlice({
           return item._id !== productId;
         });
       })
-      // ???? потребує перевірки
       .addCase(editProduct.fulfilled, (state, { payload }) => {
         const updatedProduct = payload.data; //оновлена шина
 
@@ -107,7 +112,6 @@ const catalogSlice = createSlice({
       })
       // отримати всі можливі діаметри дисків
       .addCase(fetchRimsDiameters.fulfilled, (state, action) => {
-        console.log("🟠 diameters:", action.payload);
         state.rimsDiameters = action.payload || []; //action.payload
       })
 

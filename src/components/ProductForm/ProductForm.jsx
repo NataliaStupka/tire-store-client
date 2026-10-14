@@ -2,6 +2,12 @@
 //setFieldError - Встановлює помилку для конкретного поля; setValues - Оновлює всі значення форми одночасно; інші
 // enableReinitialize - Якщо initialValues змінився — перезапусте форму заново.
 
+// ✏️
+// TODO: refactor ProductForm
+// - extract FormField component
+// - add mapper pattern
+// - dynamic product fields
+
 import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import s from "./ProductForm.module.css";

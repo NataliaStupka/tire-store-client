@@ -4,7 +4,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useMemo } from "react";
 
 import {
   selectCurrentPage,
@@ -59,9 +58,7 @@ export const useCategoryProductsPage = () => {
 
   // клік по діаметру
   const handleDiameterClick = (diameter) => {
-    console.log("⁉️ diametr?", diameter);
     setSelectedDiameter(diameter);
-    console.log("✅Обрали діаметр - ", selectedDiameter);
     dispatch(
       fetchProducts({
         category,
@@ -84,23 +81,15 @@ export const useCategoryProductsPage = () => {
   };
 
   const handlePageChange = (pageNum) => {
-    console.log("🔴:", selectedDiameter);
-
     dispatch(
       fetchProducts({
         category,
-        size: selectedDiameter ?? undefined, //ЗВЕРНИ УВАГУ, ЧИ ПРАВИЛЬНО ТУТ??
+        size: selectedDiameter ?? undefined,
         page: pageNum,
         target: "CATEGORY",
       }),
     );
   };
-
-  //кількість сторінок для пагінації (при фільтрі за діаметром/при всіх дисках)
-  const pagesArray = useMemo(
-    () => Array.from({ length: totalPages }, (_, i) => i + 1),
-    [totalPages],
-  );
 
   // ========== RETURN ========== //
   return {
@@ -110,7 +99,7 @@ export const useCategoryProductsPage = () => {
     isLoading,
     isError,
     selectedDiameter,
-    pagesArray,
+    totalPages,
     currentPage, // pageNow: currentPage,
     handleDiameterClick,
     resetDiameters,

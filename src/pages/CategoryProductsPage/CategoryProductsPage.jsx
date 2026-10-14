@@ -1,4 +1,6 @@
 // Page збирає все разом
+import { useMemo } from "react";
+
 import { useCategoryProductsPage } from "../../hooks/useCategoryProductsPage"; //redux, dispatch, selectors, useParams, useEffect, локальний state, (notFound pagesArray)
 
 import s from "./CategoryProductsPage.module.css";
@@ -23,12 +25,19 @@ const CategoryProductsPage = () => {
     selectedDiameter,
     isLoading,
     isError,
-    pagesArray,
+    totalPages,
     currentPage,
     handleDiameterClick,
     resetDiameters,
     handlePageChange,
   } = useCategoryProductsPage();
+
+  // //кількість сторінок для пагінації (при фільтрі за діаметром/при всіх дисках)
+  // const pagesArray = useMemo(
+  //   () => Array.from({ length: totalPages }, (_, i) => i + 1),
+  //   [totalPages],
+  // );
+  const pagesArray = [...Array(totalPages)].map((_, i) => i + 1);
 
   return (
     <main>
@@ -63,7 +72,7 @@ const CategoryProductsPage = () => {
                 <p className={s.errorText}>
                   Сталася помилка: <span>{isError}</span>
                 </p>
-              ) : products.length === 0 ? ( // Порожній результат фільтру
+              ) : products.length === 0 && category === "rims" ? ( // Порожній результат фільтру
                 <>
                   <p className={s.emptyText}>
                     Нічого не знайдено для цього діаметра.
@@ -92,3 +101,23 @@ const CategoryProductsPage = () => {
 };
 
 export default CategoryProductsPage;
+
+// {
+//   !isLoading && (
+//     <>
+//       {isError ? (
+//         <p className={s.errorText}>
+//           Сталася помилка: <span>{isError}</span>
+//         </p>
+//       ) : products.length > 0 ? (
+//         <ProductsCatalog products={products} />
+//       ) : category === "rims" && selectedDiameter ? (
+//         <p className={s.emptyText}>Нічого не знайдено для цього діаметра.</p>
+//       ) : category === "rims" ? (
+//         <p className={s.emptyText}>Дисків у цій категорії ще немає.</p>
+//       ) : (
+//         <p className={s.emptyText}>Шин у цій категорії ще немає.</p>
+//       )}
+//     </>
+//   );
+// }

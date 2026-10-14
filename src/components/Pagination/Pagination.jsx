@@ -1,5 +1,6 @@
 import s from "./Pagination.module.css";
 
+//                   [pages]
 const Pagination = ({ pages, currentPage, onPageChange }) => {
   return (
     <div>

@@ -19,9 +19,6 @@ export const fetchProducts = createAsyncThunk(
     },
     thunkAPI,
   ) => {
-    console.log(
-      `"PARAMS": category-${category}, size${size}, page-${page}, perPage-${perPage}, target-${target}`,
-    ); // {size: '15', category: 'rims'}
     try {
       const query = new URLSearchParams();
 
@@ -32,7 +29,6 @@ export const fetchProducts = createAsyncThunk(
       if (perPage) query.append("perPage", perPage);
 
       const response = await tireApi.get(`/tires?${query.toString()}`);
-      console.log("🔹 - response.data:", response.data);
 
       return {
         data: response.data.data, //response.data ???
@@ -146,3 +142,15 @@ export const editProduct = createAsyncThunk(
     }
   },
 );
+
+// //----- FAVORITE ??? -------
+// export const toggleFavorite = createAsyncThunk(
+//   "catalog/toggleFavorite",
+//   async (product, thunkAPI) => {
+//     try {
+//       return product;
+//     } catch (err) {
+//       return thunkAPI.rejectWithValue(product);
+//     }
+//   },
+// );
