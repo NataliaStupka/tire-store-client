@@ -48,7 +48,8 @@ export const ProductForm = ({
           } else if (
             values.category === "loader" ||
             values.category === "industrial" ||
-            values.category === "agricultural"
+            values.category === "agricultural" ||
+            values.category === "car"
           ) {
             setFieldValue("title", "tire");
           }
@@ -71,6 +72,7 @@ export const ProductForm = ({
                 <option value="agricultural">
                   Шини для сільскогосподарскої техніки
                 </option>
+                <option value="car">Легкові шини</option>
                 <option value="rims">Диски</option>
               </Field>
               <ErrorMessage

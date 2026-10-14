@@ -141,8 +141,8 @@
   white-space: nowrap;
   transition: color 0.2s ease-in-out;
 
-  &:link:hover {
-    color: var(--color-secondary);
+  &:hover {
+    color: var(--color-accent);
   }
 }
 

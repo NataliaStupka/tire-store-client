@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { clearSearchResult } from "../../redux/catalog/slice";
 // import { Helmet } from "react-helmet";
 
-// const category = ["loader", "industrial", "agricultural", "rims"];
+// const category = ["loader", "industrial", "agricultural", 'car' "rims"];
 
 const HomePage = () => {
   const {

@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const TIRE_CATEGORIES = ["loader", "industrial", "agricultural"];
+const TIRE_CATEGORIES = ["loader", "industrial", "agricultural", "car"];
 const RIM_CATEGORY = "rims";
 
 export const getProductSchema = (formType = "create") =>

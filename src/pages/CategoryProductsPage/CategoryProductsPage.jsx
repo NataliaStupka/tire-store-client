@@ -14,6 +14,7 @@ const categoryTranslation = {
   loader: "Погрузочні шини",
   industrial: "Індустріальні шини",
   agricultural: "Сільськогосподарські шини",
+  car: "Легкові шини",
   rims: "Диски",
 };
 

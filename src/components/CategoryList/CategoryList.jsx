@@ -22,7 +22,7 @@ import sprite from "../../assets/sprite.svg";
 
 export const CategoryList = ({
   variant = "list",
-  categories = ["loader", "industrial", "agricultural", "rims"],
+  categories = ["loader", "industrial", "agricultural", "car", "rims"],
 }) => {
   const navigate = useNavigate();
   const location = useLocation(); //pathname, search, hash, key, state
@@ -32,6 +32,7 @@ export const CategoryList = ({
     loader: "Погрузочні шини",
     industrial: "Індустріальні шини",
     agricultural: "Сільськогосподарські шини",
+    car: "Легкові шини",
     rims: "Диски",
   };
 
