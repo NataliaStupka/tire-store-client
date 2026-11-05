@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 import { useModal } from "./useModal";
 
@@ -9,6 +9,7 @@ import {
   deleteProduct,
   editProduct,
   fetchProducts,
+  setProductOfDay
 } from "../redux/catalog/operations";
 import {
   addFavoriteProduct,
@@ -25,6 +26,7 @@ export const useProductActions = (product) => {
   // -- 💙 FAVORITES --
   const favoriteProducts = useSelector(selectFavoriteProducts);
   const isFavorite = favoriteProducts.some((item) => item._id === _id);
+ 
 
   const addToFavorites = () => {
     dispatch(addFavoriteProduct(product));
@@ -32,6 +34,20 @@ export const useProductActions = (product) => {
   const removeFromFavorites = () => {
     dispatch(deleteFavoriteProduct(_id));
   };
+  //=======
+
+  // -- ⭐️ productDay --
+  const isProductOfDay = Boolean(product.isProductOfDay);
+
+  const toggleProductOfDay = async () => {
+    try {
+    await dispatch(setProductOfDay({id: _id, isProductOfDay: !isProductOfDay})).unwrap();
+
+    // toast.success(isProductOfDay ? "Товар прибрано з товарів дня" : "Товар додано до товарів дня")
+    } catch (err) {
+      toast.error(`Не вдалося змінити статус товару дня: ${err}`)}
+  }
+ 
   //=======
 
   //--- CATEGORY REFRESH --
@@ -79,6 +95,8 @@ export const useProductActions = (product) => {
     isFavorite,
     addToFavorites,
     removeFromFavorites,
+    toggleProductOfDay,
+    isProductOfDay,
     updateProduct,
     removeProduct,
     isOpenModal,

@@ -6,6 +6,8 @@ import {
   fetchRimsDiameters,
   fetchProducts,
   fetchProductById,
+  fetchProductsOfDay,
+  setProductOfDay,
 } from "./operations.js";
 import { REHYDRATE } from "redux-persist";
 
@@ -16,6 +18,7 @@ const initialState = {
 
   productById: null,
   favoriteProducts: [], // 💙
+  productsOfDay: [], // ⭐️
 
   rimsDiameters: [], // [можливі діаметри дисків]
 
@@ -38,6 +41,7 @@ const catalogSlice = createSlice({
     setPage(state, action) {
       state.currentPage = action.payload;
     },
+    // 💙
     addFavoriteProduct(state, action) {
       state.favoriteProducts.push(action.payload);
     },
@@ -96,6 +100,8 @@ const catalogSlice = createSlice({
       })
       .addCase(editProduct.fulfilled, (state, { payload }) => {
         const updatedProduct = payload.data; //оновлена шина
+        //const updatedProduct = payload.data?.tire; //????? чи так
+        console.log("updatedProduct перевірка:", updatedProduct);
 
         if (updatedProduct) {
           state.categoryResults = state.categoryResults.map((item) =>
@@ -105,11 +111,96 @@ const catalogSlice = createSlice({
             item._id === updatedProduct._id ? updatedProduct : item,
           );
 
-          state.productById = updatedProduct;
+          if (updatedProduct.isProductOfDay) {
+            const exists = state.productsOfDay.some(
+              (item) => item._id === updatedProduct._id,
+            );
+
+            if (exists) {
+              state.productsOfDay = state.productsOfDay.map((item) =>
+                item._id === updatedProduct._id ? updatedProduct : item,
+              );
+            } else {
+              state.productsOfDay.push(updatedProduct);
+            }
+          } else {
+            state.productsOfDay = state.productsOfDay.filter(
+              (item) => item._id !== updatedProduct._id,
+            );
+          }
+
+          state.productById = updatedProduct; 
         } else {
           console.warn("No updated tire data received:", payload);
         }
       })
+
+      // ⭐️ fetch []
+      .addCase(fetchProductsOfDay.fulfilled, (state, action) => {
+        console.log("⭐️ fetchProductsOfDay", action.payload);
+        state.productsOfDay = action.payload;
+      })
+      // ⭐️ change
+      .addCase(setProductOfDay.fulfilled, (state, action) => {
+        const updatedProduct = action.payload;
+        console.log("⭐️ setProductOfDay", updatedProduct);
+
+        if (!updatedProduct) return;
+
+        // 1. Оновлюємо товар у поточній категорії
+        const categoryProduct = state.categoryResults.find(
+          (product) => product._id === updatedProduct._id,
+        );
+        if (categoryProduct) {
+          categoryProduct.isProductOfDay = updatedProduct.isProductOfDay;
+        }
+   
+        // 2. Оновлюємо товар у результатах пошуку
+        const searchProduct = state.searchResults.find(
+          (product) => product._id === updatedProduct._id,
+        );
+        if (searchProduct) {
+          searchProduct.isProductOfDay = updatedProduct.isProductOfDay;
+        }
+
+        // 3. Оновлюємо товар у вибраному за ID
+        if (state.productById?._id === updatedProduct._id) {
+          state.productById.isProductOfDay = updatedProduct.isProductOfDay;
+        }
+
+        // 4. Оновлюємо товар в Улюбленому
+        const favoriteProduct = state.favoriteProducts.find(
+          (product) => product._id === updatedProduct._id
+        )
+        if (favoriteProduct) {
+          favoriteProduct.isProductOfDay = updatedProduct.isProductOfDay
+        }
+        // ----- ??? -----
+
+        // Синхронізуємо масив товарів дня ⭐️
+        if (updatedProduct.isProductOfDay) {
+          //товар є у масиві productsOfDay (існує)
+          const exists = state.productsOfDay.some(
+            (item) => item._id === updatedProduct._id,
+          );
+        
+          if (exists) {
+            //Оновлюємо товар у масиві
+            state.productsOfDay = state.productsOfDay.map((item) =>
+              item._id === updatedProduct._id ? updatedProduct : item,
+            );
+          } else {
+            //Якщо товару ще немає — додаємо його
+            state.productsOfDay.push(updatedProduct);
+          }
+        } else {
+          //Якщо зірочку прибрали — видаляємо товар із масиву
+          state.productsOfDay = state.productsOfDay.filter(
+            (item) => item._id !== updatedProduct._id,
+          );
+        }
+      })
+
       // отримати всі можливі діаметри дисків
       .addCase(fetchRimsDiameters.fulfilled, (state, action) => {
         state.rimsDiameters = action.payload || []; //action.payload

@@ -11,6 +11,7 @@ import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearSearchResult } from "../../redux/catalog/slice";
+import { ProductsOfDay } from "../../components/ProductsOfDay/ProductsOfDay";
 // import { Helmet } from "react-helmet";
 
 // const category = ["loader", "industrial", "agricultural", 'car' "rims"];
@@ -88,7 +89,8 @@ const HomePage = () => {
 
       <section>
         <div className="container">
-          <h2>Товар дня:</h2>
+          
+          <ProductsOfDay/>
         </div>
       </section>
 

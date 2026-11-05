@@ -29,7 +29,6 @@ export const fetchProducts = createAsyncThunk(
       if (perPage) query.append("perPage", perPage);
 
       const response = await tireApi.get(`/tires?${query.toString()}`);
-
       return {
         data: response.data.data, //response.data ???
         target,
@@ -47,7 +46,7 @@ export const fetchProductById = createAsyncThunk(
     try {
       // console.log("Fetching product with id:", id); // Дебаґ
       const response = await tireApi.get(`/tires/${id}`);
-      // console.log("Response data:", response.data); // Перевірка структури
+      console.log("Response data:", response.data); // Перевірка структури
       return response.data;
     } catch (err) {
       console.error("Fetch error:", err.response?.data || err.message);
@@ -55,6 +54,35 @@ export const fetchProductById = createAsyncThunk(
     }
   },
 );
+
+// ⭐️ fetch Product of Day 
+export const fetchProductsOfDay = createAsyncThunk(
+  'catalog/fetchProductsOfDay',
+  async(_, thunkAPI) => {
+    try {
+      const response = await tireApi.get(`/tires?isProductOfDay=true`)
+      console.log ('⭐️', response.data.data.data)
+      return response.data.data.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data?.message || err.message)
+    }
+  }
+)
+// ⭐️ зміна поля isProductOfDay: true/false 
+export const setProductOfDay = createAsyncThunk(
+  'catalog/setProductOfDay',
+  async ({id, isProductOfDay}, thunkAPI) => {
+    try { //PATCH надсилає на сервер лише поле isProductOfDay
+const response = await tireApi.patch(`/tires/${id}`, {isProductOfDay});
+console.log('operation-setProductOfDay:', response.data.data.tire)
+return response.data.data.tire //повертає оновлений товар для slice.js
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        err.response?.data?.message || err.message
+      );
+    }
+  }
+)
 
 export const fetchRimsDiameters = createAsyncThunk(
   "filter/fetchRimsDiameters",

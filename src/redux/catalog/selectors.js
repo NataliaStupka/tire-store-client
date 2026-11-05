@@ -4,7 +4,8 @@ export const selectCategoryResults = (state) => state.catalog.categoryResults;
 
 // export const selectProductById = (state) => state.catalog.productById?.tire || null;
 export const selectProductById = (state) => state.catalog.productById;
-export const selectFavoriteProducts = (state) => state.catalog.favoriteProducts;
+export const selectFavoriteProducts = (state) => state.catalog.favoriteProducts; //💙
+export const selectProductsOfDay = (state) => state.catalog.productsOfDay  // ⭐️
 
 export const selectRimsDiameters = (state) => state.catalog.rimsDiameters;
 

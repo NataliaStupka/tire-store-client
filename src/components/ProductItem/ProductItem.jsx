@@ -18,6 +18,8 @@ export const ProductItem = ({ product }) => {
     isFavorite,
     addToFavorites,
     removeFromFavorites,
+    isProductOfDay,
+    toggleProductOfDay,
     removeProduct,
     updateProduct,
     isOpenModal,
@@ -93,15 +95,34 @@ export const ProductItem = ({ product }) => {
         </div>
       </Link>
 
-      <button
-        className={s.heart}
-        onClick={isFavorite ? removeFromFavorites : addToFavorites}
-        type="button"
-      >
-        <svg className={isFavorite ? clsx(s.svg, s.svgFavorite) : s.svg}>
-          <use href={`${sprite}#${"icon-heart"}`} />
-        </svg>
-      </button>
+      {/* 💙  ⭐️ */}
+      <div className={s.productActions}>
+        <button
+          className={s.heart}
+          onClick={isFavorite ? removeFromFavorites : addToFavorites}
+          type="button"
+        >
+          <svg className={isFavorite ? clsx(s.svg, s.svgFavorite) : s.svg}>
+            <use href={`${sprite}#${"icon-heart"}`} />
+          </svg>
+        </button>
+
+        {/* ⭐️ */}
+        {userRole === "admin" && (
+          <button 
+          className={s.star} 
+          onClick={toggleProductOfDay} 
+          type="button">
+            <svg
+              className={
+                isProductOfDay ? clsx(s.svg, s.svgProductOfDay) : s.svg
+              }
+            >
+              <use href={`${sprite}#${"icon-star"}`} />
+            </svg>
+          </button>
+        )}
+      </div>
 
       {userRole === "admin" && (
         <div className={s.adminBtns}>
