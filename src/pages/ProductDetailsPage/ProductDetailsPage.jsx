@@ -52,13 +52,17 @@ export const ProductDetailsPage = () => {
           ← Назад до каталогу
         </Link>
 
-        <h2 className={s.pageTitle}>Деталі про {isTire ? "шину" : "диск"}.</h2>
+        <p className={s.pageTitle}>Деталі про {isTire ? "шину" : "диск"}.</p>
 
         <article className={s.detailsContainer}>
           <div className={s.imageWrapper}>
             <img
               src={image}
-              alt={`${title} ${producer ?? ""}`.trim()}
+              alt={
+                isTire
+                  ? `Шина ${producer ?? ""} ${size ?? ""} ${modelTire ?? ""}`
+                  : `Диск ${producer ?? ""} R${size ?? ""}`.trim()
+              }
               className={s.image}
             />
           </div>
@@ -66,14 +70,14 @@ export const ProductDetailsPage = () => {
           <div className={s.info}>
             {/* name */}
             {isTire ? (
-              <h3 className={s.name}>
+              <h1 className={s.name}>
                 Шина {size} <span className={s.model}>{modelTire}</span>{" "}
                 <span className={s.producer}>{producer}</span>
-              </h3>
+              </h1>
             ) : (
-              <h3 className={s.name}>
+              <h1 className={s.name}>
                 Диск R{size} <span className={s.producer}>{producer}</span>
-              </h3>
+              </h1>
             )}
 
             {/* <div className={s.availability}>
@@ -101,7 +105,7 @@ export const ProductDetailsPage = () => {
             </div>
 
             <div className={s.specifications}>
-              <h3 className={s.specificationsTitle}>Характеристики</h3>
+              <h2 className={s.specificationsTitle}>Характеристики</h2>
               <dl className={s.list}>
                 {size && (
                   <div className={s.specRow}>

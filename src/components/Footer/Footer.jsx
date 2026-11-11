@@ -44,7 +44,7 @@ export const Footer = () => {
             <p>
               📞 Контакти:{" "}
               {/* <a href="mailto:info@tyrestore.ua">info@tyrestore.ua</a> |{" "} */}
-              <a href='tel:+380676533553'>+38 067 653 35 53 - Євгеній</a>
+              <a href='tel:+380676533553'>+38 067 653 35 53 - Євгеній </a>
               <a href="viber://chat?number=+380676533553">Viber</a> |{" "}
               <a href="https://t.me/Stupka_Evhenii" target="_blank" rel="noreferrer">
                 Telegram

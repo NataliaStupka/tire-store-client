@@ -13,6 +13,14 @@ import { useProductActions } from "../../hooks/useProductActions";
 
 import { routes } from "../../routes/routes";
 
+  const categoryTranslation = {
+    loader: "Шини для навантажувачів",
+    industrial: "Індустріальні шини",
+    agricultural: "Сільськогосподарські шини",
+    car: "Шини для легкових автомобілів",
+    rims: "Диски",
+  };
+
 export const ProductItem = ({ product }) => {
   const {
     isFavorite,
@@ -26,6 +34,8 @@ export const ProductItem = ({ product }) => {
     openModal,
     closeModal,
   } = useProductActions(product);
+
+
 
   const location = useLocation();
 
@@ -58,7 +68,19 @@ export const ProductItem = ({ product }) => {
         state={{ from: location.pathname }}
         className={s.link}
       >
-        <img src={image} alt={size} className={s.image} />
+        <img
+          src={image}
+          alt={
+            title === "tire"
+              ? `Шина ${producer ?? ""} ${size ?? ""} ${model ?? ""}`
+                  .replace(/\s+/g, " ")
+                  .trim()
+              : `Диск ${producer ?? ""} R${size ?? ""}`
+                  .replace(/\s+/g, " ")
+                  .trim()
+          }
+          className={s.image}
+        />
 
         <div className={s.info}>
           {title === "tire" ? (
@@ -72,7 +94,7 @@ export const ProductItem = ({ product }) => {
             </h3>
           )}
 
-          <p>Категорія: {category}</p>
+          <p>Категорія: {categoryTranslation[category] ?? category}</p>
 
           {tireType && <p>Тип шини: {tireType} </p>}
           {layering && <p>Слойність шини: {layering} </p>}
@@ -109,10 +131,7 @@ export const ProductItem = ({ product }) => {
 
         {/* ⭐️ */}
         {userRole === "admin" && (
-          <button 
-          className={s.star} 
-          onClick={toggleProductOfDay} 
-          type="button">
+          <button className={s.star} onClick={toggleProductOfDay} type="button">
             <svg
               className={
                 isProductOfDay ? clsx(s.svg, s.svgProductOfDay) : s.svg

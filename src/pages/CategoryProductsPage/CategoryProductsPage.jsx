@@ -11,10 +11,10 @@ import { FilterDiametersRims } from "../../components/FilterDiametersRims/Filter
 import Pagination from "../../components/Pagination/Pagination";
 
 const categoryTranslation = {
-  loader: "Погрузочні шини",
+  loader: "Шини для навантажувачів",
   industrial: "Індустріальні шини",
   agricultural: "Сільськогосподарські шини",
-  car: "Легкові шини",
+  car: "Шини для легкових автомобілів",
   rims: "Диски",
 };
 

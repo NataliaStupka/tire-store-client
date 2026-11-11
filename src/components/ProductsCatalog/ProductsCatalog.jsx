@@ -10,7 +10,7 @@ import {
   selectIsLoading,
 } from "../../redux/catalog/selectors";
 
-import { nanoid } from "@reduxjs/toolkit";
+// import { nanoid } from "@reduxjs/toolkit";
 
 export const ProductsCatalog = ({ products: propProducts }) => {
   const products = propProducts ?? [];

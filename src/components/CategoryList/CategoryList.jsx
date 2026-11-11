@@ -20,6 +20,14 @@ import sprite from "../../assets/sprite.svg";
 //   { key: "rims", title: "Диски", image: "/images/rims.jpg" },
 // ];
 
+ const categoryTranslation = {
+    loader: "Шини для навантажувачів",
+    industrial: "Індустріальні шини",
+    agricultural: "Сільськогосподарські шини",
+    car: "Шини для легкових автомобілів",
+    rims: "Диски",
+  };
+
 export const CategoryList = ({
   variant = "list",
   categories = ["loader", "industrial", "agricultural", "car", "rims"],
@@ -28,13 +36,7 @@ export const CategoryList = ({
   const location = useLocation(); //pathname, search, hash, key, state
   const selectRef = useRef(null); //current
 
-  const categoryTranslation = {
-    loader: "Погрузочні шини",
-    industrial: "Індустріальні шини",
-    agricultural: "Сільськогосподарські шини",
-    car: "Легкові шини",
-    rims: "Диски",
-  };
+ 
 
   // Поточна категорію з URL
   const currentCategory = location.pathname.match(/\/category\/([^/]+)/)?.[1];
@@ -73,7 +75,7 @@ export const CategoryList = ({
           </option>
           {categories.map((category) => (
             <option key={category} value={category}>
-              {categoryTranslation[category]}
+              {categoryTranslation[category] ?? category}
             </option>
           ))}
         </select>
@@ -83,7 +85,7 @@ export const CategoryList = ({
 
   return (
     <div className="container">
-      <p className={s.categoryText}>Переглянути каталог</p>
+      <h2 className={s.categoryText}>Переглянути каталог</h2>
 
       <ul className={s.categoryList}>
         {categories.map((item) => {
