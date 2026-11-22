@@ -9,6 +9,18 @@ import { ProductsCatalog } from "../../components/ProductsCatalog/ProductsCatalo
 import LoaderComponent from "../../components/Loader/Loader";
 import { FilterDiametersRims } from "../../components/FilterDiametersRims/FilterDiametersRims";
 import Pagination from "../../components/Pagination/Pagination";
+import { Seo } from "../../components/Seo/Seo";
+
+const categoryDescriptions = {
+  loader:
+    "Шини, гума та колеса для різних видів навантажувачів і складської техніки. Надійні покришки для інтенсивної роботи, допомога з підбором. Висока зносостійкість, прямі поставки від виробників. Доставка по Україні.",
+  industrial:
+    "Індустріальні та промислові шини для спецтехніки, будівельних і дорожніх машин. Офіційна гарантія, допомога з підбором розміру. Доставка по Україні.",
+  agricultural:
+    "Сільськогосподарські шини (сільгоспгума) для різних видів агротехніки та причіпного обладнання. Надійні покришки від перевірених виробників з доставкою по Україні.",
+  car: "Шини для легкових автомобілів у великому асортименті. Підбір за типорозміром та маркою, відправка по Україні.",
+  rims: "Колісні диски різних діаметрів для авто, вантажного транспорту та спецтехніки. Різні діаметри та кріплення. Доставка по Україні.",
+};
 
 const categoryTranslation = {
   loader: "Шини для навантажувачів",
@@ -40,9 +52,19 @@ const CategoryProductsPage = () => {
   // );
   const pagesArray = [...Array(totalPages)].map((_, i) => i + 1);
 
+  const categoryTitle = categoryTranslation[category] || "Каталог товарів";
+  const categoryDesc = categoryDescriptions[category];
+
   return (
     <main>
       <section className={s.section}>
+        
+        <Seo
+          title={`${categoryTitle} — купити в Україні, каталог`}
+          description={categoryDesc}
+          canonicalPath={`/category/${category}`}
+        />
+
         <div className="container">
           <h1 className={s.title}>
             {categoryTranslation[category] || "Категорія"}

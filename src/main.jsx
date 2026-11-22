@@ -9,10 +9,12 @@ import "modern-normalize";
 import { persistor, store } from "./redux/store.js"; //Імпортуємо створений стор; persistor
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react"; // 'localStorage'
+import { HelmetProvider } from "react-helmet-async"; // SEO
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}>
+    <HelmetProvider>
+        <Provider store={store}>
       <BrowserRouter>
         <PersistGate loading={null} persistor={persistor}>
           <App />
@@ -45,5 +47,7 @@ createRoot(document.getElementById("root")).render(
         </PersistGate>
       </BrowserRouter>
     </Provider>
+    </HelmetProvider>
+  
   </StrictMode>
 );

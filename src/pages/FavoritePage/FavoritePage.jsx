@@ -1,19 +1,25 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import s from "./FavoritePage.module.css";
 
 import { ProductsCatalog } from "../../components/ProductsCatalog/ProductsCatalog";
 import { selectFavoriteProducts } from "../../redux/catalog/selectors";
 
+import { Seo } from "../../components/Seo/Seo";
+
 const FavoritePage = () => {
-  useEffect(() => {
-    document.title = "Tires Store | Selected";
-  }, []);
+
+  // ПЕРЕВІРИТИ чи дає заголовок SEO, як ні - повернути useEffect
+  // useEffect(() => {
+  //   document.title = "Tires Store | Selected";
+  // }, []);
 
   const favoriteProducts = useSelector(selectFavoriteProducts);
 
   return (
     <section className={s.section}>
+      <Seo title="Обрані товари" noindex={true} />
+
       <div className="container">
         <h1 className={s.title}>Обрані товари</h1>
         {favoriteProducts.length > 0 ? (

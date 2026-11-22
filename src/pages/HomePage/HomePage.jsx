@@ -14,6 +14,8 @@ import { clearSearchResult } from "../../redux/catalog/slice";
 import { ProductsOfDay } from "../../components/ProductsOfDay/ProductsOfDay";
 // import { Helmet } from "react-helmet";
 
+import { Seo } from "../../components/Seo/Seo";
+
 // const category = ["loader", "industrial", "agricultural", 'car' "rims"];
 
 const HomePage = () => {
@@ -50,6 +52,7 @@ const HomePage = () => {
   return (
     <main>
       {/* <div className={s.homePage}> */}
+      <Seo canonicalPath="/" />
 
       <section className={s.hero}>
         <div className="container">

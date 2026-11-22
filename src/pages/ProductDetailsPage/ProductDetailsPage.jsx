@@ -6,17 +6,21 @@ import LoaderComponent from "../../components/Loader/Loader";
 
 import { useProductDetailsPage } from "../../hooks/useProductDetailsPage";
 
+import { Seo } from "../../components/Seo/Seo";
+
 export const ProductDetailsPage = () => {
   const { product, isTire, isRim, isLoading, isError, goBackLink } =
     useProductDetailsPage();
 
-  // //???
   if (isLoading) {
     return <LoaderComponent />;
   }
   if (isError || !product) {
     return (
       <section className={s.details}>
+        {/* Закриваємо помилкову картку від індексації */}
+        <Seo title='Товар не знайдено' noindex={true}/>
+
         <div className={clsx("container", s.errorContainer)}>
           <Link to={goBackLink.current} className={s.goBack}>
             ← Повернутися назад
@@ -29,6 +33,7 @@ export const ProductDetailsPage = () => {
 
   // const price = product.price;
   const {
+    _id,
     title,
     price,
     image,
@@ -45,8 +50,56 @@ export const ProductDetailsPage = () => {
   //відображає поле "Виробник" лише якщо воно є
   // const isProducer = !!product.producer;
 
+  // Формуємо красиву SEO-назву та опис під шину або диск
+  const seoProductName = isTire
+   ? `Шина ${size || ""} ${modelTire || ""} ${producer || ""}`
+   .replace(/\s+/g, " ")  // прибирає зайві пробіли, залишає лише один пробіл
+   .trim() //обрізає випадкові пробіли на початку та в кінці
+  : `Диск R${size || ""} ${diskModel || ""} ${producer || ""}`
+  .replace(/\s+/g, " ")
+  .trim();
+
+  const seoTitle = `Купити ${seoProductName} — ціна, характеристики`
+  // const seoDescription = `Замовити ${seoProductName} (${title}) в інтернет-магазині Tire Store. Ціна: ${price} грн. Доставка по Україні.`;
+     const seoDescription = `Замовити ${seoProductName} (${title}) в інтернет-магазині Tire Store. Офіційний дилер, допомога з підбором, доставка по Україні.`;
+
+  // Schema.org для Google (ціна, валюта, бренд, наявність), паспорт товару
+const seoProductSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: seoProductName,
+    image: image || undefined,
+    description: seoDescription,
+    sku: _id,
+    ...(producer && {
+      brand: {
+        "@type": "Brand",
+        name: producer,
+      },
+    }),
+    offers: {
+      "@type": "Offer",
+      url: `https://tire-store-client.vercel.app/product/${_id}`, 
+      // priceCurrency: "UAH",
+      // price: price,
+      availability: instock
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+    },
+  };
+
   return (
     <section className={s.details}>
+    {/* Підключаємо SEO-теги та JSON-LD */}
+      <Seo
+        title={seoTitle}
+        description={seoDescription}
+        canonicalPath={`/product/${_id}`}
+        image={image}
+        schema={seoProductSchema}
+      />
+
+
       <div className={clsx("container", s.detailsInner)}>
         <Link to={goBackLink.current} className={s.goBack}>
           ← Назад до каталогу
