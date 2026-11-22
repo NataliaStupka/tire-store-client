@@ -2,7 +2,7 @@
   "rewrites": [
 {
       "source": "/sitemap.xml",
-      "destination": "https://onrender.com"
+      "destination": "https://tire-store-server.onrender.com/sitemap.xml"
     },
     {"source": "/(.*)", "destination": "/"}
   ]
